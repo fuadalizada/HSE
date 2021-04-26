@@ -1,0 +1,49 @@
+﻿<div class="modal fade" id="takeApictureModal">
+    <div class="modal-dialog mh-100 h-75 mw-100 w-75">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="takeApictureModalLabel">Məlumatlar</h5>
+                <button type="button" class="close close_modal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-4 col-xl-2">
+                        <label class="title" style="width: 172px;">Təlimatlandırılan şəxsin fin kodu</label>
+                        <input id="fin_code" class="form-control fincode"/>
+                        <div class="fincodeValidationMessage ErrorClass"></div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Kamera</div>
+                            <div class="panel-body">
+                                <div id="my_camera"></div>
+                                
+                                <form>  
+                                    <input type="button" class="btn btn-success takePicture" value="Şəkil çək" style="margin-top: 9px;">  
+                                </form>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-md-offset-2">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Çəkilən şəkil</div>
+                            <div class="panel-body">
+                                <div id="results">Sizin şəkliniz burada görünəcək...</div>
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="ConfirmPictureModal">Təsdiq et</button>
+                <button type="button" class="btn btn-secondary close_modal" data-dismiss="modal">Bağla</button>
+            </div>
+        </div>
+    </div>
+</div>

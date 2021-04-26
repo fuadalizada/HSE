@@ -1,0 +1,190 @@
+﻿/*
+    DEMO STYLE
+*/
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+
+#page-sidebar #sidebar-menu > li a:hover svg {
+    -webkit-animation-name: swing;
+    -moz-animation-name: swing;
+    -o-animation-name: swing;
+    animation-name: swing;
+    animation: swing 0.5s;
+}
+
+#page-sidebar li.sfHover > a.sf-with-ul:after {
+    -webkit-transition-duration: .5s;
+    -moz-transition-duration: .5s;
+    -o-transition-duration: .5s;
+    transition-duration: .5s;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+    /*color: #0093d9;*/
+}
+
+/* <<< sidebar icon styles >>> */
+#page-sidebar #sidebar-menu .svg-inline--fa {
+    color: #0093d9;
+    opacity: .60;
+}
+
+#page-sidebar.font-inverse#page-sidebar ul li a .svg-inline--fa {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#page-sidebar #sidebar-menu > li > a .svg-inline--fa {
+    width: 21px;
+    height: 15px;
+}
+
+#page-sidebar #sidebar-menu > li ul li a .svg-inline--fa {
+    width: 16px;
+    height: 12px;
+}
+/* << end sidebar icon styles */
+#sidebar #sidebar-menu li a.active-menu {
+    border-color: #d1d9dd;
+}
+
+    #sidebar #sidebar-menu li a.active-menu span {
+        font-weight: bold;
+        text-decoration: underline;
+        text-decoration-color: #1c82e1;
+        color: #1c82e1;
+    }
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul li.mobileCollapseListItem {
+    display: none;
+}
+
+#sidebarCollapseMobile {
+    margin-left: 10px;
+    margin-bottom: 5px;
+    border: 1px solid transparent;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+.bg-gradient-9 {
+    background: linear-gradient(154deg,#008fe2 0,#00b29c 100%);
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+
+    #page-sidebar {
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        z-index: 999;
+        /* background: #7386D5;
+        color: #fff;*/
+        transition: all 0.3s;
+    }
+
+        #page-sidebar.active {
+            margin-left: calc(0px - 100%);
+        }
+
+    #content {
+        width: 100%;
+        min-height: 100vh;
+        padding: 40px;
+        transition: all 0.3s;
+        position: absolute;
+        border: 0;
+    }
+
+        #content.active {
+            height: 0;
+        }
+
+    ul li.mobileCollapseListItem {
+        display: list-item;
+    }
+}
+
+@-webkit-keyframes swing {
+    20% {
+        -webkit-transform: rotate3d(0, 0, 1, 15deg);
+        transform: rotate3d(0, 0, 1, 15deg);
+    }
+
+    40% {
+        -webkit-transform: rotate3d(0, 0, 1, -10deg);
+        transform: rotate3d(0, 0, 1, -10deg);
+    }
+
+    60% {
+        -webkit-transform: rotate3d(0, 0, 1, 5deg);
+        transform: rotate3d(0, 0, 1, 5deg);
+    }
+
+    80% {
+        -webkit-transform: rotate3d(0, 0, 1, -5deg);
+        transform: rotate3d(0, 0, 1, -5deg);
+    }
+
+    100% {
+        -webkit-transform: rotate3d(0, 0, 1, 0deg);
+        transform: rotate3d(0, 0, 1, 0deg);
+    }
+}
+
+@keyframes swing {
+    20% {
+        -webkit-transform: rotate3d(0, 0, 1, 15deg);
+        -ms-transform: rotate3d(0, 0, 1, 15deg);
+        transform: rotate3d(0, 0, 1, 15deg);
+    }
+
+    40% {
+        -webkit-transform: rotate3d(0, 0, 1, -10deg);
+        -ms-transform: rotate3d(0, 0, 1, -10deg);
+        transform: rotate3d(0, 0, 1, -10deg);
+    }
+
+    60% {
+        -webkit-transform: rotate3d(0, 0, 1, 5deg);
+        -ms-transform: rotate3d(0, 0, 1, 5deg);
+        transform: rotate3d(0, 0, 1, 5deg);
+    }
+
+    80% {
+        -webkit-transform: rotate3d(0, 0, 1, -5deg);
+        -ms-transform: rotate3d(0, 0, 1, -5deg);
+        transform: rotate3d(0, 0, 1, -5deg);
+    }
+
+    100% {
+        -webkit-transform: rotate3d(0, 0, 1, 0deg);
+        -ms-transform: rotate3d(0, 0, 1, 0deg);
+        transform: rotate3d(0, 0, 1, 0deg);
+    }
+}
+
+.swing {
+    -webkit-transform-origin: top center;
+    -ms-transform-origin: top center;
+    transform-origin: top center;
+    -webkit-animation-name: swing;
+    animation-name: swing;
+}

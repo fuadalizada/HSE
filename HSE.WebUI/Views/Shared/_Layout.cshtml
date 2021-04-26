@@ -1,0 +1,531 @@
+﻿@using System.Security.Claims;
+@using HSE.DAL.Settings
+@using Microsoft.Extensions.Options;
+@inject IOptions<RecaptchaSettings> CaptchaSetting;
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <style>
+        .spinner {
+            margin: 0;
+            width: 70px;
+            height: 18px;
+            margin: -35px 0 0 -9px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            text-align: center
+        }
+
+            .spinner > div {
+                width: 18px;
+                height: 18px;
+                background-color: #333;
+                border-radius: 100%;
+                display: inline-block;
+                -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+                animation: bouncedelay 1.4s infinite ease-in-out;
+                -webkit-animation-fill-mode: both;
+                animation-fill-mode: both
+            }
+
+            .spinner .bounce1 {
+                -webkit-animation-delay: -.32s;
+                animation-delay: -.32s
+            }
+
+            .spinner .bounce2 {
+                -webkit-animation-delay: -.16s;
+                animation-delay: -.16s
+            }
+
+        @@-webkit-keyframes bouncedelay {
+            0%, 80%, 100% {
+                -webkit-transform: scale(0.0)
+            }
+
+            40% {
+                -webkit-transform: scale(1.0)
+            }
+        }
+
+        @@keyframes bouncedelay {
+            0%, 80%, 100% {
+                transform: scale(0.0);
+                -webkit-transform: scale(0.0)
+            }
+
+            40% {
+                transform: scale(1.0);
+                -webkit-transform: scale(1.0)
+            }
+        }
+    </style>
+
+    <meta charset="UTF-8">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <title> eDoc </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Favicon -->
+
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/images/logo.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/images/logo.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/images/logo.png">
+    <link rel="apple-touch-icon-precomposed" href="~/images/logo.png">
+    <link rel="shortcut icon" href="~/images/logo.png">
+
+    <!-- Bootstrap CSS CDN -->
+    <link href="~/shared/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+
+    @await RenderSectionAsync("TourStyles", false)
+
+
+    <!-- HELPERS -->
+
+    <link rel="stylesheet" type="text/css" href="~/assets/helpers/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/helpers/backgrounds.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/helpers/utils.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/helpers/colors.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/helpers/grid.css">
+
+    <!-- ICONS -->
+
+    <link rel="stylesheet" type="text/css" href="~/assets/icons/fontawesome/fontawesome.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/icons/linecons/linecons.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/icons/spinnericon/spinnericon.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/solid.css">
+
+    <link rel="stylesheet" type="text/css" href="~/assets/widgets/input-switch/inputswitch.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/widgets/input-switch/inputswitch-alt.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/widgets/theme-switcher/themeswitcher.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/snippets/mobile-navigation.css">
+
+    <!-- Admin theme -->
+
+    <link rel="stylesheet" type="text/css" href="~/assets/themes/admin/layout.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/themes/admin/color-schemes/default.css">
+    <link href="~/customStyles/layout.css?v=56" rel="stylesheet" />
+
+
+    <!-- Components theme -->
+
+    <link rel="stylesheet" type="text/css" href="~/assets/themes/components/default.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/themes/components/border-radius.css">
+
+    <!-- Admin responsive -->
+
+    <link rel="stylesheet" type="text/css" href="~/assets/helpers/responsive-elements.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/helpers/admin-responsive.css">
+
+    <!-- Sidebar -->
+
+    <link href="~/customStyles/sidebar/sidebar.css" rel="stylesheet" />
+
+    <!--Data table-->
+    <link href="~/shared/datatable/css/dataTables.bootstrap4.css" rel="stylesheet" />
+    <link href="~/shared/datatable/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <link href="~/shared/datatable/css/select.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/shared/datatable/css/fixedHeader.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/shared/datatable/css/scroller.dataTables.min.css" rel="stylesheet" />
+
+    <!--Select2-->
+    <link href="~/shared/select2/select2.min.css" rel="stylesheet" />
+
+    <!--Tempusdominus-->
+    <link href="~/shared/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!--Toastr-->
+    <link href="~/shared/toastr/toastr.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap Modal -->
+    <link rel="stylesheet" type="text/css" href="~/assets/widgets/modal/modal.css">
+
+    <link href="~/assets/widgets/tabs-ui/tabs.css" rel="stylesheet" />
+    <link href="~/customStyles/account-notification.css" rel="stylesheet" />
+
+    <link href="~/customStyles/account-notification.css" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="~/assets/widgets/popover/popover.css">
+
+    @await RenderSectionAsync("Styles", false)
+
+    @await RenderSectionAsync("TourJs", false)
+
+    <!-- JS Core -->
+    <script type="text/javascript" src="~/assets/js-core/jquery-core.js"></script>
+    <script type="text/javascript" src="~/assets/js-core/jquery-ui-core.js"></script>
+    <script type="text/javascript" src="~/assets/js-core/jquery-ui-widget.js"></script>
+    <script type="text/javascript" src="~/assets/js-core/jquery-ui-mouse.js"></script>
+    <script type="text/javascript" src="~/assets/js-core/jquery-ui-position.js"></script>
+    <script type="text/javascript" src="~/assets/js-core/modernizr.js"></script>
+    <script type="text/javascript" src="~/assets/js-core/jquery-cookie.js"></script>
+
+
+    <!-- Font Awesome JS -->
+    <script defer src="~/shared/font-awesome/js/solid.js"></script>
+    <script defer src="~/shared/font-awesome/js/fontawesome.js"></script>
+
+    <script async src="https://www.google.com/recaptcha/api.js?render=@CaptchaSetting.Value.SiteKey"></script>
+
+    <script type="text/javascript">
+        $(window).load(function () {
+            setTimeout(function () {
+                $('#loading').fadeOut(400, "linear");
+            }, 300);
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var check = false;
+            $(".create").click(function () {
+                if (check) {
+                    $(".list").click();
+                    check = false;
+                }
+            });
+            $(document)
+                .ajaxStop(function () {
+                    //got response so hide the loading image
+                    $('#loading').fadeOut(400, "linear");
+                });
+            $(document).ajaxSend(function (event, jqxhr, settings) {
+                var blackListUrls = [];
+
+                var newUrl = settings.url.substring(0, settings.url.indexOf('?'));
+
+                var isDenied = (blackListUrls.indexOf(newUrl) > -1) || (blackListUrls.indexOf(settings.url) > -1);
+                if (!isDenied) {
+                    $('#loading').fadeIn(300, "linear");
+                }
+            });
+        });
+        document.onkeydown = KeyDownHandler;
+        document.onkeyup = KeyUpHandler;
+
+        var CTRL = false;
+        var SHIFT = false;
+        var ALT = false;
+        var CHAR_CODE = -1;
+
+        function KeyDownHandler(e) {
+            var x = '';
+            if (document.all) {
+                var evnt = window.event;
+                x = evnt.keyCode;
+            }
+            else {
+                x = e.keyCode;
+            }
+            DetectKeys(x, true);
+            Yonlendir();
+        }
+
+        function KeyUpHandler(e) {
+            var x = '';
+            if (document.all) {
+                var evnt = window.event;
+                x = evnt.keyCode;
+            }
+            else {
+                x = e.keyCode;
+            }
+
+            DetectKeys(x, false);
+            Yonlendir();
+        }
+
+        function DetectKeys(keyCode, isKeyDown) {
+            if (keyCode === '16') {
+                SHIFT = isKeyDown;
+            }
+            else if (keyCode === '17') {
+                CTRL = isKeyDown;
+            }
+            else if (keyCode === '18') {
+                ALT = isKeyDown;
+            }
+            else {
+                if (isKeyDown)
+                    CHAR_CODE = keyCode;
+                else
+                    CHAR_CODE = -1;
+            }
+        }
+
+        function Yonlendir() {
+            if (CTRL && SHIFT && CHAR_CODE === '85') {
+                window.location.href = "/Admin/UserBrowse";
+            }
+
+        }
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GH45EY4055"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-GH45EY4055');
+    </script>
+</head>
+
+
+<body>
+    <input hidden value="@User.Claims.FirstOrDefault(c=>c.Type=="LayoutOptions")?.Value" id="userLayoutOptions" />
+    <div id="sb-site">
+
+        <div id="loading">
+            <div class="spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        </div>
+
+
+        <div id="page-wrapper">
+            <div id="page-header" class="bg-gradient-9">
+                <div id="mobile-navigation">
+                    <button id="nav-toggle" class="collapsed" data-toggle="collapse" data-target="#page-sidebar"><span></span></button>
+
+                </div>
+                <div id="header-logo" class="logo-bg">
+                    <a asp-controller="Home" asp-action="Index" class="logo-content-big" title="Ana səhifə"></a>
+                    <a asp-controller="Home" asp-action="Index" class="logo-content-small" title="Ana səhifə"></a>
+                    <a id="close-sidebar" href="#" title="Close sidebar">
+                        <i class="glyph-icon icon-angle-left"></i>
+                    </a>
+                </div>
+
+                <div id="header-nav-right">
+                    <a id="axtar" style="border-radius: 6px" href="#" class="hdr-btn popover-button" title="Axtar" data-placement="bottom" data-id="#popover-search">
+                        <i class="glyph-icon icon-search"></i>
+                    </a>
+                    <div class="hide" id="popover-search">
+                        <div class="pad5A box-md">
+                            <div class="input-group">
+                                <input type="text" class="form-control search-value" placeholder="Sənəd № görə axtarış">
+                                <span class="input-group-btn">
+                                    <a class="btn btn-primary search-btn" href="#">Axtar</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="bildirish" class="account-wrap header-account">
+                        <div class="account-item clearfix js-item-menu">
+                            <div class="image">
+                                <img src="@Url.Action("GetPhoto","User")" alt="" />
+                            </div>
+                            <div class="content">
+                                <a class="js-acc-btn" href="#"><label class="user-fullname">@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value  @User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value</label></a>
+                            </div>
+                            <div class="account-dropdown js-dropdown">
+                                <div class="info clearfix">
+                                    <div class="image">
+                                        <a href="#">
+                                            <img src="@Url.Action("GetPhoto","User")" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="content">
+                                        <h5 class="name">
+                                            <a href="#">@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value  @User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value</a>
+                                        </h5>
+                                        <span class="email">@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value</span>
+                                    </div>
+                                </div>
+                                <div class="account-dropdown__body">
+                                    <div class="account-dropdown__item">
+                                        <a asp-controller="User" asp-action="Index">
+                                            <i class="fas fa-user-cog"></i> Tənzimləmələr
+                                        </a>
+                                    </div>
+                                    <div class="account-dropdown__item">
+                                        <a asp-controller="Account" asp-action="LogOut">
+                                            <i class="fas fa-power-off"></i> Çıxış
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- #header-nav-right -->
+            </div>
+
+            <div id="page-sidebar">
+                <div class="scroll-sidebar">
+                    <ul id="sidebar-menu" class="list-unstyled">
+
+                        <li>
+                            <a asp-controller="Home" asp-action="Index" title="Ana səhifə">
+                                <i class="fa fa-home"></i>
+                                <span>Ana səhifə</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#emeliyyatlar" class="hasSubMenu" title="Yeni">
+                                <i class="fa fa-file"></i>
+                                <span>Yeni</span>
+                            </a>
+
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a asp-controller="Form" asp-action="CreateForm" title="Form yarat">
+                                            <i class="fa fa-upload"></i>
+                                            <span>Form yarat</span>
+                                        </a>
+                                    <li />
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li>
+                            <a href="#gelenler" class="hasSubMenu" title="Gələnlər">
+                                <i class="fa fa-list"></i>
+                                <span>Gələnlər</span>
+                                <label id="generalTaskCount" class="badge badge-sidebar-count"></label>
+                            </a>
+
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a asp-action="Income" asp-controller="Incoming" class="operation" data-id="1" title="Formların təsdiqi">
+                                            <i class="fa fa-check"></i>
+                                            <span>Formların təsdiqi</span>
+                                            <label id="forExecutionTaskCount" class="badge badge-sidebar-count"></label>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li>
+                            <a href="#tarixce" class="hasSubMenu" title="Tarixçə">
+                                <i class="fa fa-history"></i>
+                                <span>Tarixçə</span>
+                            </a>
+
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a asp-controller="History" asp-action="AllFormsHistory" title="Yaradılmış formlar">
+                                            <i class="fa fa-download"></i>
+                                            <span>Yaradılmış formlar</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
+                        <li>
+                            <a href="#help" class="hasSubMenu" title="Kömək">
+                                <i class="fa fa-question"></i>
+                                <span>Kömək</span>
+                            </a>
+
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="https://edoc.ady.az/edoc Təlimat 11042020 V.pdf" target="_blank" title="İstifadəçi təlimatı">
+                                            <i class="fa fa-book"></i>
+                                            <span>İstifadəçi təlimatı</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul><!-- #sidebar-menu -->
+                </div>
+            </div>
+            <div id="page-content-wrapper">
+                <div id="page-content">
+                    <div class="container">
+                        <div id="page-title">
+                        </div>
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- WIDGETS -->
+
+        <script type="text/javascript" src="~/assets/bootstrap/js/bootstrap.js"></script>
+
+        <!-- Superclick -->
+
+        <script type="text/javascript" src="~/assets/widgets/superclick/superclick.js"></script>
+
+        <!-- Input switch alternate -->
+
+        <script type="text/javascript" src="~/assets/widgets/input-switch/inputswitch-alt.js"></script>
+
+        <!-- Slim scroll -->
+
+        <script type="text/javascript" src="~/assets/widgets/slimscroll/slimscroll.js"></script>
+
+        <!-- Screenfull -->
+
+        <script type="text/javascript" src="~/assets/widgets/screenfull/screenfull.js"></script>
+
+        <!-- Widgets init for demo -->
+
+        <script type="text/javascript" src="~/assets/js-init/widgets-init.js"></script>
+
+        <!-- Theme layout -->
+
+        <script type="text/javascript" src="~/assets/themes/admin/layout.js"></script>
+
+        <!-- Theme switcher -->
+
+        <script type="text/javascript" src="~/assets/widgets/theme-switcher/themeswitcher.js"></script>
+
+        <!--Moment js-->
+
+        <script src="~/shared/moment.js/moment.min.js"></script>
+
+        <!-- Data table -->
+
+        <script src="~/shared/datatable/js/jquery.dataTables.js"></script>
+        <script src="~/shared/datatable/js/dataTables.bootstrap4.js"></script>
+        <script src="~/shared/datatable/js/dataTables.fixedHeader.min.js"></script>
+        <script src="~/shared/datatable/js/dataTables.responsive.min.js"></script>
+        <script src="~/shared/datatable/js/dataTables.select.min.js"></script>
+        <script src="~/shared/datatable/js/dataTables.fixedColumns.min.js"></script>
+        <script src="~/shared/datatable/js/dataTables.scroller.min.js"></script>
+
+        <!-- Select2 -->
+
+        <script src="~/shared/select2/select2.min.js"></script>
+
+        <!-- Tempusdominus date picker-->
+
+        <script src="~/shared/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
+        <!-- Toastr date picker-->
+
+        <script src="~/shared/toastr/toastr.min.js"></script>
+
+        <!-- Boostrap Tabs -->
+
+        <script type="text/javascript" src="~/assets/widgets/tabs-ui/tabs.js"></script>
+
+        <script src="~/customScripts/layout.js?v=56"></script>
+
+        <script src="~/customScripts/account-notification.js"></script>
+
+        <script src="~/customScripts/Tour/tour.js"></script>
+        @await RenderSectionAsync("Scripts", false)
+    </div>
+</body>
+</html>     

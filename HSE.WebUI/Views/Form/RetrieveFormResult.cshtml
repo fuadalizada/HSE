@@ -1,0 +1,113 @@
+﻿@model RetrieveFormResultViewModel
+@{
+    ViewData["Title"] = "RetrieveFormResult";
+}
+
+@section Styles
+{
+    <link href="~/shared/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <link href="~/customStyles/form/createForm.css" rel="stylesheet" />
+}
+
+@section Scripts
+{
+    <script src="~/shared/bootstrap-daterangepicker/moment.min.js"></script>
+}
+
+
+<form>
+    <div class="row">
+        <div class="col-sm-4 col-xl-2">
+            <label class="title">Form №</label>
+            <input readonly value="@Model.InstructionFormDto.Id" class="form-control instructionFormId"/>
+        </div>
+
+        <div class="col-sm-4 col-xl-3 col-md-offset-4 col-md-2">
+            <label class="title">Təlimatçının adı,soyadı</label>
+            <input readonly value="@Model.InstructionFormDto.InstructorFullName" class="form-control nameSurnameCopy"/>
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-sm-4 col-xl-3">
+            <label class="title">Hazırlanma tarixi</label>
+            <div class="input-group date" id="createDateCopy" data-target-input="nearest">
+                <input readonly type="text" class="form-control datetimepicker-input" name="createDateCopy" data-target="#createDateCopy" value="@Model.InstructionFormDto.InstructionDate.ToString("dd/MM/yyyy")"/>
+                <div class="input-group-append" data-target="#createDateCopy" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-xl-3 col-md-offset-3 col-md-2">
+            <label class="title">Təlimatçının vəzifəsi</label>
+            <input readonly value="@Model.InstructionFormDto.InstructorPosition" class="form-control instructorpositionCopy"/>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-sm-4 col-xl-2">
+            <label class="title">Təlimatın növü</label>
+            <select disabled id="InstructionTypeCopy" name="InstructionType" class="select">
+                <option value="@Model.InstructionFormDto.InstructionTypeId">@Model.InstructionFormDto.InstructionTypeName</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-sm-4 col-xl-5">
+            <label class="title">Təlimatın qısa məzmunu</label>
+            <textarea readonly id="ShortContentCopy" name="ShortContentCopy" class="form-control" rows="2">@Model.InstructionFormDto.InstructionShortContent</textarea>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-sm-4 col-xl-3">
+            <label class="title">Təlimatlandırılan şəxslərin məlumatları</label>
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover instructor_Notes_Copy" id="InstructorNotesCopy">
+                <thead class="table table-bordered" style="background-color: gainsboro">
+                <tr>
+                    <th style="font-size: 12px; text-align: left">№</th>
+                    <th style="font-size: 12px; text-align: left">Təlimatlandırılan şəxsin adı, soyadı, ata atı</th>
+                    <th style="font-size: 12px; text-align: center">Vəzifəsi</th>
+                    <th style="font-size: 12px; text-align: left">Təlimatçının rəyi</th>
+                    <th style="font-size: 12px; text-align: left;">Statusu</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                @{
+                    var counter = 0;
+                }
+                @foreach (var item in Model.EmployeeFormDtos)
+                {
+                    <tr>
+                        <td>@(++counter)</td>
+                        <td>@item.EmployeeFullName</td>
+                        <td>@item.EmployeePosition</td>
+                        <td>@item.InstructorComment</td>
+                        @if (item.IsActive == true)
+                        {
+                            <td><button data-employeeUserId="@item.EmployeeUserId" title="Təsdiqə göndər" type="button" class="btn openPopUp" id="openPictureModal"><i class="fas fa-arrow-right mr-1" style="font-size: 20px; color: red"></i></button></td>
+                        }
+                        else
+                        {
+                            <td><button data-employeeUserId="@item.EmployeeUserId" title="Təsdiqlənib" type="button" class="btn ShowPicturePopUp" id="openPictureModal"><i class="fas fa-eye mr-1" style="font-size: 20px; color: green" aria-hidden="true"></i></button></td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+            @await Html.PartialAsync("_takeApictureModal")
+            @await Html.PartialAsync("_showPhotoModal")
+        </div>
+    </div>
+</form>
+
+<script src="~/customScripts/retrieveFormResult/retrieveFormResult.js?v=66"></script>
+<script src="~/customScripts/webcam/webcam.js"></script>

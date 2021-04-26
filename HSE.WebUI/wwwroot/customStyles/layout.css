@@ -1,0 +1,320 @@
+﻿body {
+    font-size: 12px;
+}
+
+input[type="file"] {
+    font-size: 13px;
+    float: none;
+    background: #fff;
+    width: 100%;
+    height: 34px !important;
+    padding: 6px 12px;
+    color: #2b2f33;
+    border: #ced4da solid 1px !important;
+    box-shadow: inset 1px 1px 3px #f6f6f6;
+    line-height: unset !important;
+}
+
+.selectize-control.multi .selectize-input > div {
+    cursor: pointer;
+    margin: 0 3px 3px 0;
+    padding: 2px 6px;
+    border: 0 solid #d0d0d0;
+    display: block;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+a.logout {
+    background-color: #f8f9fa;
+    color: #7386d5;
+}
+
+.propove:hover {
+    cursor: pointer;
+}
+
+.colorBlue {
+    color: blue;
+}
+
+.page-loading {
+    background-color: #ffffff;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 2147483647;
+}
+
+    .page-loading > img {
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+        -o-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    .page-loading > span {
+        color: #b3b3b3;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 17px;
+        letter-spacing: 0;
+        margin-top: 30px;
+        text-decoration: underline;
+    }
+
+.circle {
+    border-radius: 50%;
+    background-color: #0093d9;
+    width: 25px;
+    height: 25px;
+    line-height: 24px;
+    text-align: center;
+    font-size: 14px;
+    color: white !important;
+    margin: auto;
+}
+
+table tr {
+    cursor: pointer !important;
+}
+
+#page-sidebar #sidebar-menu li a.sfActive {
+    /*font-weight: bold;*/
+    border-color: rgba(255, 255, 255, 0.26);
+}
+
+    #page-sidebar #sidebar-menu li a.sfActive span {
+        /*font-weight: bold;*/
+        text-decoration: underline;
+        text-decoration-color: white;
+    }
+
+.vld-message {
+    color: red;
+}
+
+.selected-row {
+    background-color: blue !important;
+    color: white !important;
+}
+
+img {
+    image-orientation: from-image !important;
+}
+
+/*#FileUpload .file .file__name p {
+    margin-top:;
+}*/
+
+tr.selected .fa-eye {
+    color: white !important;
+    font-size: x-large !important;
+}
+
+.grecaptcha-badge {
+    visibility: hidden;
+}
+
+.modal {
+    padding-right: 0px !important;
+}
+
+#tabs-message table tbody td {
+    vertical-align: middle !important;
+}
+
+.modal {
+    overflow-y: auto !important;
+}
+
+.instruction-deadline-date-picker {
+    width: 115px !important;
+}
+
+.red, .red:focus {
+    background-color: red !important;
+    color: white !important;
+}
+
+    .red:focus option {
+        background-color: white !important;
+        color: black !important;
+    }
+
+.white {
+    background-color: white;
+    color: black;
+}
+
+label.red {
+    padding: 5px;
+    font-weight: bold;
+}
+
+.badge-new {
+    background-color: red;
+    margin-left: -2%;
+    z-index: 1;
+    margin-top: -4%;
+    color: white;
+    position: absolute;
+}
+
+.delegation-icon {
+    /*height: 7% !important;*/
+    width: 18% !important;
+    margin-top: -1% !important;
+}
+
+.popover {
+    max-width: none !important;
+}
+
+.seeDocument {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .seeDocument {
+        display: table-cell !important;
+    }
+    /* show it on mobile screens */
+}
+
+rightSideOfNavbar {
+    width: auto;
+    height: auto;
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between !important;
+    /*position:absolute;*/
+    /*right:0;*/
+}
+
+.hidden {
+    display: none !important;
+}
+
+.file-container td {
+    word-break: break-all !important;
+}
+
+.seperator {
+    height: 20px;
+    width: 100%;
+    color: red;
+    background-color: aliceblue;
+}
+
+/*  ===================  */
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    /*visibility: hidden;*/
+    /*opacity: 0;*/
+    /*transition: visibility 0s, opacity 0.5s ease-in-out;*/
+}
+
+    .dropdown-content.show {
+        display: block !important;
+        /*visibility: visible;*/
+        /*opacity: 1;*/
+    }
+
+/*   top panel dropdown width matters   */
+@media only screen and (max-width: 376px) {
+    .notificationsPanel {
+        min-width: 55vw !important;
+    }
+
+    .authorityPanel {
+        min-width: 15vw !important;
+    }
+}
+
+@media only screen and (min-width: 376px) and (max-width: 575px) {
+    .notificationsPanel {
+        min-width: 60vw !important;
+    }
+
+    .authorityPanel {
+        min-width: 30vw !important;
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 992px) {
+    .notificationsPanel {
+        min-width: 40vw !important;
+    }
+}
+/*   ==================   */
+.badge {
+    font-size: 100% !important;
+}
+
+input, select, textarea {
+    font-family: Arial, 'Font Awesome 5 Free' !important;
+    font-size: 12px !important;
+}
+
+    table input.form-control, input.form-control-sm {
+        font-size: 10px !important;
+    }
+
+.btn:not(.theme-switcher):not(.effect) {
+    font-size: 13px !important;
+}
+
+.select2-container {
+    width: -webkit-fill-available !important;
+}
+
+.sorting_1 {
+    background-color: #afaf63 !important;
+    background-color: rgba(175, 175, 99, 0.69) !important;
+}
+
+a.cke_path_item, span.cke_path_empty {
+    display: none !important;
+}
+
+.header.badge {
+    width: 100%;
+    text-align: center;
+    font-size: 14px !important;
+}
+
+.select2-container--default.select2-container--disabled .select2-selection--single {
+    opacity: .65 !important;
+    background: #fafafa !important;
+}
+
+.related-documents td {
+    color: black;
+}
+
+
+@media (max-width: 767px) {
+    #PreviewAttachModal .modal-dialog {
+        max-width: 90% !important;
+        width: 90% !important;
+    }
+}

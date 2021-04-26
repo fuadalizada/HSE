@@ -1,0 +1,180 @@
+﻿@using Microsoft.Extensions.Options;
+@using HSE.DAL.Settings
+@inject IOptions<RecaptchaSettings> CaptchaSetting;
+@{
+    Layout = null;
+}
+
+@model HSE.DAL.ViewModels.LoginViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/shared/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <style>
+        body {
+            background: url('/images/backround.jpg') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            /*background-color: navy !important;*/
+            /*background-color: black !important;*/
+        }
+
+        .card {
+            width: 300px;
+            opacity: .6 !important;
+        }
+
+        .grecaptcha-badge {
+            visibility: hidden !important;
+        }
+
+        .page-loading {
+            background-color: #ffffff;
+            content: "";
+            height: 100%;
+            left: 0;
+            position: fixed;
+            text-align: center;
+            top: 0;
+            width: 100%;
+            z-index: 2147483647;
+        }
+
+            .page-loading > img {
+                left: 50%;
+                position: absolute;
+                top: 50%;
+                -webkit-transform: translateX(-50%) translateY(-50%);
+                -moz-transform: translateX(-50%) translateY(-50%);
+                -ms-transform: translateX(-50%) translateY(-50%);
+                -o-transform: translateX(-50%) translateY(-50%);
+                transform: translateX(-50%) translateY(-50%);
+            }
+
+            .page-loading > span {
+                color: #b3b3b3;
+                cursor: pointer;
+                display: inline-block;
+                font-size: 17px;
+                letter-spacing: 0;
+                margin-top: 30px;
+                text-decoration: underline;
+            }
+    </style>
+
+    <script src="~/shared/jquery/jquery.js"></script>
+    <script src="~/shared/jquery/jquery-validate/jquery.validate.js"></script>
+    <script src="~/shared/jquery/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <!-- Font Awesome JS -->
+    <script defer src="~/shared/font-awesome/js/solid.js"></script>
+    <script defer src="~/shared/font-awesome/js/fontawesome.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=@CaptchaSetting.Value.SiteKey"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.page-loading').fadeOut('slow');
+            sessionStorage.setItem("activeId", 0);
+            sessionStorage.setItem('returnInbox', '0');
+
+            $('#backgroundImage').on('change', function () {
+                $('body').attr("style='background:url('" + $(this).val() + "') no-repeat center center fixed !important;'");
+                document.body.style.backgroundImage = 'url("' + $(this).val() + '")';
+            });
+
+            $('#login').on('click', function () {
+                if (($('#email').attr('aria-invalid') === 'false' || $('#email').val())
+                    && ($('#password').attr('aria-invalid') === 'false' || $('#password').val())) {
+                    $('.page-loading').fadeIn('slow');
+                    window.grecaptcha.ready(function () {
+                        window.grecaptcha.execute($('#siteKey').val(), { action: 'login' }).then(function (token) {
+                            $('#Token').val(token);
+                            localStorage.setItem("FromWhere", "fromLogin");
+                            $('form').submit();
+                        });
+                    });
+                }
+            });
+
+            $('body').keypress(function (e) {
+                var key = e.which;
+                if (key === 13)  //the enter key code
+                {
+                    $('#login').click();
+                }
+            });
+        });
+    </script>
+    <link href="~/customStyles/login/login.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="page-loading">
+        <img src="~/images/loader.gif" alt="" />
+    </div>
+    <input hidden id="siteKey" value="@CaptchaSetting.Value.SiteKey" />
+    <div style="text-align:right;opacity:0.4 !important;" class="">
+        <select id="backgroundImage" style="opacity:0.4!important;" class="form-control">
+            <option style="opacity:0.4!important;" value="/images/paperless-office.jpg">Backround 1</option>
+            <option style="opacity:0.4!important;" value="/images/backround.jpg">Backround 2</option>
+        </select>
+    </div>
+    <div class="container mt-5 pt-5">
+        <div class="card mx-auto border-0" style="width:350px">
+            <div class="card-body pb-4">
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab">
+                        <form asp-controller="Account" asp-action="Login" id="LoginForm">
+                            <input hidden asp-for="ReturnUrl" value="@ViewBag.ReturnUrl" />
+                            <input hidden asp-for="Token" value="" id="Token" />
+                            <div class="login100-pic text-center" data-tilt>
+                                <img src="~/images/logo.png" asp-append-version="true" />
+                                <h3 style="margin-left:51%;margin-top:-9%; color:#2c5b8f">SƏTƏM</h3>
+                            </div>
+                            <div class="wrap-input100 validate-input">
+                                <input type="text" asp-for="Username" class="input100" id="email" placeholder="İstifadəçi adı" autofocus>
+                                <span asp-validation-for="Username" style="margin-left:22px;" class="text-danger"></span>
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input">
+                                <input type="password" asp-for="Password" class="input100" id="password" placeholder="Şifrə">
+                                <span asp-validation-for="Password" style="margin-left:22px;" class="text-danger"></span>
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </span>
+                                <span class="text-danger">@ViewBag.ErrorMessage</span>
+                            </div>
+
+                            <div class="container-login100-form-btn" data-tilt>
+                                <button type="button" id="login" class="login100-form-btn">DAXİL OL</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="col text-right" style="color:white;font-size:large;position:absolute;bottom:20px;font-weight:bold;">
+            © 2021 MHM
+        </div>
+    </footer>
+    <script src="~/shared/twitter-bootstrap/js/bootstrap.js"></script>
+    <script src="~/customStyles/login/tilt/tilt.jquery.min.js"></script>
+    <script>
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+</body>
+</html>
+

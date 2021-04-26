@@ -1,0 +1,38 @@
+﻿.select {
+    width: 100% !important;
+}
+
+.btn-add {
+    color: #fff;
+    border-color: #00b19b;
+    background: #00bca4;
+}
+
+    .btn-add:hover {
+        color: #ffffff;
+        background-color: #00ceb4;
+    }
+
+
+.btn-confirmation {
+    color: #fff;
+    border-color: #00b19b;
+    background: #00bca4;
+}
+
+    .btn-confirmation:hover {
+        color: #ffffff;
+        background-color: #00ceb4;
+    }
+
+.selectErrorClass {
+    border: 2px solid red;
+}
+
+.shortContentErrorClass {
+    border: 1px solid red;
+}
+
+.tdNoteErrorClass {
+    border: 3px solid red !important;
+}

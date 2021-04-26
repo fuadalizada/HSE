@@ -1,0 +1,76 @@
+﻿.select {
+    width: 100% !important;
+    height: 24px !important;
+}
+
+.btn-add {
+    color: #fff;
+    border-color: #00b19b;
+    background: #00bca4;
+}
+
+.btn-add:hover {
+    color: #ffffff;
+    background-color: #00ceb4;
+}
+
+
+.btn-confirmation {
+    color: #fff;
+    border-color: #00b19b;
+    background: #00bca4;
+}
+
+.btn-confirmation:hover {
+    color: #ffffff;
+    background-color: #00ceb4;
+}
+
+body {
+    font-family: Helvetica, sans-serif;
+}
+
+h2, h3 {
+    margin-top: 0;
+}
+
+form {
+    margin-top: 15px;
+}
+
+form > input {
+    margin-right: 15px;
+}
+
+
+#buttonhide {
+    background: transparent;
+    border: none !important;
+    font-size: 0;
+}
+
+.openPopUp {
+    margin-top: -9px;
+    margin-left: 39px;
+}
+
+.ShowPicturePopUp {
+    margin-top: -9px;
+    margin-left: 39px;
+}
+
+.tdNoteErrorClass {
+    border: 3px solid red !important;
+}
+
+.selectErrorClass {
+    border: 2px solid red !important;
+}
+
+.shortContentErrorClass {
+    border: 2px solid red !important;
+}
+
+.ErrorClass {
+    color: red !important;
+}
