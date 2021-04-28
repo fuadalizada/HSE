@@ -2,11 +2,14 @@
 var rowEmployeeUserId;
 var instructionFormId;
 var fincode;
+var counter = 0;
+
 $(document).ready(function () {
     OpenPopUpForTakingPicture();
     OpenPopUpForShowingPicture();
     $(".takePicture").on("click",
         function () {
+            counter++;
             take_snapshot();
         });
     $(".close_modal").click(function () {
@@ -19,11 +22,14 @@ function OpenPopUpForTakingPicture() {
     $("body").on("click", ".openPopUp",
         function () {
             employeeUserId = $(this).attr("data-employeeUserId");
+            var employeeFullName = $(this).attr("data-employeeFullName");
+            $(".nameSurnameModal").val(employeeFullName);
             $("#takeApictureModal").modal("show");
             var finCode = $(".fincode").val();
             if (finCode !== null) {
                 document.getElementById("fin_code").value = "";
                 document.getElementById("results").innerHTML = `<img src="${null}"/>`;
+                $(".fincodeValidationMessage").html("");
             }
             attachCamera();
             ConfirmModal();
@@ -35,7 +41,8 @@ function OpenPopUpForShowingPicture() {
         function () {
             var empUserId = $(this).attr("data-employeeUserId");
             instructionFormId = $(".instructionFormId").val();
-
+            var employeeFullName = $(this).attr("data-employeeFullName");
+            $(".nameSurnameShowModal").val(employeeFullName);
             document.getElementById("photoResult").innerHTML =
                 `<img src="/Camera/IsThePhotoExist?employeeUserId=${empUserId}&instructionFormId=${instructionFormId}"/>`;
 
@@ -56,14 +63,20 @@ function ConfirmModal() {
                     data: { fincode: fincode, employeeUserId: employeeUserId },
                     success: function (data) {
                         if (data === true) {
-
-                            if (instructionFormId !== null) {
-                                UpdateEmployeeForm(instructionFormId, employeeUserId);
-                                $("#takeApictureModal").modal("hide");
-                                $(`[data-employeeuserid="${employeeUserId}"]`).html('<i class="fas fa-eye mr-1" title="Təsdiqlənib" style="font-size:20px;color:green" aria-hidden="true"></i>').removeClass("openPopUp").addClass("ShowPicturePopUp");
-                                Webcam.reset();
+                            console.log(counter);
+                            if (counter !== 0) {
+                                if (instructionFormId !== null) {
+                                    UpdateEmployeeForm(instructionFormId, employeeUserId);
+                                    $("#takeApictureModal").modal("hide");
+                                    $(`[data-employeeuserid="${employeeUserId}"]`).html('<i class="fas fa-eye mr-1" title="Təsdiqlənib" style="font-size:20px;color:green" aria-hidden="true"></i>').removeClass("openPopUp").addClass("ShowPicturePopUp");
+                                    Webcam.reset();
+                                    counter = 0;
+                                } else {
+                                    $(".fincodeValidationMessage").html("Formun id nömrəsi yoxdur");
+                                }
                             } else {
-                                $(".fincodeValidationMessage").html("Formun id nömrəsi yoxdur");
+                                //$(".myCamera").html("Şəkil çəkin.");
+                                alert("Şəkil çəkin.");
                             }
                         } else {
                             $(".fincodeValidationMessage").html("Fin kod yanlishdir.");

@@ -285,6 +285,7 @@ D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\customScripts\form\createForm.js
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\customScripts\form\workerInformationModal.js
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\customScripts\history\historyAllForms.js
+D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\customScripts\history\retrieveHistoryResult.js
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\customScripts\incoming\incomingIncome.js
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\customScripts\incoming\retrieveIncomingResult.js
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\customScripts\layout.js

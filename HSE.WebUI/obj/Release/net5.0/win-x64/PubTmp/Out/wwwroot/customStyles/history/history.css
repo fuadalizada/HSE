@@ -1,5 +1,6 @@
 ﻿.select {
     width: 100% !important;
+    height: 24px !important;
 }
 
 .btn-add {
@@ -50,5 +51,10 @@ form > input {
 
 .openPopUp {
     margin-top: -9px;
-    margin-left: 39px;
+    /*margin-left: 39px;*/
+}
+
+.ShowPicturePopUp {
+    margin-top: -9px;
+    /*margin-left: 39px;*/
 }

@@ -135,15 +135,15 @@ function CreateWorkerInformationSearchPanel() {
     });
 
     $("#selectWorkerInformation").on("click", function () {
-        
+
+        document.getElementById("confirm").disabled = false;
         var table = document.getElementById("InstructorNotes");
         var rowLength = table.rows.length;
         
         index = 0;
-        document.getElementById("confirm").disabled = false;
         $.each(selected, function (i, value) {
             index++;
-            var isExist=false;
+            var isExist = false;
             for (var j = 0; j < rowLength; j++) {
                 var row = table.rows[j];
                 if (value["userId"] == $(row).attr("data-userid")) {

@@ -7,12 +7,14 @@ using HSE.Business.Services.Abstract;
 using HSE.DAL.ViewModels;
 using HSE.WebUI.Models;
 using HSE.WebUI.ServiceFacade;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using DataTableParamsModel = HSE.DAL.ViewModels.DataTableParamsModel;
 
 namespace HSE.WebUI.Controllers
 {
+    [Authorize]
     public class FormController : Controller
     {
         private readonly IInstructionTypeService _instructionTypeService;

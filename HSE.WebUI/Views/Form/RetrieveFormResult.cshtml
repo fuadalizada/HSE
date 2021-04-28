@@ -31,9 +31,9 @@
     <div class="row mt-1">
         <div class="col-sm-4 col-xl-3">
             <label class="title">Hazırlanma tarixi</label>
-            <div class="input-group date" id="createDateCopy" data-target-input="nearest">
-                <input readonly type="text" class="form-control datetimepicker-input" name="createDateCopy" data-target="#createDateCopy" value="@Model.InstructionFormDto.InstructionDate.ToString("dd/MM/yyyy")"/>
-                <div class="input-group-append" data-target="#createDateCopy" data-toggle="datetimepicker">
+            <div class="input-group" id="createDateCopy">
+                <input readonly type="text" class="form-control" name="createDateCopy" data-target="#createDateCopy" value="@Model.InstructionFormDto.InstructionDate.ToString("dd/MM/yyyy")"/>
+                <div class="input-group-append">
                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                     <th style="font-size: 12px; text-align: left">Təlimatlandırılan şəxsin adı, soyadı, ata atı</th>
                     <th style="font-size: 12px; text-align: center">Vəzifəsi</th>
                     <th style="font-size: 12px; text-align: left">Təlimatçının rəyi</th>
-                    <th style="font-size: 12px; text-align: left;">Statusu</th>
+                    <th style="font-size: 12px; text-align: center; width: 100px;">Statusu</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -93,11 +93,11 @@
                         <td>@item.InstructorComment</td>
                         @if (item.IsActive == true)
                         {
-                            <td><button data-employeeUserId="@item.EmployeeUserId" title="Təsdiqə göndər" type="button" class="btn openPopUp" id="openPictureModal"><i class="fas fa-arrow-right mr-1" style="font-size: 20px; color: red"></i></button></td>
+                            <td style="width: 100px; text-align: center"><button data-employeeFullName="@item.EmployeeFullName" data-employeeUserId="@item.EmployeeUserId" title="Təsdiqə göndər" type="button" class="btn openPopUp" id="openPictureModal"><i class="fas fa-arrow-right" style="font-size: 20px; color: red"></i></button></td>
                         }
                         else
                         {
-                            <td><button data-employeeUserId="@item.EmployeeUserId" title="Təsdiqlənib" type="button" class="btn ShowPicturePopUp" id="openPictureModal"><i class="fas fa-eye mr-1" style="font-size: 20px; color: green" aria-hidden="true"></i></button></td>
+                            <td style="width: 100px; text-align: center;"><button data-employeeFullName="@item.EmployeeFullName" data-employeeUserId="@item.EmployeeUserId" title="Təsdiqlənib" type="button" class="btn ShowPicturePopUp" id="openPictureModal"><i class="fas fa-eye" style="font-size: 20px; color: green" aria-hidden="true"></i></button></td>
                         }
                     </tr>
                 }

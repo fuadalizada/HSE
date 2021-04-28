@@ -3,7 +3,7 @@ var inputTooShort = "Axtarış üçün minimum 3 hərf daxil edin.";
 var searching = "Axtarılır...";
 var noResults = "Uyğun nəticə tapılmadı.";
 var employeInfoArray = [];
-var employeInfo = { EmployeUserId: "",EmployeFullName: "",EmployeePosition: "", Note: "" };
+var employeInfo = { EmployeUserId: "", EmployeFullName: "", EmployeePosition: "", Note: "" };
 var formData = new FormData();
 var isNoteTrue;
 var tdNote;
@@ -71,16 +71,16 @@ function CreateForm() {
                 employeInfoArray.push(employeInfo);
             });
 
-            
-            
+
+
             var newUrl = "RetrieveFormResult?instructionFormId=";
-            
+
             if (!instructionType || !instructionTypeName) {
                 $("#InstructionType").parent().find(".select2-container").addClass("selectErrorClass");
             }
             else if (!instructionShortContent) {
                 $("#ShortContent").addClass("shortContentErrorClass");
-            } 
+            }
             else if (!isNoteTrue) {
                 tdNote.addClass("tdNoteErrorClass");
             }
@@ -108,12 +108,12 @@ function CreateForm() {
 
 function ChangeBorderColor() {
     $("#ShortContent").on("change",
-        function() {
+        function () {
             $("#ShortContent").removeClass("shortContentErrorClass");
         });
 
     $("#InstructionType").on("change",
-        function() {
+        function () {
             $("#InstructionType").parent().find(".select2-container").removeClass("selectErrorClass");
         });
 }

@@ -107,8 +107,8 @@ tableIncomings.columns().every(function () {
 
         const data = tableIncomings.row(this).data();
         const newUrl = "/Incoming/RetrieveIncomingResult?instructionFormId=";
-        window.open(newUrl + data.formId);
-        window.target("_blank");
+        window.open(newUrl + data.formId,"_self");
+        //window.target("_blank");
     });
 }
 

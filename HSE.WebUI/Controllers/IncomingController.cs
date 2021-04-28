@@ -6,11 +6,13 @@ using HSE.Business.Services.Abstract;
 using HSE.DAL.ViewModels;
 using HSE.WebUI.Models;
 using HSE.WebUI.ServiceFacade;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using DataTableParamsModel = HSE.DAL.ViewModels.DataTableParamsModel;
 
 namespace HSE.WebUI.Controllers
 {
+    [Authorize]
     public class IncomingController : Controller
     {
         private readonly IInstructionFormService _instructionFormService;

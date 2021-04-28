@@ -8,9 +8,11 @@ using HSE.WebUI.ServiceFacade;
 using DataTableParamsModel = HSE.DAL.ViewModels.DataTableParamsModel;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HSE.WebUI.Controllers
 {
+    [Authorize]
     public class HistoryController : Controller
     {
         private readonly IInstructionFormService _instructionFormService;
