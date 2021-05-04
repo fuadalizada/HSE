@@ -3,6 +3,8 @@ var rowEmployeeUserId;
 var instructionFormId;
 var fincode;
 var counter = 0;
+var len = 0;
+var maxChar = 7;
 
 $(document).ready(function () {
     OpenPopUpForTakingPicture();
@@ -16,6 +18,7 @@ $(document).ready(function () {
         $("#takeApictureModal").modal("hide");
         Webcam.reset();
     });
+    ShowLeftCharactersForFincode();
 });
 
 function OpenPopUpForTakingPicture() {
@@ -43,8 +46,20 @@ function OpenPopUpForShowingPicture() {
             instructionFormId = $(".instructionFormId").val();
             var employeeFullName = $(this).attr("data-employeeFullName");
             $(".nameSurnameShowModal").val(employeeFullName);
+            $.ajax({
+                type: "Post",
+                url: "/Form/GetPhotoDate",
+                data: { instructionFormId: instructionFormId, employeeUserId: empUserId },
+                success:function(data) {
+                    $(".photoDateShowModal").val(data);
+                }
+            });
+            
             document.getElementById("photoResult").innerHTML =
                 `<img src="/Camera/IsThePhotoExist?employeeUserId=${empUserId}&instructionFormId=${instructionFormId}"/>`;
+
+            document.getElementById("qrcode").innerHTML =
+                `<img style="margin-top:-15px;" src="/File/GenerateQrCode?employeeUserId=${empUserId}&instructionFormId=${instructionFormId}"/>`;
 
             $("#showPhotoModal").modal("show");
         });
@@ -57,36 +72,57 @@ function ConfirmModal() {
             fincode = $(".fincode").val();
             instructionFormId = $(".instructionFormId").val();
             if (!isEmpty(fincode)) {
-                $.ajax({
-                    type: "Post",
-                    url: "/Form/CheckIfFincodeAndEmpUserIdIsTrue",
-                    data: { fincode: fincode, employeeUserId: employeeUserId },
-                    success: function (data) {
-                        if (data === true) {
-                            console.log(counter);
-                            if (counter !== 0) {
-                                if (instructionFormId !== null) {
-                                    UpdateEmployeeForm(instructionFormId, employeeUserId);
-                                    $("#takeApictureModal").modal("hide");
-                                    $(`[data-employeeuserid="${employeeUserId}"]`).html('<i class="fas fa-eye mr-1" title="Təsdiqlənib" style="font-size:20px;color:green" aria-hidden="true"></i>').removeClass("openPopUp").addClass("ShowPicturePopUp");
-                                    Webcam.reset();
-                                    counter = 0;
+                if (LengthCheck(fincode, 7)) {
+                    $.ajax({
+                        type: "Post",
+                        url: "/Form/CheckIfFincodeAndEmpUserIdIsTrue",
+                        data: { fincode: fincode, employeeUserId: employeeUserId },
+                        success: function (data) {
+                            if (data === true) {
+                                if (counter !== 0) {
+                                    if (instructionFormId !== null) {
+                                        UpdateEmployeeForm(instructionFormId, employeeUserId);
+                                        $("#takeApictureModal").modal("hide");
+                                        $(`[data-employeeuserid="${employeeUserId}"]`).html('<i class="fas fa-eye mr-1" title="Təsdiqlənib" style="font-size:20px;color:green" aria-hidden="true"></i>').removeClass("openPopUp").addClass("ShowPicturePopUp");
+                                        Webcam.reset();
+                                        counter = 0;
+                                    } else {
+                                        $(".fincodeValidationMessage").html("Formun id nömrəsi yoxdur");
+                                    }
                                 } else {
-                                    $(".fincodeValidationMessage").html("Formun id nömrəsi yoxdur");
+                                    alert("Şəkil çəkin.");
                                 }
                             } else {
-                                //$(".myCamera").html("Şəkil çəkin.");
-                                alert("Şəkil çəkin.");
+                                $(".fincodeValidationMessage").html("Fin kod yanlishdir.");
                             }
-                        } else {
-                            $(".fincodeValidationMessage").html("Fin kod yanlishdir.");
                         }
-                    }
-                });
+                    });
+                } else {
+                    $(".fincodeValidationMessage").html("Fin kodu düzgün daxil edin.");
+                }
             } else {
                 $(".fincodeValidationMessage").html("Fin kod daxil edilmeyib");
             }
         });
+}
+
+function ShowLeftCharactersForFincode() {
+    $('#fin_code').keyup(function () {
+        len = this.value.length;
+        if (len > maxChar) {
+            return false;
+        } else if (len > 0) {
+            $(".fincodeValidationMessage").html(`Daxil ediləcək simvol sayı: ${maxChar - len}`);
+        } else {                                                                                          
+            $(".fincodeValidationMessage").html(`Daxil ediləcək simvol sayı: ${maxChar}`);
+        }
+    });
+}
+
+// verifying length
+function LengthCheck(value, length) {
+    if (String(value).length !== length) { return false; }
+    return true;
 }
 
 function UpdateEmployeeForm(instructionFormId, employeeUserId) {
@@ -113,7 +149,6 @@ function take_snapshot() {
         Webcam.upload(dataUri,
             `/Camera/Capture?employeeUserId=${employeeUserId}&instructionFormId=${instructionFormId}`,
             function () {
-                //bootbox.alert("Şəkil çəkildi.");
             });
     });
 }

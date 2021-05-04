@@ -1,4 +1,6 @@
-﻿namespace HSE.Business.DTOs
+﻿using System;
+
+namespace HSE.Business.DTOs
 {
     public class EmployeeFormDto :BaseDto
     {
@@ -8,5 +10,6 @@
         public string EmployeeFullName { get; set; }
         public string EmployeePosition { get; set; }
         public bool? IsActive { get; set; }
+        public DateTime? PhotoTakingDate { get; set; }
     }
 }

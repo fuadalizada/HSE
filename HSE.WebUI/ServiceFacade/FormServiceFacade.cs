@@ -70,5 +70,16 @@ namespace HSE.WebUI.ServiceFacade
             var result = await _employeeFormService.Update(dto);
             return result;
         }
+
+        public async Task<string> GetPhotoDate(int instructionFormId, int employeeUserId)
+        {
+            var result = await _employeeFormService.GetPhotoDateByInstructionFormId(instructionFormId, employeeUserId);
+            if (result != null)
+            {
+                return result.Value.ToString("dd/MM/yyyy HH:mm");
+            }
+
+            return result.ToString();
+        }
     }
 }

@@ -36,6 +36,7 @@ namespace HSE.Business.DTOs
         public char? PersonIsCuratorFlag { get; set; }
         public int? OrgStrDeductedMgrPersonId { get; set; }
         public int? L3ParentOrganizationId { get; set; }
+        public byte? PhotoBinary { get; set; }
         public DateTime CreateDate { get; set; }
     }
 }

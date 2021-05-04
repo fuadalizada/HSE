@@ -36,6 +36,7 @@ namespace HSE.Domain.Entities
         public char? PosOrgMgrPositionFlag { get; set; }
         public int? L3ParentOrganizationId { get; set; }
         public string WorkPhone { get; set; }
+        public byte[] PhotoBinary { get; set; }
         public DateTime? CreateDate { get; set; }
     }
 }

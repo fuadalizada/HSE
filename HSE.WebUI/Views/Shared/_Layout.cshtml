@@ -323,7 +323,7 @@
                     <div id="bildirish" class="account-wrap header-account">
                         <div class="account-item clearfix js-item-menu">
                             <div class="image">
-                                <img src="@Url.Action("GetPhoto","User")" alt="" />
+                                <img src="@Url.Action("GetUserPhoto","File")" alt="" />
                             </div>
                             <div class="content">
                                 <a class="js-acc-btn" href="#"><label class="user-fullname">@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value  @User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value</label></a>
@@ -332,7 +332,7 @@
                                 <div class="info clearfix">
                                     <div class="image">
                                         <a href="#">
-                                            <img src="@Url.Action("GetPhoto","User")" alt="" />
+                                            <img src="@Url.Action("GetUserPhoto","File")" alt="" />
                                         </a>
                                     </div>
                                     <div class="content">

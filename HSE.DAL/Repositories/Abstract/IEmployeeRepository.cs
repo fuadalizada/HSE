@@ -6,5 +6,6 @@ namespace HSE.DAL.Repositories.Abstract
     public interface IEmployeeRepository:IBaseRepository<Employee>
     {
         Task<int> GetOrganizationIdByFincode(string fincode);
+        Task<byte[]> GetUserPhotoByFincode(string fincode);
     }
 }

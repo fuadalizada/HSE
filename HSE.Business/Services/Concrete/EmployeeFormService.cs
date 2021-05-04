@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using HSE.Business.DTOs;
@@ -38,6 +39,12 @@ namespace HSE.Business.Services.Concrete
             var request = _mapper.Map<EmployeeForm>(dto);
             var response = await _repository.Update(request);
             var result = _mapper.Map<EmployeeFormDto>(response);
+            return result;
+        }
+
+        public async Task<DateTime?> GetPhotoDateByInstructionFormId(int instructionFormId, int employeeUserId)
+        {
+            var result = await _repository.GetPhotoDateByInstructionFormId(instructionFormId, employeeUserId);
             return result;
         }
     }

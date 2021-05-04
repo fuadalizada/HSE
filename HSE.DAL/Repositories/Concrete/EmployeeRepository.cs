@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using HSE.DAL.DbContext;
 using HSE.DAL.Repositories.Abstract;
@@ -19,7 +20,14 @@ namespace HSE.DAL.Repositories.Concrete
         {
             var result = await _context.Set<Employee>().Where(x => x.NationalIdentifier == fincode)
                 .FirstOrDefaultAsync();
-            return (int)result.OrganizationId;
+            return Convert.ToInt32(result.OrganizationId);
+        }
+         
+        public async Task<byte[]> GetUserPhotoByFincode(string fincode)
+        {
+            var result = await _context.Set<Employee>().Where(x => x.NationalIdentifier == fincode)
+                .FirstOrDefaultAsync();
+            return result.PhotoBinary;
         }
     }
 }

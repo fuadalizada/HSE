@@ -14,8 +14,14 @@
                         <input disabled class="form-control nameSurnameShowModal" />
                     </div>
                 </div>
+                <div class="row mt-2">
+                    <div class="col-sm-4 col-xl-4">
+                        <label class="title">Şəklin çəkildiyi tarix</label>
+                        <input disabled class="form-control photoDateShowModal" />
+                    </div>
+                </div>
                 <div class="row mt-3">
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">Çəkilən şəkil</div>
                             <div class="panel-body">
@@ -27,8 +33,9 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close_modal" data-dismiss="modal">Bağla</button>
+            <div class="modal-footer" style="margin-top: -30px; justify-content: space-between;">
+                <div id="qrcode" style="margin-left: -9px !important;"></div>
+                <button type="button" class="btn btn-secondary close_modal" data-dismiss="modal" style="margin-top: 48px !important;">Bağla</button>
             </div>
         </div>
     </div>

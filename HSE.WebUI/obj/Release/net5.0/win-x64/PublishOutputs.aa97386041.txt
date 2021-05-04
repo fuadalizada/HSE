@@ -540,6 +540,7 @@ D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Microsof
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Newtonsoft.Json.dll
+D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\QRCoder.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\System.Composition.AttributedModel.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\System.Composition.Convention.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\System.Composition.Hosting.dll

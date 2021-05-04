@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -141,6 +142,23 @@ namespace HSE.WebUI.Controllers
             };
 
             var result = await _formServiceFacade.UpdateIsActiveOfEmployee(dto);
+        }
+
+        [HttpPost]
+        public async Task<string> GetPhotoDate(int instructionFormId, int employeeUserId)
+        {
+            string result = "";
+            if (instructionFormId != 0 && employeeUserId != 0)
+            {
+                result = await _formServiceFacade.GetPhotoDate(instructionFormId, employeeUserId);
+            }
+
+            if (result != null)
+            {
+                return result;
+            }
+
+            return string.Empty;
         }
     }
 }

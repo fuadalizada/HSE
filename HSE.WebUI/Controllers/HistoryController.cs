@@ -79,7 +79,6 @@ namespace HSE.WebUI.Controllers
         {
             var instructionFormData = await _formServiceFacade.GetInstructionFormInfo(instructionFormId);
             var employeeFormData = await _formServiceFacade.GetEmployeeFormInfo(instructionFormId);
-
             var retrieveFormResultViewModel = new RetrieveFormResultViewModel
             {
                 InstructionFormDto = instructionFormData,

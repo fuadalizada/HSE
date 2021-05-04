@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using HSE.DAL.DbContext;
 using HSE.DAL.Repositories.Abstract;
@@ -36,6 +37,7 @@ namespace HSE.DAL.Repositories.Concrete
             if (result != null)
             {
                 result.IsActive = false;
+                result.PhotoTakingDate = DateTime.Now;
                 _context.Update(result);
                 await _context.SaveChangesAsync();
             }
@@ -59,6 +61,14 @@ namespace HSE.DAL.Repositories.Concrete
                 }
             }
             return true;
+        }
+
+        public async Task<DateTime?> GetPhotoDateByInstructionFormId(int instructionFormId, int employeeUserId)
+        {
+            var result = await _context.Set<EmployeeForm>()
+                .Where(x => x.InstructionFormId == instructionFormId & x.EmployeeUserId == employeeUserId & x.IsActive == false)
+                .FirstOrDefaultAsync();
+            return result.PhotoTakingDate;
         }
     }
 }

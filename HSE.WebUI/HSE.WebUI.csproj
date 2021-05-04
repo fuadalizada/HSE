@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Files\2021\" />
+    <Folder Include="Files\qrcode2021\" />
     <Folder Include="Views\Camera\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
@@ -23,6 +24,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="QRCoder" Version="1.4.1" />
   </ItemGroup>
 
 </Project>

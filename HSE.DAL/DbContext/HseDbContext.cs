@@ -256,6 +256,11 @@ namespace HSE.DAL.DbContext
                 .Property(x => x.CreateDate)
                 .HasColumnName("CREATE_DATE")
                 .HasColumnType("datetime");
+            
+            modelBuilder.Entity<Employee>()
+                .Property(x => x.PhotoBinary)
+                .HasColumnName("PHOTO_BINARY")
+                .HasColumnType("varbinary(max)");
             #endregion
 
             #region LoginLog
@@ -464,6 +469,11 @@ namespace HSE.DAL.DbContext
                 .HasColumnType("bit")
                 .HasDefaultValueSql("1")
                 .IsRequired();
+            
+            modelBuilder.Entity<EmployeeForm>()
+                .Property(x => x.PhotoTakingDate)
+                .HasColumnName("PHOTO_TAKING_DATE")
+                .HasColumnType("datetime");
 
             #endregion
         }

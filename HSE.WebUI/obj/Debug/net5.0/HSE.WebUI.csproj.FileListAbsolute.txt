@@ -164,3 +164,4 @@ D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\Razor\Views\Incoming\Retrieve
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\Razor\Views\Shared\_showPhotoModal.cshtml.g.cs
 D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\System.DirectoryServices.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.0\System.DirectoryServices.dll
+D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\QRCoder.dll

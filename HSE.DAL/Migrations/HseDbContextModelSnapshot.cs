@@ -176,6 +176,10 @@ namespace HSE.DAL.Migrations
                         .HasColumnType("nvarchar(1)")
                         .HasColumnName("PERSON_IS_ENTERPRISE_MGR_FLAG");
 
+                    b.Property<byte[]>("PhotoBinary")
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("PHOTO_BINARY");
+
                     b.Property<string>("PosOrgMgrPositionFlag")
                         .HasColumnType("nvarchar(1)")
                         .HasColumnName("POS_ORG_MGR_POSITION_FLAG");
@@ -226,6 +230,10 @@ namespace HSE.DAL.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("IS_ACTIVE")
                         .HasDefaultValueSql("1");
+
+                    b.Property<DateTime?>("PhotoTakingDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("PHOTO_TAKING_DATE");
 
                     b.HasKey("Id");
 

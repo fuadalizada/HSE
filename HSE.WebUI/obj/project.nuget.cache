@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "9hBYsnv+5D823FjOwE9OYRa1+k7PR/X/qU9QSU0pkwcvKD8FQRFByxN3pEtk+iZ/4gkljijfYwr4KGlwdEqLJg==",
+  "dgSpecHash": "H5QiZ4+yKUZpQJpajYdNWSHmayRswp7QTwmNDo2m0xk1DN6y9y8GIxpmbS3WcwmvoqJdRy9v1rHRD094A3Q5cw==",
   "success": true,
   "projectFilePath": "D:\\VisualStudio2019\\HSE\\HSE.WebUI\\HSE.WebUI.csproj",
   "expectedPackageFiles": [
@@ -59,6 +59,7 @@
     "C:\\Users\\fu.alizada\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\fu.alizada\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "C:\\Users\\fu.alizada\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
+    "C:\\Users\\fu.alizada\\.nuget\\packages\\qrcoder\\1.4.1\\qrcoder.1.4.1.nupkg.sha512",
     "C:\\Users\\fu.alizada\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
     "C:\\Users\\fu.alizada\\.nuget\\packages\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
     "C:\\Users\\fu.alizada\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",

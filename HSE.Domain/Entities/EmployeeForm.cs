@@ -1,4 +1,6 @@
-﻿namespace HSE.Domain.Entities
+﻿using System;
+
+namespace HSE.Domain.Entities
 {
     public class EmployeeForm : BaseEntity
     {
@@ -8,6 +10,7 @@
         public string EmployeeFullName { get; set; }
         public string EmployeePosition { get; set; }
         public bool? IsActive { get; set; }
+        public DateTime? PhotoTakingDate { get; set; }
         public InstructionForm InstructionForm { get; set; }
     }
 }
