@@ -300,6 +300,7 @@
                 <div id="header-logo" class="logo-bg">
                     <a asp-controller="Home" asp-action="Index" class="logo-content-big" title="Ana səhifə"></a>
                     <a asp-controller="Home" asp-action="Index" class="logo-content-small" title="Ana səhifə"></a>
+                    <h6 style="margin-top: 52px !important;">SƏTƏM</h6>
                     <a id="close-sidebar" href="#" title="Close sidebar">
                         <i class="glyph-icon icon-angle-left"></i>
                     </a>
@@ -326,7 +327,7 @@
                                 <img src="@Url.Action("GetUserPhoto","File")" alt="" />
                             </div>
                             <div class="content">
-                                <a class="js-acc-btn" href="#"><label class="user-fullname">@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value  @User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value</label></a>
+                                <a class="js-acc-btn" href="#"><label class="user-fullname">@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value  @User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value</label></a>
                             </div>
                             <div class="account-dropdown js-dropdown">
                                 <div class="info clearfix">
@@ -359,7 +360,6 @@
                     </div>
                 </div><!-- #header-nav-right -->
             </div>
-
             <div id="page-sidebar">
                 <div class="scroll-sidebar">
                     <ul id="sidebar-menu" class="list-unstyled">
@@ -427,6 +427,24 @@
                             </div>
                         </li>
                         
+                        @*<li>
+                            <a href="#reportMenu" class="hasSubMenu" title="Hesabatlar">
+                                <i class="fa fa-chart-line"></i>
+                                <span>Hesabatlar</span>
+                            </a>
+
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a asp-controller="Report" asp-action="ReportIndex" title="Ümumi">
+                                            <i class="fas fa-sitemap"></i>
+                                            <span>Ümumi</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>*@
+
                         <li>
                             <a href="#help" class="hasSubMenu" title="Kömək">
                                 <i class="fa fa-question"></i>
@@ -445,6 +463,11 @@
                             </div>
                         </li>
                     </ul><!-- #sidebar-menu -->
+                    <footer>
+                        <div class="col text-left" style="color:black;font-size:initial;position:absolute;bottom:20px;font-weight:bold;">
+                            © 2021 ADY MHM
+                        </div>
+                    </footer>
                 </div>
             </div>
             <div id="page-content-wrapper">

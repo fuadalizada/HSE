@@ -21,15 +21,18 @@ namespace HSE.WebUI.Controllers
         private readonly IAuthenticateService _authenticateService;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
+        private readonly IUserRoleService _userRoleService;
         private readonly AccountServiceFacade _accountServiceFacade;
 
-        public AccountController(IRecaptchaService recaptchaService, IMapper mapper, HseDbContext context, IAuthenticateService authenticateService, IUserService userService, AccountServiceFacade accountServiceFacade)
+        public AccountController(IRecaptchaService recaptchaService, IMapper mapper, HseDbContext context, IAuthenticateService authenticateService, IUserRoleService userRoleService,
+            IUserService userService, AccountServiceFacade accountServiceFacade)
         {
             _context = context;
             _recaptchaService = recaptchaService;
             _authenticateService = authenticateService;
             _mapper = mapper;
             _userService = userService;
+            _userRoleService = userRoleService;
             _accountServiceFacade = accountServiceFacade;
         }
 
@@ -68,7 +71,9 @@ namespace HSE.WebUI.Controllers
             if (result !=null)
             {
                 var userId = await _userService.GetUserIdByFincode(result.Fincode);
+                var role = await _userRoleService.GetUserRoleByUserId(userId);
                 result.Id = userId;
+                result.RoleName = role;
                 var user = _mapper.Map<Authenticate>(result);
                 if (user == null)
                 {
@@ -92,7 +97,7 @@ namespace HSE.WebUI.Controllers
         private async Task<IActionResult> SignInUser(Authenticate user, string returnUrl)
         {
             await TakeInfoWithClaims(user);
-            if (String.IsNullOrEmpty(returnUrl))
+            if (string.IsNullOrEmpty(returnUrl))
             {
                 returnUrl = Url.Action("Index", "Home");
             }
@@ -116,7 +121,11 @@ namespace HSE.WebUI.Controllers
             identity.AddClaim(new Claim(ClaimTypes.Dns, string.Empty));
             identity.AddClaim(new Claim("IsManager", user.IsManager.ToString()));
             identity.AddClaim(new Claim("TourDate", user.TourDate + string.Empty));
-            identity.AddClaim(new Claim("LayoutOptions", user.LayoutOptions ?? String.Empty));
+            identity.AddClaim(new Claim("LayoutOptions", user.LayoutOptions ?? string.Empty));
+            foreach (string role in user.RoleName.Split(","))
+            {
+                identity.AddClaim(new Claim(ClaimTypes.Role, role));
+            }
 
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
@@ -127,7 +136,7 @@ namespace HSE.WebUI.Controllers
             System.Net.IPAddress remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress;
             string browserInfo = Request.Headers["User-Agent"].ToString();
             int? userId = null;
-            if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value != null && !String.IsNullOrEmpty(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value))
+            if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value != null && !string.IsNullOrEmpty(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value))
             {
                 userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value ?? string.Empty);
             }

@@ -55,7 +55,7 @@ namespace HSE.DAL.Repositories.Concrete
                                     FatherName = e.Patronymic,
                                     UserOrgId = e.OrganizationId.ToString(),
                                     Position = e.JobName,
-                                    PhoneNumber = String.IsNullOrEmpty(e.MobilePhone) ? "" : e.MobilePhone
+                                    PhoneNumber = string.IsNullOrEmpty(e.MobilePhone) ? "" : e.MobilePhone
                                 }).First();
             }
             return user;

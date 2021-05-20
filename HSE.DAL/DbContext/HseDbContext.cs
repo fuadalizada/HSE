@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using HSE.Domain.Entities;
 
 namespace HSE.DAL.DbContext
@@ -18,6 +17,12 @@ namespace HSE.DAL.DbContext
         public DbSet<InstructionType> InstructionTypes { get; set; }
         public DbSet<InstructionForm> InstructionForms { get; set; }
         public DbSet<EmployeeForm> EmployeeForms { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<OrganizationBasePermitionMap> OrganizationBasePermitionMaps { get; set; }
+        public DbSet<Structure> Structures { get; set; }
+        public DbSet<ErrorLog> ErrorLogs { get; set; }
+        public DbSet<FormShortContent> FormShortContents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -474,6 +479,309 @@ namespace HSE.DAL.DbContext
                 .Property(x => x.PhotoTakingDate)
                 .HasColumnName("PHOTO_TAKING_DATE")
                 .HasColumnType("datetime");
+
+            #endregion
+
+            #region Role
+
+            modelBuilder.Entity<Role>().ToTable("TBL_ROLE");
+            modelBuilder.Entity<Role>().HasKey(x => x.Id);
+            modelBuilder.Entity<Role>()
+                .Property(x => x.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ID");
+            
+            modelBuilder.Entity<Role>()
+                .Property(x => x.RoleName)
+                .HasColumnType("nvarchar(250)")
+                .HasColumnName("ROLE_NAME");
+            
+            modelBuilder.Entity<Role>()
+                .Property(x => x.Description)
+                .HasColumnType("nvarchar(max)")
+                .HasColumnName("DESCRIPTION");
+            
+            modelBuilder.Entity<Role>()
+                .Property(x => x.IsActive)
+                .HasColumnType("bit")
+                .HasDefaultValue(true)
+                .HasColumnName("IS_ACTIVE");
+
+            #endregion
+
+            #region UserRole
+
+            modelBuilder.Entity<UserRole>().ToTable("TBL_USER_ROLE");
+            modelBuilder.Entity<UserRole>().HasKey(x => x.Id);
+            modelBuilder.Entity<UserRole>()
+                .Property(x => x.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ID");
+
+            modelBuilder.Entity<UserRole>()
+                .Property(x => x.UserId)
+                .HasColumnType("int")
+                .IsRequired()
+                .HasColumnName("USER_ID");
+            
+            modelBuilder.Entity<UserRole>()
+                .Property(x => x.RoleId)
+                .HasColumnType("int")
+                .IsRequired()
+                .HasColumnName("ROLE_ID");
+            
+            modelBuilder.Entity<UserRole>()
+                .Property(x => x.Role)
+                .HasColumnType("nvarchar(100)")
+                .IsRequired()
+                .HasColumnName("ROLE");
+            
+            modelBuilder.Entity<UserRole>()
+                .Property(x => x.IsActive)
+                .HasColumnType("bit")
+                .HasDefaultValue(true)
+                .HasColumnName("IS_ACTIVE");
+            
+            modelBuilder.Entity<UserRole>()
+                .Property(x => x.CreateDate)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("GetDate()")
+                .HasColumnName("CREATE_DATE");
+
+
+            #endregion
+
+            #region OrganizationBasePermitionMap
+
+            modelBuilder.Entity<OrganizationBasePermitionMap>().ToTable("TBL_ORGANIZATION_BASE_PERMITION_MAP");
+            modelBuilder.Entity<OrganizationBasePermitionMap>().HasKey(x => x.Id);
+            modelBuilder.Entity<OrganizationBasePermitionMap>()
+                .Property(x => x.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ID");
+
+            modelBuilder.Entity<OrganizationBasePermitionMap>()
+                .Property(x => x.UserId)
+                .HasColumnType("int")
+                .IsRequired()
+                .HasColumnName("USER_ID");
+
+            modelBuilder.Entity<OrganizationBasePermitionMap>()
+                .Property(x => x.RoleId)
+                .HasColumnType("int")
+                .IsRequired()
+                .HasColumnName("ROLE_ID");
+
+            modelBuilder.Entity<OrganizationBasePermitionMap>()
+                .Property(x => x.Role)
+                .HasColumnType("nvarchar(100)")
+                .IsRequired()
+                .HasColumnName("ROLE");
+
+            modelBuilder.Entity<OrganizationBasePermitionMap>()
+                .Property(x => x.OrganizationId)
+                .HasColumnType("int")
+                .IsRequired()
+                .HasColumnName("ORGANIZATION_ID");
+
+            modelBuilder.Entity<OrganizationBasePermitionMap>()
+                .Property(x => x.OrganizationName)
+                .HasColumnType("nvarchar(100)")
+                .IsRequired()
+                .HasColumnName("ORGANIZATION_NAME");
+
+            modelBuilder.Entity<OrganizationBasePermitionMap>()
+                .Property(x => x.IsActive)
+                .HasColumnType("bit")
+                .HasDefaultValue(true)
+                .HasColumnName("IS_ACTIVE");
+
+            modelBuilder.Entity<OrganizationBasePermitionMap>()
+                .Property(x => x.CreateDate)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("GetDate()")
+                .HasColumnName("CREATE_DATE");
+
+            #endregion
+
+            #region Structure
+
+            modelBuilder.Entity<Structure>()
+                .ToTable("TBL_STRUCTURE");
+            modelBuilder.Entity<Structure>().HasKey(x => x.Id);
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ID");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ParentOrganizationId)
+                .HasColumnName("PARENT_ORGANIZATION_ID")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ParentOrganizationFullname)
+                .HasColumnName("PARENT_ORGANIZATION_FULL_NAME")
+                .HasColumnType("nvarchar(240)");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ParentOrganizationShortName)
+                .HasColumnName("PARENT_ORGANIZATION_SHORT_NAME")
+                .HasColumnType("nvarchar(240)");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ParentOrgIsEmployerFlag)
+                .HasColumnName("PARENT_ORG_IS_EMPLOYER_FLAG")
+                .HasColumnType("nvarchar(1)");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.LevelDifference)
+                .HasColumnName("LEVEL_DIFFERENCE")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ChildOrganizationId)
+                .HasColumnName("CHILD_ORGANIZATION_ID")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ChildOrganizationFullname)
+                .HasColumnName("CHILD_ORGANIZATION_FULL_NAME")
+                .HasColumnType("nvarchar(240)");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ChildOrganizationShortName)
+                .HasColumnName("CHILD_ORGANIZATION_SHORT_NAME")
+                .HasColumnType("nvarchar(240)");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ChildOrgIsEmployerFlag)
+                .HasColumnName("CHILD_ORG_IS_EMPLOYER_FLAG")
+                .HasColumnType("nvarchar(1)");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ParentOrgMgrPositionId)
+                .HasColumnName("PARENT_ORG_MGR_POSITION_ID")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ParentIndOrgMgrPositionId)
+                .HasColumnName("PARENT_IND_ORG_MGR_POSITION_ID")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ParentIndOrgMgrPosOrgId)
+                .HasColumnName("PARENT_IND_ORG_MGR_POS_ORG_ID")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ParentIndOrgMgrPosLevel)
+                .HasColumnName("PARENT_IND_ORG_MGR_POS_LEVEL")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ParentIndFirstIncPersonId)
+                .HasColumnName("PARENT_IND_FIRST_INC_PERSON_ID")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ParentL3ParentOrgId)
+                .HasColumnName("PARENT_L3_PARENT_ORG_ID")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ChildOrgMgrPositionId)
+                .HasColumnName("CHILD_ORG_MGR_POSITION_ID")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ChildIndOrgMgrPositionId)
+                .HasColumnName("CHILD_IND_ORG_MGR_POSITION_ID")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ChildIndOrgMgrPosOrgId)
+                .HasColumnName("CHILD_IND_ORG_MGR_POS_ORG_ID")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ChildIndOrgMgrPosLevel)
+                .HasColumnName("CHILD_IND_ORG_MGR_POS_LEVEL")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ChildIndFirstIncPersonId)
+                .HasColumnName("CHILD_IND_FIRST_INC_PERSON_ID")
+                .HasColumnType("int");
+
+            modelBuilder.Entity<Structure>()
+                .Property(x => x.ChildL3ParentOrgId)
+                .HasColumnName("CHILD_L3_PARENT_ORG_ID")
+                .HasColumnType("int");
+
+            #endregion
+
+            #region ErrorLog
+
+            modelBuilder.Entity<ErrorLog>().ToTable("TBL_ERROR_LOG");
+            modelBuilder.Entity<ErrorLog>().HasKey(x => x.Id);
+            modelBuilder.Entity<ErrorLog>()
+                .Property(x => x.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ID");
+            
+            modelBuilder.Entity<ErrorLog>()
+                .Property(x => x.UserId)
+                .HasColumnName("USER_ID")
+                .HasColumnType("int");
+            
+            modelBuilder.Entity<ErrorLog>()
+                .Property(x => x.InstructionFormId)
+                .HasColumnName("INSTRUCTION_FORM_ID")
+                .HasColumnType("int");
+            
+            modelBuilder.Entity<ErrorLog>()
+                .Property(x => x.ErrorMessage)
+                .HasColumnName("ERROR_MESSAGE")
+                .HasColumnType("nvarchar(max)");
+            
+            modelBuilder.Entity<ErrorLog>()
+                .Property(x => x.ActionName)
+                .HasColumnName("ACTION_NAME")
+                .HasColumnType("nvarchar(250)");
+            
+            modelBuilder.Entity<ErrorLog>()
+                .Property(x => x.CreateDate)
+                .HasColumnName("CREATE_DATE")
+                .HasColumnType("datetime");
+
+            #endregion
+
+            #region FormShortContent
+
+            modelBuilder.Entity<FormShortContent>().ToTable("TBL_FORM_SHORT_CONTENT");
+            modelBuilder.Entity<FormShortContent>().HasKey(x => x.Id);
+            modelBuilder.Entity<FormShortContent>()
+                .Property(x => x.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ID");
+
+            modelBuilder.Entity<FormShortContent>()
+                .Property(x => x.Name)
+                .HasColumnName("NAME")
+                .HasColumnType("nvarchar(max)");
+            
+            modelBuilder.Entity<FormShortContent>()
+                .Property(x => x.Description)
+                .HasColumnName("DESCRIPTION")
+                .HasColumnType("nvarchar(max)");
+            
+            modelBuilder.Entity<FormShortContent>()
+                .Property(x => x.IsActive)
+                .HasColumnName("IS_ACTIVE")
+                .HasDefaultValue(true)
+                .HasColumnType("bit");
 
             #endregion
         }

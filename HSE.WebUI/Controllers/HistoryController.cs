@@ -17,10 +17,12 @@ namespace HSE.WebUI.Controllers
     {
         private readonly IInstructionFormService _instructionFormService;
         private readonly FormServiceFacade _formServiceFacade;
-        public HistoryController(IInstructionFormService instructionFormService, FormServiceFacade formServiceFacade)
+        private readonly UserRoleServiceFacade _userRoleServiceFacade;
+        public HistoryController(IInstructionFormService instructionFormService, FormServiceFacade formServiceFacade, UserRoleServiceFacade userRoleServiceFacade)
         {
             _instructionFormService = instructionFormService;
             _formServiceFacade = formServiceFacade;
+            _userRoleServiceFacade = userRoleServiceFacade;
         }
 
         [HttpGet]
@@ -42,29 +44,92 @@ namespace HSE.WebUI.Controllers
                 MaxDegreeOfParallelism = 3
             };
 
-            Parallel.Invoke(parallelOptions, () =>
-                {
-                    Task.Run(async () =>
+            if (User.IsInRole("WorkFlowBase"))
+            {
+                Parallel.Invoke(parallelOptions, () =>
                     {
-                        data.AddRange(await _instructionFormService.GetAllFormsForHistory(instructorUserId, jqueryDataTablesParameters));
-                    }).Wait();
-                },
-                () =>
-                {
-                    Task.Run(async () =>
+                        Task.Run(async () =>
+                        {
+                            data.AddRange(await _instructionFormService.GetAllFormsForHistory(instructorUserId,3,string.Empty, jqueryDataTablesParameters));
+                        }).Wait();
+                    },
+                    () =>
                     {
-                        recordsTotal = await _instructionFormService.GetAllFormsForHistoryTotalCount(instructorUserId);
-                    }).Wait();
-                },
-                () =>
-                {
-                    Task.Run(async () =>
+                        Task.Run(async () =>
+                        {
+                            recordsTotal = await _instructionFormService.GetAllFormsForHistoryTotalCount(instructorUserId,3,string.Empty);
+                        }).Wait();
+                    },
+                    () =>
                     {
-                        recordsFiltered =
-                            await _instructionFormService.GetAllFormsForHistoryFilteredCount(instructorUserId, jqueryDataTablesParameters);
-                    }).Wait();
+                        Task.Run(async () =>
+                        {
+                            recordsFiltered =
+                                await _instructionFormService.GetAllFormsForHistoryFilteredCount(instructorUserId,3,string.Empty, jqueryDataTablesParameters);
+                        }).Wait();
+                    }
+                );
+            }
+            else if (User.IsInRole("OrganizationBase"))
+            {
+                List<string> organizationIdList = new List<string>();
+                var organizationIds = _userRoleServiceFacade.GetOrganizationIdsByUserId(instructorUserId);
+                if (organizationIds.Result.Any())
+                {
+                    organizationIdList = _userRoleServiceFacade.GetOrganizationIdList(organizationIds);
+                    var joinListAsString = string.Join(',', organizationIdList);
+                    Parallel.Invoke(parallelOptions, () =>
+                        {
+                            Task.Run(async () =>
+                            {
+                                data.AddRange(await _instructionFormService.GetAllFormsForHistory(instructorUserId, 4, joinListAsString, jqueryDataTablesParameters));
+                            }).Wait();
+                        },
+                        () =>
+                        {
+                            Task.Run(async () =>
+                            {
+                                recordsTotal = await _instructionFormService.GetAllFormsForHistoryTotalCount(instructorUserId, 4, joinListAsString);
+                            }).Wait();
+                        },
+                        () =>
+                        {
+                            Task.Run(async () =>
+                            {
+                                recordsFiltered =
+                                    await _instructionFormService.GetAllFormsForHistoryFilteredCount(instructorUserId, 4, joinListAsString, jqueryDataTablesParameters);
+                            }).Wait();
+                        }
+                    );
                 }
-            );
+            }
+            else
+            {
+                Parallel.Invoke(parallelOptions, () =>
+                    {
+                        Task.Run(async () =>
+                        {
+                            data.AddRange(await _instructionFormService.GetAllFormsForHistory(instructorUserId, 5,string.Empty, jqueryDataTablesParameters));
+                        }).Wait();
+                    },
+                    () =>
+                    {
+                        Task.Run(async () =>
+                        {
+                            recordsTotal = await _instructionFormService.GetAllFormsForHistoryTotalCount(instructorUserId, 5,string.Empty);
+                        }).Wait();
+                    },
+                    () =>
+                    {
+                        Task.Run(async () =>
+                        {
+                            recordsFiltered =
+                                await _instructionFormService.GetAllFormsForHistoryFilteredCount(instructorUserId, 5,string.Empty, jqueryDataTablesParameters);
+                        }).Wait();
+                    }
+                );
+            }
+            
             return new JsonResult(new DataTableParamsModel.JqueryDataTablesResult<AllFormsForHistoryViewModel>
             {
                 Draw = jqueryDataTablesParameters.Draw,
@@ -72,6 +137,13 @@ namespace HSE.WebUI.Controllers
                 RecordsFiltered = recordsFiltered,
                 RecordsTotal = recordsTotal
             });
+        }
+
+        [HttpPost]
+        public async Task<bool> CheckIfInstructionFormIdExist(int instructionFormId)
+        {
+            var result = await _formServiceFacade.CheckIfInstructionFormIdExist(instructionFormId);
+            return result;
         }
 
         [HttpGet]

@@ -19,7 +19,7 @@
 
 <form id="ReportForm">
     <div class="row">
-        <div class="col-sm-4 col-xl-2">
+        <div class="col-sm-4 col-xl-1">
             <label class="title">Form №</label>
             <input disabled value="" class="form-control" />
         </div>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="row mt-1">
-        <div class="col-sm-4 col-xl-3">
+        <div class="col-sm-4 col-xl-2">
             <label class="title">Hazırlanma tarixi</label>
             <div class="input-group date" id="createDate" data-target-input="nearest">
                 <input type="text" class="form-control datetimepicker-input" name="createDate" data-target="#createDate" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
@@ -63,7 +63,14 @@
     <div class="row mt-2">
         <div class="col-sm-4 col-xl-5">
             <label class="title">Təlimatın qısa məzmunu</label>
-            <textarea id="ShortContent" name="ShortContent" class="form-control" rows="2"></textarea>
+            <select id="ShortContent" name="ShortContent" class="select">
+                @foreach (var item in Model.FormShortContentDtos)
+                {
+                    <option></option>
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            @*<textarea id="ShortContent" name="ShortContent" class="form-control" rows="2"></textarea>*@
         </div>
     </div>
 

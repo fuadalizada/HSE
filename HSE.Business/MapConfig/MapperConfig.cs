@@ -20,6 +20,10 @@ namespace HSE.Business.MapConfig
             CreateMap<InstructionFormDto, InstructionForm>().ReverseMap();
             CreateMap<EmployeeFormDto, EmployeeForm>().ReverseMap();
             CreateMap<EmployeeDto, Employee>().ReverseMap();
+            CreateMap<UserRoleDto, UserRole>().ReverseMap();
+            CreateMap<OrganizationBasePermitionMapDto, OrganizationBasePermitionMap>().ReverseMap();
+            CreateMap<StructureDto, Structure>().ReverseMap();
+            CreateMap<FormShortContentDto, FormShortContent>().ReverseMap();
             CreateMap<LoginLogDto, LoginLog>()
                 .ForMember(
                     d => d.CreateDate,

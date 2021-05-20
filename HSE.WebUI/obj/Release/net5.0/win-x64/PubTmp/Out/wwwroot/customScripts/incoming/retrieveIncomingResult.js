@@ -5,6 +5,8 @@ var fincode;
 var counter = 0;
 var len = 0;
 var maxChar = 7;
+var toastr;
+var isSuccess = false;
 
 $(document).ready(function () {
     OpenPopUpForTakingPicture();
@@ -19,9 +21,41 @@ $(document).ready(function () {
     $(".close_modal").click(function () {
         $("#takeApictureModal").modal("hide");
         Webcam.reset();
+        counter = 0;
     });
     ShowLeftCharactersForFincode();
 });
+
+//toastr.options = {
+//    "closeButton": true,
+//    "debug": false,
+//    "newestOnTop": true,
+//    "progressBar": true,
+//    "positionClass": "toast-top-right",
+//    "preventDuplicates": false,
+//    "onclick": null,
+//    "showDuration": "300",
+//    "hideDuration": "1000",
+//    "timeOut": "5000",
+//    "extendedTimeOut": "1000",
+//    "showEasing": "swing",
+//    "hideEasing": "linear",
+//    "showMethod": "fadeIn",
+//    "hideMethod": "fadeOut"
+//};
+
+function showSuccessMessage(message, title) {
+    toastr["success"](message, title);
+}
+function showErrorMessage(message, title) {
+    toastr["error"](message, title);
+}
+function showInfoMessage(message, title) {
+    toastr["info"](message, title);
+}
+function showWarningMessage(message, title) {
+    toastr["warning"](message, title);
+}
 
 function OpenPopUpForTakingPicture() {
     $("body").on("click", ".openPopUp",
@@ -29,8 +63,11 @@ function OpenPopUpForTakingPicture() {
             employeeUserId = $(this).attr("data-employeeUserId");
             var employeeFullName = $(this).attr("data-employeeFullName");
             $(".nameSurnameModal").val(employeeFullName);
-            
-            $("#takeApictureModal").modal("show");
+
+            $("#takeApictureModal").modal({
+                backdrop: "static",
+                keyboard: false
+            });
             var finCode = $(".fincode").val();
             if (finCode !== null) {
                 document.getElementById("fin_code").value = "";
@@ -38,6 +75,9 @@ function OpenPopUpForTakingPicture() {
                 $(".fincodeValidationMessage").html("");
             }
             attachCamera();
+            $("#example").tooltip({
+                title: "Şəxsiyyət vəsiqəsinin fərdi identifikasiya nömrəsi"
+            });
         });
 }
 
@@ -46,6 +86,7 @@ function OpenPopUpForShowingPicture() {
         function () {
             var empUserId = $(this).attr("data-employeeUserId");
             instructionFormId = $(".instructionFormId").val();
+            $("#shoPhotoModalLabel").text(`Form № ${instructionFormId}`);
             var employeeFullName = $(this).attr("data-employeeFullName");
             $(".nameSurnameShowModal").val(employeeFullName);
 
@@ -61,6 +102,9 @@ function OpenPopUpForShowingPicture() {
             document.getElementById("photoResult").innerHTML =
                 `<img src="/Camera/IsThePhotoExist?employeeUserId=${empUserId}&instructionFormId=${instructionFormId}"/>`;
 
+            document.getElementById("matchPhotoResult").innerHTML =
+                `<img style="height:169px;" src="/Camera/GetEmployeePhotoByFincode?employeeUserId=${empUserId}"/>`;
+
             document.getElementById("qrcode").innerHTML =
                 `<img style="margin-top:-15px;" src="/File/GenerateQrCode?employeeUserId=${empUserId}&instructionFormId=${instructionFormId}"/>`;
 
@@ -72,6 +116,7 @@ function ConfirmModal() {
     
     $("#ConfirmPictureModal").on("click",
         function () {
+            isSuccess = false;
             fincode = $(".fincode").val();
             instructionFormId = $(".instructionFormId").val();
             if (!isEmpty(fincode)) {
@@ -89,22 +134,27 @@ function ConfirmModal() {
                                         $(`[data-employeeuserid="${employeeUserId}"]`).html('<i class="fas fa-eye mr-1" title="Təsdiqlənib" style="font-size:20px;color:green" aria-hidden="true"></i>').removeClass("openPopUp").addClass("ShowPicturePopUp");
                                         Webcam.reset();
                                         counter = 0;
+                                        isSuccess = true;
+                                        showSuccessMessage("Sənəd uğurla təsdiq olundu.");
                                     } else {
                                         $(".fincodeValidationMessage").html("Formun id nömrəsi yoxdur");
                                     }
-                                } else {
-                                    alert("Şəkil çəkin.");
+                                } else if (!isSuccess) {
+                                    console.log(counter);
+                                    showWarningMessage("Təlimat alanın şəklini çəkin.", "Bildiriş");
                                 }
-
                             } else {
+                                console.log(counter);
                                 $(".fincodeValidationMessage").html("Fin kod yanlishdir.");
                             }
                         }
                     });
                 } else {
+                    console.log(counter);
                     $(".fincodeValidationMessage").html("Fin kodu düzgün daxil edin.");
                 }
             } else {
+                console.log(counter);
                 $(".fincodeValidationMessage").html("Fin kod daxil edilmeyib");
             }
         });

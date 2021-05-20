@@ -33,7 +33,7 @@ namespace HSE.DAL.Repositories.Concrete
             return result;
         }
 
-        public async Task<List<ActiveFormsViewModel>> GetActiveForms(int userId,DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters)
+        public async Task<List<ActiveFormsViewModel>> GetActiveForms(int userId,int userRoleId, string organizationIds,DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters)
         {
             var activeFormsViewModels = new List<ActiveFormsViewModel>();
 
@@ -51,7 +51,7 @@ namespace HSE.DAL.Repositories.Concrete
             cmd.Parameters.AddWithValue("@instructorFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorFullName"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorPosition", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorPosition"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorTypeName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorTypeName"))?.Search.Value ?? DBNull.Value);
-
+            
             if (jqueryDataTablesParameters.SortOrder == null)
             {
                 cmd.Parameters.AddWithValue("@sortedColumn", DBNull.Value);
@@ -68,6 +68,8 @@ namespace HSE.DAL.Repositories.Concrete
             {
                 cmd.Parameters.AddWithValue("@sortedType", jqueryDataTablesParameters.Order[0].Dir.ToString());
             }
+            cmd.Parameters.AddWithValue("@permitionTypeId", userRoleId);
+            cmd.Parameters.AddWithValue("@child_orgs", organizationIds);
 
             var reader = await cmd.ExecuteReaderAsync();
             if (reader.HasRows)
@@ -90,7 +92,7 @@ namespace HSE.DAL.Repositories.Concrete
             return activeFormsViewModels;
         }
 
-        public async Task<int> GetActiveFormsTotalCount(int userId)
+        public async Task<int> GetActiveFormsTotalCount(int userId,int userRoleId,string organizationIds)
         {
             await using var con = new SqlConnection(AppSettings.ConnectionString);
             await con.OpenAsync();
@@ -100,12 +102,14 @@ namespace HSE.DAL.Repositories.Concrete
                 CommandTimeout = 0
             };
             cmd.Parameters.AddWithValue("@instructorUserId", userId);
+            cmd.Parameters.AddWithValue("@permitionTypeId", userRoleId);
+            cmd.Parameters.AddWithValue("@child_orgs", organizationIds);
             var recordsTotalCount = int.Parse((await cmd.ExecuteScalarAsync())?.ToString() ?? string.Empty);
 
             return recordsTotalCount;
         }
 
-        public async Task<int> GetActiveFormsFilteredCount(int instructorUserId, DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters)
+        public async Task<int> GetActiveFormsFilteredCount(int instructorUserId,int userRoleId, string organizationIds, DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters)
         {
             await using var con = new SqlConnection(AppSettings.ConnectionString);
             await con.OpenAsync();
@@ -120,12 +124,14 @@ namespace HSE.DAL.Repositories.Concrete
             cmd.Parameters.AddWithValue("@instructorFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorFullName"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorPosition", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorPosition"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorTypeName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorTypeName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@permitionTypeId", userRoleId);
+            cmd.Parameters.AddWithValue("@child_orgs", organizationIds);
 
             int filteredCount = int.Parse((await cmd.ExecuteScalarAsync())?.ToString() ?? string.Empty);
             return filteredCount;
         }
 
-        public async Task<List<AllFormsForHistoryViewModel>> GetAllFormsForHistory(int instructorUserId, DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters)
+        public async Task<List<AllFormsForHistoryViewModel>> GetAllFormsForHistory(int instructorUserId, int userRoleId, string organizationIds, DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters)
         {
             var allFormsForHistoryViewModels = new List<AllFormsForHistoryViewModel>();
 
@@ -160,6 +166,8 @@ namespace HSE.DAL.Repositories.Concrete
             {
                 cmd.Parameters.AddWithValue("@sortedType", jqueryDataTablesParameters.Order[0].Dir.ToString());
             }
+            cmd.Parameters.AddWithValue("@permitionTypeId", userRoleId);
+            cmd.Parameters.AddWithValue("@child_orgs", organizationIds);
 
             var reader = await cmd.ExecuteReaderAsync();
             if (reader.HasRows)
@@ -182,7 +190,7 @@ namespace HSE.DAL.Repositories.Concrete
             return allFormsForHistoryViewModels;
         }
 
-        public async Task<int> GetAllFormsForHistoryTotalCount(int instructorUserId)
+        public async Task<int> GetAllFormsForHistoryTotalCount(int instructorUserId, int userRoleId, string organizationIds)
         {
             await using var con = new SqlConnection(AppSettings.ConnectionString);
             await con.OpenAsync();
@@ -192,12 +200,14 @@ namespace HSE.DAL.Repositories.Concrete
                 CommandTimeout = 0
             };
             cmd.Parameters.AddWithValue("@instructorUserId", instructorUserId);
+            cmd.Parameters.AddWithValue("@permitionTypeId", userRoleId);
+            cmd.Parameters.AddWithValue("@child_orgs", organizationIds);
             var recordsTotalCount = int.Parse((await cmd.ExecuteScalarAsync())?.ToString() ?? string.Empty);
 
             return recordsTotalCount;
         }
 
-        public async Task<int> GetAllFormsForHistoryFilteredCount(int instructorUserId, DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters)
+        public async Task<int> GetAllFormsForHistoryFilteredCount(int instructorUserId, int userRoleId, string organizationIds, DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters)
         {
             await using var con = new SqlConnection(AppSettings.ConnectionString);
             await con.OpenAsync();
@@ -212,8 +222,141 @@ namespace HSE.DAL.Repositories.Concrete
             cmd.Parameters.AddWithValue("@instructorFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorFullName"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorPosition", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorPosition"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorTypeName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorTypeName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@permitionTypeId", userRoleId);
+            cmd.Parameters.AddWithValue("@child_orgs", organizationIds);
 
             int filteredCount = int.Parse((await cmd.ExecuteScalarAsync())?.ToString()?? string.Empty);
+            return filteredCount;
+        }
+
+        public async Task<List<FormsReportViewModel>> GetFormsReport(int instructorUserId, string dateRange, int userRoleId, string organizationIds, DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters)
+        {
+            DateTime startDateTime = DateTime.MinValue;
+            DateTime endDateTime = DateTime.Now;
+
+            if (!string.IsNullOrEmpty(dateRange))
+            {
+                startDateTime = DateTime.ParseExact(dateRange.Split('-')[0].Trim(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                endDateTime = DateTime.ParseExact(dateRange.Split('-')[1].Trim(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            }
+
+            var formsReportViewModels = new List<FormsReportViewModel>();
+
+            await using var con = new SqlConnection(AppSettings.ConnectionString);
+            await con.OpenAsync();
+            await using var cmd = new SqlCommand("SP_GET_FORMS_REPORT", con)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
+            cmd.Parameters.AddWithValue("@page", jqueryDataTablesParameters.Start);
+            cmd.Parameters.AddWithValue("@number", jqueryDataTablesParameters.Length);
+            cmd.Parameters.AddWithValue("@startDate", startDateTime);
+            cmd.Parameters.AddWithValue("@endDate", endDateTime);
+            cmd.Parameters.AddWithValue("@formId", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("formId"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@instructorUserId", instructorUserId);
+            cmd.Parameters.AddWithValue("@instructionDate", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructionDate"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@instructorFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorFullName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@instructorPosition", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorPosition"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@instructorTypeName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorTypeName"))?.Search.Value ?? DBNull.Value);
+
+            if (jqueryDataTablesParameters.SortOrder == null)
+            {
+                cmd.Parameters.AddWithValue("@sortedColumn", DBNull.Value);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@sortedColumn", jqueryDataTablesParameters.SortOrder);
+            }
+            if (jqueryDataTablesParameters.Order == null)
+            {
+                cmd.Parameters.AddWithValue("@sortedType", DBNull.Value);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@sortedType", jqueryDataTablesParameters.Order[0].Dir.ToString());
+            }
+            cmd.Parameters.AddWithValue("@permitionTypeId", userRoleId);
+            cmd.Parameters.AddWithValue("@child_orgs", organizationIds);
+
+            var reader = await cmd.ExecuteReaderAsync();
+            if (reader.HasRows)
+            {
+                while (await reader.ReadAsync())
+                {
+                    formsReportViewModels.Add(new FormsReportViewModel
+                    {
+                        FormId = int.Parse(reader["ID"].ToString() ?? string.Empty),
+                        InstructionDate = reader["INSTRUCTION_DATE"].ToString(),
+                        InstructorFullName = reader["INSTRUCTOR_FULL_NAME"].ToString(),
+                        InstructorPosition = reader["INSTRUCTOR_POSITION"].ToString(),
+                        InstructorTypeName = reader["INSTRUCTION_TYPE_NAME"].ToString(),
+                        InstructionShortContent = reader["INSTRUCTOR_SHORT_CONTENT"].ToString(),
+                        InstructionStatus = reader["IS_ACTIVE"].ToString()
+                    });
+                }
+            }
+
+            return formsReportViewModels;
+        }
+
+        public async Task<int> GetFormsReportTotalCount(int instructorUserId, string dateRange, int userRoleId, string organizationIds)
+        {
+            DateTime startDateTime = DateTime.MinValue;
+            DateTime endDateTime = DateTime.Now;
+
+            if (!string.IsNullOrEmpty(dateRange))
+            {
+                startDateTime = DateTime.ParseExact(dateRange.Split('-')[0].Trim(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                endDateTime = DateTime.ParseExact(dateRange.Split('-')[1].Trim(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            }
+
+            await using var con = new SqlConnection(AppSettings.ConnectionString);
+            await con.OpenAsync();
+            await using var cmd = new SqlCommand("SP_GET_FORMS_REPORT_TOTAL_COUNT", con)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure,
+                CommandTimeout = 0
+            };
+            cmd.Parameters.AddWithValue("@instructorUserId", instructorUserId);
+            cmd.Parameters.AddWithValue("@startDate", startDateTime);
+            cmd.Parameters.AddWithValue("@endDate", endDateTime);
+            cmd.Parameters.AddWithValue("@permitionTypeId", userRoleId);
+            cmd.Parameters.AddWithValue("@child_orgs", organizationIds);
+            var recordsTotalCount = int.Parse((await cmd.ExecuteScalarAsync())?.ToString() ?? string.Empty);
+
+            return recordsTotalCount;
+        }
+
+        public async Task<int> GetFormsReportFilteredCount(int instructorUserId, string dateRange, int userRoleId, string organizationIds, DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters)
+        {
+            DateTime startDateTime = DateTime.MinValue;
+            DateTime endDateTime = DateTime.Now;
+
+            if (!string.IsNullOrEmpty(dateRange))
+            {
+                startDateTime = DateTime.ParseExact(dateRange.Split('-')[0].Trim(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                endDateTime = DateTime.ParseExact(dateRange.Split('-')[1].Trim(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            }
+
+            await using var con = new SqlConnection(AppSettings.ConnectionString);
+            await con.OpenAsync();
+            await using var cmd = new SqlCommand("SP_GET_FORMS_REPORT_FILTER_COUNT", con)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure,
+                CommandTimeout = 0
+            };
+            cmd.Parameters.AddWithValue("@formId", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("formId"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@startDate", startDateTime);
+            cmd.Parameters.AddWithValue("@endDate", endDateTime);
+            cmd.Parameters.AddWithValue("@instructorUserId", instructorUserId);
+            cmd.Parameters.AddWithValue("@instructionDate", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructionDate"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@instructorFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorFullName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@instructorPosition", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorPosition"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@instructorTypeName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorTypeName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@permitionTypeId", userRoleId);
+            cmd.Parameters.AddWithValue("@child_orgs", organizationIds);
+
+            int filteredCount = int.Parse((await cmd.ExecuteScalarAsync())?.ToString() ?? string.Empty);
             return filteredCount;
         }
 

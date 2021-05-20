@@ -242,6 +242,66 @@ namespace HSE.DAL.Migrations
                     b.ToTable("TBL_EMPLOYEE_FORM");
                 });
 
+            modelBuilder.Entity("HSE.Domain.Entities.ErrorLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ActionName")
+                        .HasColumnType("nvarchar(250)")
+                        .HasColumnName("ACTION_NAME");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CREATE_DATE");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ERROR_MESSAGE");
+
+                    b.Property<int?>("InstructionFormId")
+                        .HasColumnType("int")
+                        .HasColumnName("INSTRUCTION_FORM_ID");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("USER_ID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_ERROR_LOG");
+                });
+
+            modelBuilder.Entity("HSE.Domain.Entities.FormShortContent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("DESCRIPTION");
+
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true)
+                        .HasColumnName("IS_ACTIVE");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("NAME");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_FORM_SHORT_CONTENT");
+                });
+
             modelBuilder.Entity("HSE.Domain.Entities.InstructionForm", b =>
                 {
                     b.Property<int>("Id")
@@ -352,6 +412,177 @@ namespace HSE.DAL.Migrations
                     b.ToTable("TBL_LOGIN_LOG");
                 });
 
+            modelBuilder.Entity("HSE.Domain.Entities.OrganizationBasePermitionMap", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasColumnName("CREATE_DATE")
+                        .HasDefaultValueSql("GetDate()");
+
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true)
+                        .HasColumnName("IS_ACTIVE");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("int")
+                        .HasColumnName("ORGANIZATION_ID");
+
+                    b.Property<string>("OrganizationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("ORGANIZATION_NAME");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("ROLE");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int")
+                        .HasColumnName("ROLE_ID");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("USER_ID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_ORGANIZATION_BASE_PERMITION_MAP");
+                });
+
+            modelBuilder.Entity("HSE.Domain.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("DESCRIPTION");
+
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true)
+                        .HasColumnName("IS_ACTIVE");
+
+                    b.Property<string>("RoleName")
+                        .HasColumnType("nvarchar(250)")
+                        .HasColumnName("ROLE_NAME");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_ROLE");
+                });
+
+            modelBuilder.Entity("HSE.Domain.Entities.Structure", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ChildIndFirstIncPersonId")
+                        .HasColumnType("int")
+                        .HasColumnName("CHILD_IND_FIRST_INC_PERSON_ID");
+
+                    b.Property<int?>("ChildIndOrgMgrPosLevel")
+                        .HasColumnType("int")
+                        .HasColumnName("CHILD_IND_ORG_MGR_POS_LEVEL");
+
+                    b.Property<int?>("ChildIndOrgMgrPosOrgId")
+                        .HasColumnType("int")
+                        .HasColumnName("CHILD_IND_ORG_MGR_POS_ORG_ID");
+
+                    b.Property<int?>("ChildIndOrgMgrPositionId")
+                        .HasColumnType("int")
+                        .HasColumnName("CHILD_IND_ORG_MGR_POSITION_ID");
+
+                    b.Property<int?>("ChildL3ParentOrgId")
+                        .HasColumnType("int")
+                        .HasColumnName("CHILD_L3_PARENT_ORG_ID");
+
+                    b.Property<string>("ChildOrgIsEmployerFlag")
+                        .HasColumnType("nvarchar(1)")
+                        .HasColumnName("CHILD_ORG_IS_EMPLOYER_FLAG");
+
+                    b.Property<int?>("ChildOrgMgrPositionId")
+                        .HasColumnType("int")
+                        .HasColumnName("CHILD_ORG_MGR_POSITION_ID");
+
+                    b.Property<string>("ChildOrganizationFullname")
+                        .HasColumnType("nvarchar(240)")
+                        .HasColumnName("CHILD_ORGANIZATION_FULL_NAME");
+
+                    b.Property<int?>("ChildOrganizationId")
+                        .HasColumnType("int")
+                        .HasColumnName("CHILD_ORGANIZATION_ID");
+
+                    b.Property<string>("ChildOrganizationShortName")
+                        .HasColumnType("nvarchar(240)")
+                        .HasColumnName("CHILD_ORGANIZATION_SHORT_NAME");
+
+                    b.Property<int?>("LevelDifference")
+                        .HasColumnType("int")
+                        .HasColumnName("LEVEL_DIFFERENCE");
+
+                    b.Property<int?>("ParentIndFirstIncPersonId")
+                        .HasColumnType("int")
+                        .HasColumnName("PARENT_IND_FIRST_INC_PERSON_ID");
+
+                    b.Property<int?>("ParentIndOrgMgrPosLevel")
+                        .HasColumnType("int")
+                        .HasColumnName("PARENT_IND_ORG_MGR_POS_LEVEL");
+
+                    b.Property<int?>("ParentIndOrgMgrPosOrgId")
+                        .HasColumnType("int")
+                        .HasColumnName("PARENT_IND_ORG_MGR_POS_ORG_ID");
+
+                    b.Property<int?>("ParentIndOrgMgrPositionId")
+                        .HasColumnType("int")
+                        .HasColumnName("PARENT_IND_ORG_MGR_POSITION_ID");
+
+                    b.Property<int?>("ParentL3ParentOrgId")
+                        .HasColumnType("int")
+                        .HasColumnName("PARENT_L3_PARENT_ORG_ID");
+
+                    b.Property<string>("ParentOrgIsEmployerFlag")
+                        .HasColumnType("nvarchar(1)")
+                        .HasColumnName("PARENT_ORG_IS_EMPLOYER_FLAG");
+
+                    b.Property<int?>("ParentOrgMgrPositionId")
+                        .HasColumnType("int")
+                        .HasColumnName("PARENT_ORG_MGR_POSITION_ID");
+
+                    b.Property<string>("ParentOrganizationFullname")
+                        .HasColumnType("nvarchar(240)")
+                        .HasColumnName("PARENT_ORGANIZATION_FULL_NAME");
+
+                    b.Property<int?>("ParentOrganizationId")
+                        .HasColumnType("int")
+                        .HasColumnName("PARENT_ORGANIZATION_ID");
+
+                    b.Property<string>("ParentOrganizationShortName")
+                        .HasColumnType("nvarchar(240)")
+                        .HasColumnName("PARENT_ORGANIZATION_SHORT_NAME");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_STRUCTURE");
+                });
+
             modelBuilder.Entity("HSE.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -404,6 +635,44 @@ namespace HSE.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TBL_USER");
+                });
+
+            modelBuilder.Entity("HSE.Domain.Entities.UserRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasColumnName("CREATE_DATE")
+                        .HasDefaultValueSql("GetDate()");
+
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true)
+                        .HasColumnName("IS_ACTIVE");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("ROLE");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int")
+                        .HasColumnName("ROLE_ID");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("USER_ID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_USER_ROLE");
                 });
 
             modelBuilder.Entity("HSE.Domain.Entities.EmployeeForm", b =>

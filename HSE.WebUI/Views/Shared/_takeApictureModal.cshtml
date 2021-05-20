@@ -1,7 +1,7 @@
 ﻿<div class="modal fade" id="takeApictureModal">
     <div class="modal-dialog mh-100  mw-100 w-75">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header">  
                 <h5 class="modal-title" id="takeApictureModalLabel">Məlumatlar</h5>
                 <button type="button" class="close close_modal" data-dismiss="modal" aria-label="Close" style="margin-top: -14px;">
                     <span aria-hidden="true">&times;</span>
@@ -11,8 +11,11 @@
                 <div class="row">
                     <div class="col-sm-4 col-xl-2">
                         <label class="title" style="width: 172px;">Təlimatlandırılan şəxsin fin kodu</label>
-                        <input id="fin_code" class="form-control fincode" maxlength="7" autocomplete="off"/>
+                        <input id="fin_code" class="form-control fincode" maxlength="7" autocomplete="off" />
                         <div class="fincodeValidationMessage ErrorClass" style="width: 106%;"></div>
+                    </div>
+                    <div style="margin-top: 29px !important; font-size: larger !important;">
+                        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" id="example"></i>
                     </div>
                     <div class="col-sm-4 col-xl-4 col-md-offset-4 col-md-2">
                         <label class="title">Təlimatlandırılan şəxsin adı, soyadı, ata adı</label>

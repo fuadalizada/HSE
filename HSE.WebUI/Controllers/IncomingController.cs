@@ -17,11 +17,14 @@ namespace HSE.WebUI.Controllers
     {
         private readonly IInstructionFormService _instructionFormService;
         private readonly FormServiceFacade _formServiceFacade;
-        public IncomingController(IInstructionFormService instructionFormService, FormServiceFacade formServiceFacade)
+        private readonly UserRoleServiceFacade _userRoleServiceFacade;
+        public IncomingController(IInstructionFormService instructionFormService, FormServiceFacade formServiceFacade,UserRoleServiceFacade userRoleServiceFacade)
         {
             _instructionFormService = instructionFormService;
             _formServiceFacade = formServiceFacade;
+            _userRoleServiceFacade = userRoleServiceFacade;
         }
+
         [HttpGet]
         public IActionResult Income()
         {
@@ -41,29 +44,92 @@ namespace HSE.WebUI.Controllers
                 MaxDegreeOfParallelism = 3
             };
 
-            Parallel.Invoke(parallelOptions, () =>
-                {
-                    Task.Run(async () =>
+            if (User.IsInRole("WorkFlowBase"))
+            {
+                Parallel.Invoke(parallelOptions, () =>
                     {
-                        data.AddRange(await _instructionFormService.GetActiveForms(instructorUserId, jqueryDataTablesParameters));
-                    }).Wait();
-                },
-                () =>
-                {
-                    Task.Run(async () =>
+                        Task.Run(async () =>
+                        {
+                            data.AddRange(await _instructionFormService.GetActiveForms(instructorUserId,3,string.Empty, jqueryDataTablesParameters));
+                        }).Wait();
+                    },
+                    () =>
                     {
-                        recordsTotal = await _instructionFormService.GetActiveFormsTotalCount(instructorUserId);
-                    }).Wait();
-                },
-                () =>
-                {
-                    Task.Run(async () =>
+                        Task.Run(async () =>
+                        {
+                            recordsTotal = await _instructionFormService.GetActiveFormsTotalCount(instructorUserId,3,string.Empty);
+                        }).Wait();
+                    },
+                    () =>
                     {
-                        recordsFiltered =
-                            await _instructionFormService.GetActiveFormsFilteredCount(instructorUserId,jqueryDataTablesParameters);
-                    }).Wait();
+                        Task.Run(async () =>
+                        {
+                            recordsFiltered =
+                                await _instructionFormService.GetActiveFormsFilteredCount(instructorUserId,3,string.Empty, jqueryDataTablesParameters);
+                        }).Wait();
+                    }
+                );
+            }
+            else if (User.IsInRole("OrganizationBase"))
+            {
+                List<string> organizationIdList = new List<string>();
+                var organizationIds = _userRoleServiceFacade.GetOrganizationIdsByUserId(instructorUserId);
+                if (organizationIds.Result.Any())
+                {
+                    organizationIdList = _userRoleServiceFacade.GetOrganizationIdList(organizationIds);
+                    var joinListAsString = string.Join(',', organizationIdList);
+                    Parallel.Invoke(parallelOptions, () =>
+                        {
+                            Task.Run(async () =>
+                            {
+                                data.AddRange(await _instructionFormService.GetActiveForms(instructorUserId, 4, joinListAsString, jqueryDataTablesParameters));
+                            }).Wait();
+                        },
+                        () =>
+                        {
+                            Task.Run(async () =>
+                            {
+                                recordsTotal = await _instructionFormService.GetActiveFormsTotalCount(instructorUserId, 4, joinListAsString);
+                            }).Wait();
+                        },
+                        () =>
+                        {
+                            Task.Run(async () =>
+                            {
+                                recordsFiltered =
+                                    await _instructionFormService.GetActiveFormsFilteredCount(instructorUserId, 4, joinListAsString, jqueryDataTablesParameters);
+                            }).Wait();
+                        }
+                    );
                 }
-            );
+            }
+            else
+            {
+                Parallel.Invoke(parallelOptions, () =>
+                    {
+                        Task.Run(async () =>
+                        {
+                            data.AddRange(await _instructionFormService.GetActiveForms(instructorUserId, 5,string.Empty, jqueryDataTablesParameters));
+                        }).Wait();
+                    },
+                    () =>
+                    {
+                        Task.Run(async () =>
+                        {
+                            recordsTotal = await _instructionFormService.GetActiveFormsTotalCount(instructorUserId, 5,string.Empty);
+                        }).Wait();
+                    },
+                    () =>
+                    {
+                        Task.Run(async () =>
+                        {
+                            recordsFiltered =
+                                await _instructionFormService.GetActiveFormsFilteredCount(instructorUserId, 5,string.Empty, jqueryDataTablesParameters);
+                        }).Wait();
+                    }
+                );
+            }
+            
             return new JsonResult(new DataTableParamsModel.JqueryDataTablesResult<ActiveFormsViewModel>
             {
                 Draw = jqueryDataTablesParameters.Draw,

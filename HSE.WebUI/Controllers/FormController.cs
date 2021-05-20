@@ -21,15 +21,17 @@ namespace HSE.WebUI.Controllers
         private readonly IInstructionTypeService _instructionTypeService;
         private readonly IEmployeeService _employeeService;
         private readonly IUserService _userService;
+        private readonly IFormShortContentService _formShortContentService;
         private readonly FormServiceFacade _formServiceFacade;
         public InstructionFormDto InstructionFormResult;
 
-        public FormController(IInstructionTypeService instructionTypeService, IUserService userService, IEmployeeService employeeService, FormServiceFacade formServiceFacade)
+        public FormController(IInstructionTypeService instructionTypeService, IUserService userService, IEmployeeService employeeService,IFormShortContentService formShortContentService, FormServiceFacade formServiceFacade)
         {
             _instructionTypeService = instructionTypeService;
             _userService = userService;
             _employeeService = employeeService;
             _formServiceFacade = formServiceFacade;
+            _formShortContentService = formShortContentService;
         }
 
         [HttpGet]
@@ -40,11 +42,14 @@ namespace HSE.WebUI.Controllers
             var instructorPosition = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Actor)?.Value;
             
             var instructionTypeList = await _instructionTypeService.GetActiveTypes();
+            var formShortContentList = await _formShortContentService.GetShortContentNames();
+
             var createFormViewModel = new CreateFormViewModel
             {
                 InstructorFullName = $"{firstName} {lastName}",
                 InstructorPosition = instructorPosition,
-                InstructionFormDtos = instructionTypeList.ToList()
+                InstructionFormDtos = instructionTypeList.ToList(),
+                FormShortContentDtos = formShortContentList.ToList()
             };
             return View(createFormViewModel);
         }
@@ -126,9 +131,9 @@ namespace HSE.WebUI.Controllers
         public async Task<bool> CheckIfFincodeAndEmpUserIdIsTrue(string fincode,int employeeUserId)
         {
             var result = await _userService.CheckFincodeAndEmpUserId(fincode, employeeUserId);
-#if DEBUG
-            result = true;
-#endif
+//#if DEBUG
+//            result = true;
+//#endif
             return result;
         }
 

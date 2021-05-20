@@ -53,12 +53,17 @@ namespace HSE.WebUI.Utils
             service.AddScoped<IInstructionFormRepository, InstructionFormRepository>();
             service.AddScoped<IEmployeeFormRepository, EmployeeFormRepository>();
             service.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            service.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            service.AddScoped<IOrganizationBasePermitionMapRepository, OrganizationBasePermitionMapRepository>();
+            service.AddScoped<IStructureRepository, StructureRepository>();
+            service.AddScoped<IFormShortContentRepository, FormShortContentRepository>();
         }
 
         private void DependencyInjectionFacades(IServiceCollection service)
         {
             service.AddScoped<AccountServiceFacade>();
             service.AddScoped<FormServiceFacade>();
+            service.AddScoped<UserRoleServiceFacade>();
         }
 
         private void DependencyInjectionServices(IServiceCollection service)
@@ -71,6 +76,10 @@ namespace HSE.WebUI.Utils
             service.AddScoped<IInstructionFormService, InstructionFormService>();
             service.AddScoped<IEmployeeFormService, EmployeeFormService>();
             service.AddScoped<IEmployeeService, EmployeeService>();
+            service.AddScoped<IUserRoleService, UserRoleService>();
+            service.AddScoped<IOrganizationBasePermitionMapService, OrganizationBasePermitionMapService>();
+            service.AddScoped<IStructureService, StructureService>();
+            service.AddScoped<IFormShortContentService, FormShortContentService>();
         }
 
         private void DependencyInjectionMappers(IServiceCollection service)

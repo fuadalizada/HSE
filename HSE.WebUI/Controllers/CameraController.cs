@@ -12,14 +12,16 @@ namespace HSE.WebUI.Controllers
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IUserService _userService;
-        public CameraController(IWebHostEnvironment webHostEnvironment,IUserService userService)
+        private readonly IEmployeeService _employeeService;
+        public CameraController(IWebHostEnvironment webHostEnvironment, IUserService userService, IEmployeeService employeeService)
         {
             _webHostEnvironment = webHostEnvironment;
             _userService = userService;
+            _employeeService = employeeService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Capture(int employeeUserId,int instructionFormId)
+        public async Task<IActionResult> Capture(int employeeUserId, int instructionFormId)
         {
             var files = HttpContext.Request.Form.Files;
             foreach (var file in files)
@@ -51,11 +53,11 @@ namespace HSE.WebUI.Controllers
         /// <param name="file"></param>
         /// <param name="employeeUserId"></param>
         /// <param name="instructionFormId"></param>
-        private async Task StoreInFolder(IFormFile file,int employeeUserId,int instructionFormId)
+        private async Task StoreInFolder(IFormFile file, int employeeUserId, int instructionFormId)
         {
             var user = await _userService.GetUserInfoByUserId(employeeUserId);
             var uploads = Path.Combine(_webHostEnvironment.ContentRootPath, "Files", DateTime.Now.Year.ToString());
-            var filePath = Path.Combine(uploads,instructionFormId + user.Fincode + ".jpg");
+            var filePath = Path.Combine(uploads, instructionFormId + user.Fincode + ".jpg");
             IfExistDeletePhoto(filePath);
             await using var fileStream = new FileStream(filePath, FileMode.Create);
             await file.CopyToAsync(fileStream);
@@ -73,11 +75,11 @@ namespace HSE.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> IsThePhotoExist(int employeeUserId,int instructionFormId)
+        public async Task<IActionResult> IsThePhotoExist(int employeeUserId, int instructionFormId)
         {
             var user = await _userService.GetUserInfoByUserId(employeeUserId);
             var fileName = instructionFormId + user.Fincode + ".jpg";
-            
+
             if (!string.IsNullOrEmpty(fileName))
             {
                 var folderPath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files", DateTime.Now.Year.ToString());
@@ -95,5 +97,35 @@ namespace HSE.WebUI.Controllers
             }
             return BadRequest("Şəklin adı boşdur");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetEmployeePhotoByFincode(int employeeUserId)
+        {
+            var user = await _userService.GetUserInfoByUserId(employeeUserId);
+            byte[] fileContent = await _employeeService.GetUserPhotoByFincode(user.Fincode);
+            string contentType;
+            if (fileContent == null)
+            {
+                string filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files", "employeeImages", $"{ user.Fincode.ToUpper()}.JPG");
+
+                if (!System.IO.File.Exists(filePath))
+                {
+                    filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot", "images", $"{user.Gender.ToString().ToLower()}.png");
+                }
+                System.Net.WebClient net = new System.Net.WebClient();
+
+                byte[] data = net.DownloadData(filePath);
+                MemoryStream content = new MemoryStream(data);
+                contentType = "APPLICATION/octet-stream";
+
+                return File(content, contentType, Path.GetFileName(filePath));
+            }
+
+            MemoryStream stream = new MemoryStream(fileContent);
+            contentType = "APPLICATION/octet-stream";
+            return File(stream, contentType, "userPhoto.jpg");
+        }
+
     }
 }
+

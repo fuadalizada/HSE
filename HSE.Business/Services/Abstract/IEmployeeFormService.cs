@@ -10,5 +10,6 @@ namespace HSE.Business.Services.Abstract
         Task<IQueryable<EmployeeFormDto>> GetEmployeesByFormId(int id);
         Task<EmployeeFormDto> Update(EmployeeFormDto dto);
         Task<DateTime?> GetPhotoDateByInstructionFormId(int instructionFormId, int employeeUserId);
+        Task<bool> CheckIfInstructionFormIdExist(int instructionFormId);
     }
 }

@@ -47,5 +47,11 @@ namespace HSE.Business.Services.Concrete
             var result = await _repository.GetPhotoDateByInstructionFormId(instructionFormId, employeeUserId);
             return result;
         }
+
+        public async Task<bool> CheckIfInstructionFormIdExist(int instructionFormId)
+        {
+            var result = await _repository.CheckIfInstructionFormIdExist(instructionFormId);
+            return result;
+        }
     }
 }

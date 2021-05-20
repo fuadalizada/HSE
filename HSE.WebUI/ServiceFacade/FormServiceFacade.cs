@@ -81,5 +81,11 @@ namespace HSE.WebUI.ServiceFacade
 
             return result.ToString();
         }
+
+        public async Task<bool> CheckIfInstructionFormIdExist(int instructionFormId)
+        {
+            var result = await _employeeFormService.CheckIfInstructionFormIdExist(instructionFormId);
+            return result;
+        }
     }
 }

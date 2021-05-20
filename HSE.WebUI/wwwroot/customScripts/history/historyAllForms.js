@@ -36,7 +36,7 @@ function CreateDataTable() {
             { "data": "instructorFullName", "name": "instructorFullName", "autoWidth": true },
             { "data": "instructorPosition", "name": "instructorPosition", "autoWidth": true },
             { "data": "instructorTypeName", "name": "instructorTypeName", "autoWidth": true },
-            { "data": "instructionStatus", "name": "instructionStatus", "autoWidth": true },
+            { "data": "instructionStatus", "name": "instructionStatus", "autoWidth": true }
         ],
         "processing": true,
         "serverSide": true,
@@ -113,8 +113,8 @@ function CreateDataTable() {
 
         const data = tableHistoryForms.row(this).data();
         const newUrl = "/History/RetrieveHistoryResult?instructionFormId=";
-        window.open(newUrl + data.formId);
-        window.target("_blank");
+        window.open(newUrl + data.formId,"_self");
+        //window.target("_blank");
     });
 }
 

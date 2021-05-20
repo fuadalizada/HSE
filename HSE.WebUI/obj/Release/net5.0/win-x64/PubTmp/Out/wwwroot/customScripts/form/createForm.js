@@ -41,6 +41,25 @@ function Select2Plugins() {
             }
         }
     });
+
+    $("#ShortContent").select2({
+        placeholder: selectPlaceholder,
+        allowClear: true,
+        language: {
+            inputTooShort: function () {
+                return inputTooShort;
+            },
+            searching: function () {
+                return searching;
+            },
+            noResults: function () {
+                return noResults;
+            },
+            loadingMore: function () {
+                return this.loadingMore;
+            }
+        }
+    });
 }
 
 function CreateForm() {
@@ -52,7 +71,8 @@ function CreateForm() {
             var instructorPosition = $(".instructorposition").val();
             var instructionType = $("#InstructionType").val();
             var instructionTypeName = $("#InstructionType option:selected").text();
-            var instructionShortContent = $("#ShortContent").val();
+            var instructionShortContent = $("#ShortContent option:selected").text();
+            //var instructionShortContent = $("#ShortContent").val();
 
 
             employeInfoArray = [];
@@ -79,7 +99,8 @@ function CreateForm() {
                 $("#InstructionType").parent().find(".select2-container").addClass("selectErrorClass");
             }
             else if (!instructionShortContent) {
-                $("#ShortContent").addClass("shortContentErrorClass");
+                //$("#ShortContent").addClass("shortContentErrorClass");
+                $("#ShortContent").parent().find(".select2-container").addClass("selectErrorClass");
             }
             else if (!isNoteTrue) {
                 tdNote.addClass("tdNoteErrorClass");
@@ -109,7 +130,8 @@ function CreateForm() {
 function ChangeBorderColor() {
     $("#ShortContent").on("change",
         function () {
-            $("#ShortContent").removeClass("shortContentErrorClass");
+            //$("#ShortContent").removeClass("shortContentErrorClass");
+            $("#ShortContent").parent().find(".select2-container").removeClass("selectErrorClass");
         });
 
     $("#InstructionType").on("change",

@@ -70,5 +70,17 @@ namespace HSE.DAL.Repositories.Concrete
                 .FirstOrDefaultAsync();
             return result.PhotoTakingDate;
         }
+
+        public async Task<bool> CheckIfInstructionFormIdExist(int instructionFormId)
+        {
+            var result = await _context.Set<EmployeeForm>().Where(x => x.InstructionFormId == instructionFormId)
+                .FirstOrDefaultAsync();
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace HSE.DAL.Repositories.Abstract
         Task<EmployeeForm> Update(EmployeeForm entity);
         Task<bool> CheckIfAllEmpFormsClosed(int instructionFormId);
         Task<DateTime?> GetPhotoDateByInstructionFormId(int instructionFormId,int employeeUserId);
+        Task<bool> CheckIfInstructionFormIdExist(int instructionFormId);
     }
 }
