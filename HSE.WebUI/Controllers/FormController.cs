@@ -42,16 +42,22 @@ namespace HSE.WebUI.Controllers
             var instructorPosition = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Actor)?.Value;
             
             var instructionTypeList = await _instructionTypeService.GetActiveTypes();
-            var formShortContentList = await _formShortContentService.GetShortContentNames();
 
             var createFormViewModel = new CreateFormViewModel
             {
                 InstructorFullName = $"{firstName} {lastName}",
                 InstructorPosition = instructorPosition,
-                InstructionFormDtos = instructionTypeList.ToList(),
-                FormShortContentDtos = formShortContentList.ToList()
+                InstructionFormDtos = instructionTypeList.ToList()
             };
             return View(createFormViewModel);
+        }
+
+        [HttpPost]
+        public async Task<List<FormShortContentDto>> GetFormContentListByInstructionType()
+        {
+            var formShortContentList = await _formShortContentService.GetShortContentNames();
+            
+            return formShortContentList.ToList();
         }
 
         [HttpPost]
@@ -131,9 +137,9 @@ namespace HSE.WebUI.Controllers
         public async Task<bool> CheckIfFincodeAndEmpUserIdIsTrue(string fincode,int employeeUserId)
         {
             var result = await _userService.CheckFincodeAndEmpUserId(fincode, employeeUserId);
-//#if DEBUG
-//            result = true;
-//#endif
+#if DEBUG
+            result = true;
+#endif
             return result;
         }
 

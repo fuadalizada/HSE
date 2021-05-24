@@ -41,25 +41,6 @@ function Select2Plugins() {
             }
         }
     });
-
-    $("#ShortContent").select2({
-        placeholder: selectPlaceholder,
-        allowClear: true,
-        language: {
-            inputTooShort: function () {
-                return inputTooShort;
-            },
-            searching: function () {
-                return searching;
-            },
-            noResults: function () {
-                return noResults;
-            },
-            loadingMore: function () {
-                return this.loadingMore;
-            }
-        }
-    });
 }
 
 function CreateForm() {
@@ -71,8 +52,7 @@ function CreateForm() {
             var instructorPosition = $(".instructorposition").val();
             var instructionType = $("#InstructionType").val();
             var instructionTypeName = $("#InstructionType option:selected").text();
-            var instructionShortContent = $("#ShortContent option:selected").text();
-            //var instructionShortContent = $("#ShortContent").val();
+            var instructionShortContent = $("#ShortContent").val();
 
 
             employeInfoArray = [];
@@ -99,8 +79,7 @@ function CreateForm() {
                 $("#InstructionType").parent().find(".select2-container").addClass("selectErrorClass");
             }
             else if (!instructionShortContent) {
-                //$("#ShortContent").addClass("shortContentErrorClass");
-                $("#ShortContent").parent().find(".select2-container").addClass("selectErrorClass");
+                $("#ShortContent").addClass("shortContentErrorClass");
             }
             else if (!isNoteTrue) {
                 tdNote.addClass("tdNoteErrorClass");
@@ -130,12 +109,36 @@ function CreateForm() {
 function ChangeBorderColor() {
     $("#ShortContent").on("change",
         function () {
-            //$("#ShortContent").removeClass("shortContentErrorClass");
-            $("#ShortContent").parent().find(".select2-container").removeClass("selectErrorClass");
+            $("#ShortContent").removeClass("shortContentErrorClass");
         });
 
     $("#InstructionType").on("change",
         function () {
             $("#InstructionType").parent().find(".select2-container").removeClass("selectErrorClass");
+            if ($("#InstructionType option:selected").text() === "Giriş") {
+                $.ajax({
+                    type: "POST",
+                    url: "/Form/GetFormContentListByInstructionType",
+                    success: function (data) {
+                        
+                        $("#ShortContent").text(data);
+                        var nameList = "";
+                        for (var i = 0; i < data.length; i++) {
+                            nameList = nameList + (i + 1) + ") " + data[i].name + "\n";
+                        }
+                        
+                        $("#ShortContent").val(nameList).change();
+                        auto_grow(document.getElementById("ShortContent"));
+                    }
+                });
+            } else {
+                $("#ShortContent").val("");
+                auto_grow(document.getElementById("ShortContent"));
+            }
         });
+}
+
+function auto_grow(element) {
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight) + "px";
 }

@@ -8,6 +8,5 @@ namespace HSE.WebUI.Models
         public string InstructorFullName { get; set; }
         public string InstructorPosition { get; set; }
         public List<InstructionTypeDto> InstructionFormDtos { get; set; }
-        public List<FormShortContentDto>  FormShortContentDtos { get; set; }
     }
 }

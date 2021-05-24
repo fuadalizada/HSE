@@ -62,15 +62,8 @@
 
     <div class="row mt-2">
         <div class="col-sm-4 col-xl-5">
-            <label class="title">Təlimatın qısa məzmunu</label>
-            <select id="ShortContent" name="ShortContent" class="select">
-                @foreach (var item in Model.FormShortContentDtos)
-                {
-                    <option></option>
-                    <option value="@item.Id">@item.Name</option>
-                }
-            </select>
-            @*<textarea id="ShortContent" name="ShortContent" class="form-control" rows="2"></textarea>*@
+            <label id="shortContentLabel" class="title">Təlimatın qısa məzmunu</label>
+            <textarea disabled id="ShortContent" name="ShortContent" class="form-control" style="resize: none; overflow: hidden; min-height: 50px;"></textarea>
         </div>
     </div>
 

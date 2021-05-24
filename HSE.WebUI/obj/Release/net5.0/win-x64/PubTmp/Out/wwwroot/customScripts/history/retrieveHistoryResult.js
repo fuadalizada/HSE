@@ -8,6 +8,8 @@ $(document).ready(function () {
         $("#showPhotoModal").modal("hide");
         Webcam.reset();
     });
+
+    auto_grow(document.getElementById("ShortContentHistory"));
 });
 
 function OpenPopUpForShowingPicture() {
@@ -39,4 +41,9 @@ function OpenPopUpForShowingPicture() {
 
             $("#showPhotoModal").modal("show");
         });
+}
+
+function auto_grow(element) {
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight) + "px";
 }

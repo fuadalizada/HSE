@@ -56,10 +56,7 @@
     <div class="row mt-2">
         <div class="col-sm-4 col-xl-5">
             <label class="title">Təlimatın qısa məzmunu</label>
-            @*<textarea readonly id="ShortContentCopy" name="ShortContentCopy" class="form-control" rows="2">@Model.InstructionFormDto.InstructionShortContent</textarea>*@
-            <select disabled id="ShortContent" name="ShortContent" class="select">
-                <option>@Model.InstructionFormDto.InstructionShortContent</option>
-            </select>
+            <textarea disabled id="ShortContentIncoming" name="ShortContentCopy" class="form-control" style="resize: none; overflow: hidden; min-height: 50px;">@Model.InstructionFormDto.InstructionShortContent</textarea>
         </div>
     </div>
 

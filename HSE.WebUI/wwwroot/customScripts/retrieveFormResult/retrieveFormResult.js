@@ -21,26 +21,10 @@ $(document).ready(function () {
         Webcam.reset();
         counter = 0;
     });
+
+    auto_grow(document.getElementById("ShortContentRetrieveResult"));
     ShowLeftCharactersForFincode();
 });
-
-//toastr.options = {
-//    "closeButton": true,
-//    "debug": false,
-//    "newestOnTop": true,
-//    "progressBar": true,
-//    "positionClass": "toast-top-right",
-//    "preventDuplicates": false,
-//    "onclick": null,
-//    "showDuration": "300",
-//    "hideDuration": "1000",
-//    "timeOut": "5000",
-//    "extendedTimeOut": "1000",
-//    "showEasing": "swing",
-//    "hideEasing": "linear",
-//    "showMethod": "fadeIn",
-//    "hideMethod": "fadeOut"
-//};
 
 function showSuccessMessage(message, title) {
     toastr["success"](message, title);
@@ -212,4 +196,9 @@ function attachCamera() {
         jpeg_quality: 90
     });
     Webcam.attach("#my_camera");
+}
+
+function auto_grow(element) {
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight) + "px";
 }
