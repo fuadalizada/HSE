@@ -12,8 +12,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HSE.WebUI.Controllers
+namespace HSE.WebUI.Controllers 
 {
+    [Route("[controller]")]
     public class AccountController : Controller
     {
         private readonly HseDbContext _context;
@@ -36,7 +37,7 @@ namespace HSE.WebUI.Controllers
             _accountServiceFacade = accountServiceFacade;
         }
 
-        [HttpGet]
+        [HttpGet("Login")]
         public IActionResult Login(string returnUrl)
         {
             if (!Url.IsLocalUrl(returnUrl) && !string.IsNullOrEmpty(returnUrl))
@@ -47,7 +48,8 @@ namespace HSE.WebUI.Controllers
             return View();
         }
 
-        [HttpPost]
+
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
             System.Net.IPAddress remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress;
@@ -85,13 +87,10 @@ namespace HSE.WebUI.Controllers
                 await _accountServiceFacade.AddLoginLog(model, browserInfo, remoteIpAddress, true);
                 return await SignInUser(user, returnUrl);
             }
-            else
-            {
-                ViewBag.ErrorMessage = "İstifadəçi adı və ya şifrə yanlışdır.";
-                await _accountServiceFacade.AddLoginLog(model, browserInfo, remoteIpAddress, false);
-                return View(model);
-            }
-            
+
+            ViewBag.ErrorMessage = "İstifadəçi adı və ya şifrə yanlışdır.";
+            await _accountServiceFacade.AddLoginLog(model, browserInfo, remoteIpAddress, false);
+            return View(model);
         }
 
         private async Task<IActionResult> SignInUser(Authenticate user, string returnUrl)
@@ -131,6 +130,9 @@ namespace HSE.WebUI.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
         }
 
+
+        
+        [HttpGet("AccessDenied")]
         public IActionResult AccessDenied(string refererUrl = null)
         {
             System.Net.IPAddress remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress;
@@ -153,15 +155,12 @@ namespace HSE.WebUI.Controllers
             return Json("Access denied...");
         }
 
+      
+        [HttpGet("LogOut")]
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
     }
 }

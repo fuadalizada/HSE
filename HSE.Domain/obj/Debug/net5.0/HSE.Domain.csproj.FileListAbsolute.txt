@@ -2,7 +2,6 @@ D:\VisualStudio2019\HSE\HSE.Domain\bin\Debug\net5.0\HSE.Domain.deps.json
 D:\VisualStudio2019\HSE\HSE.Domain\bin\Debug\net5.0\HSE.Domain.dll
 D:\VisualStudio2019\HSE\HSE.Domain\bin\Debug\net5.0\ref\HSE.Domain.dll
 D:\VisualStudio2019\HSE\HSE.Domain\bin\Debug\net5.0\HSE.Domain.pdb
-D:\VisualStudio2019\HSE\HSE.Domain\obj\Debug\net5.0\HSE.Domain.csprojAssemblyReference.cache
 D:\VisualStudio2019\HSE\HSE.Domain\obj\Debug\net5.0\HSE.Domain.GeneratedMSBuildEditorConfig.editorconfig
 D:\VisualStudio2019\HSE\HSE.Domain\obj\Debug\net5.0\HSE.Domain.AssemblyInfoInputs.cache
 D:\VisualStudio2019\HSE\HSE.Domain\obj\Debug\net5.0\HSE.Domain.AssemblyInfo.cs
@@ -10,3 +9,4 @@ D:\VisualStudio2019\HSE\HSE.Domain\obj\Debug\net5.0\HSE.Domain.csproj.CoreCompil
 D:\VisualStudio2019\HSE\HSE.Domain\obj\Debug\net5.0\HSE.Domain.dll
 D:\VisualStudio2019\HSE\HSE.Domain\obj\Debug\net5.0\ref\HSE.Domain.dll
 D:\VisualStudio2019\HSE\HSE.Domain\obj\Debug\net5.0\HSE.Domain.pdb
+D:\VisualStudio2019\HSE\HSE.Domain\obj\Debug\net5.0\HSE.Domain.csproj.AssemblyReference.cache

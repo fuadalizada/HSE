@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HSE.WebUI</name>
+    </assembly>
+    <members>
+        <member name="M:HSE.WebUI.Controllers.AccountController.Login(System.String)">
+            <summary>
+             Show login page
+            </summary>
+            <param name="returnUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HSE.WebUI.Controllers.AccountController.Login(HSE.DAL.ViewModels.LoginViewModel,System.String)">
+            <summary>
+            Try to log in to HSE
+            </summary>
+            <param name="model"></param>
+            <param name="returnUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HSE.WebUI.Controllers.AccountController.AccessDenied(System.String)">
+            <summary>
+            Return access denied message
+            </summary>
+            <param name="refererUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HSE.WebUI.Controllers.AccountController.LogOut">
+            <summary>
+            Log out of the sistem
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HSE.WebUI.Controllers.CameraController.StoreInFolder(Microsoft.AspNetCore.Http.IFormFile,System.Int32,System.Int32)">
+            <summary>  
+            Saving captured image into Folder.  
+            </summary>  
+            <param name="file"></param>
+            <param name="employeeUserId"></param>
+            <param name="instructionFormId"></param>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.JqueryDataTablesResult`1.Draw">
+            <summary>
+            The draw counter that this object is a response to - from the draw parameter sent as part of the data request.
+            Note that it is strongly recommended for security reasons that you cast this parameter to an integer, rather than simply echoing back to the client what it sent in the draw parameter, in order to prevent Cross Site Scripting (XSS) attacks.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.JqueryDataTablesResult`1.RecordsTotal">
+            <summary>
+            Total records, before filtering (i.e. the total number of records in the database)
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.JqueryDataTablesResult`1.RecordsFiltered">
+            <summary>
+            Total records, after filtering (i.e. the total number of records after filtering has been applied - not just the number of records being returned for this page of data).
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.JqueryDataTablesResult`1.Data">
+            <summary>
+            The data to be displayed in the table.
+            This is an array of data source objects, one for each row, which will be used by DataTables.
+            Note that this parameter's name can be changed using the ajaxDT option's dataSrc property.
+            </summary>
+        </member>
+        <member name="T:HSE.WebUI.Models.DataTableParamsModel.DtRow">
+            <summary>
+            The additional columns that you can send to jQuery DataTables for automatic processing.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.DtRow.DtRowId">
+            <summary>
+            Set the ID property of the dt-tag tr node to this value
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.DtRow.DtRowClass">
+            <summary>
+            Add this class to the dt-tag tr node
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.DtRow.DtRowData">
+            <summary>
+            Add this data property to the row's dt-tag tr node allowing abstract data to be added to the node, using the HTML5 data-* attributes.
+            This uses the jQuery data() method to set the data, which can also then be used for later retrieval (for example on a click event).
+            </summary>
+        </member>
+        <member name="T:HSE.WebUI.Models.DataTableParamsModel.JqueryDataTablesParameters">
+            <summary>
+            The parameters sent by jQuery DataTables in AJAX queries.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.JqueryDataTablesParameters.Draw">
+            <summary>
+            Draw counter.
+            This is used by DataTables to ensure that the Ajax returns from server-side processing requests are drawn in sequence by DataTables (Ajax requests are asynchronous and thus can return out of sequence).
+            This is used as part of the draw return parameter (see below).
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.JqueryDataTablesParameters.Columns">
+            <summary>
+            An array defining all columns in the table.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.JqueryDataTablesParameters.Order">
+            <summary>
+            An array defining how many columns are being ordering upon - i.e. if the array length is 1, then a single column sort is being performed, otherwise a multi-column sort is being performed.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.JqueryDataTablesParameters.Start">
+            <summary>
+            Paging first record indicator.
+            This is the start point in the current data set (0 index based - i.e. 0 is the first record).
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.JqueryDataTablesParameters.Length">
+            <summary>
+            Number of records that the table can display in the current draw.
+            It is expected that the number of records returned will be equal to this number, unless the server has fewer records to return.
+            Note that this can be -1 to indicate that all records should be returned (although that negates any benefits of server-side processing!)
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.JqueryDataTablesParameters.Search">
+            <summary>
+            Global search value. To be applied to all columns which have searchable as true.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.JqueryDataTablesParameters.SortOrder">
+            <summary>
+            Custom column that is used to further sort on the first Order column.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.JqueryDataTablesParameters.AdditionalValues">
+            <summary>
+            For Posting Additional Parameters to Server
+            </summary>
+        </member>
+        <member name="T:HSE.WebUI.Models.DataTableParamsModel.DtColumn">
+            <summary>
+            A jQuery DataTables column.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.DtColumn.Data">
+            <summary>
+            Column's data source, as defined by columns.data.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.DtColumn.Name">
+            <summary>
+            Column's name, as defined by columns.name.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.DtColumn.Searchable">
+            <summary>
+            Flag to indicate if this column is searchable (true) or not (false). This is controlled by columns.searchable.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.DtColumn.Orderable">
+            <summary>
+            Flag to indicate if this column is orderable (true) or not (false). This is controlled by columns.orderable.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.DtColumn.Search">
+            <summary>
+            Specific search value.
+            </summary>
+        </member>
+        <member name="T:HSE.WebUI.Models.DataTableParamsModel.DtOrder">
+            <summary>
+            An order, as sent by jQuery DataTables when doing AJAX queries.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.DtOrder.Column">
+            <summary>
+            Column to which ordering should be applied.
+            This is an index reference to the columns array of information that is also submitted to the server.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.DtOrder.Dir">
+            <summary>
+            Ordering direction for this column.
+            It will be dt-string asc or dt-string desc to indicate ascending ordering or descending ordering, respectively.
+            </summary>
+        </member>
+        <member name="T:HSE.WebUI.Models.DataTableParamsModel.DtOrderDir">
+            <summary>
+            Sort orders of jQuery DataTables.
+            </summary>
+        </member>
+        <member name="T:HSE.WebUI.Models.DataTableParamsModel.DtSearch">
+            <summary>
+            A search, as sent by jQuery DataTables when doing AJAX queries.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.DtSearch.Value">
+            <summary>
+            Global search value. To be applied to all columns which have searchable as true.
+            </summary>
+        </member>
+        <member name="P:HSE.WebUI.Models.DataTableParamsModel.DtSearch.Regex">
+            <summary>
+            true if the global filter should be treated as a regular expression for advanced searching, false otherwise.
+            Note that normally server-side processing scripts will not perform regular expression searching for performance reasons on large data sets, but it is technically possible and at the discretion of your script.
+            </summary>
+        </member>
+    </members>
+</doc>

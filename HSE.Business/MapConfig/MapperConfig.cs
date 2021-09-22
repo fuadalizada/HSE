@@ -24,6 +24,7 @@ namespace HSE.Business.MapConfig
             CreateMap<OrganizationBasePermitionMapDto, OrganizationBasePermitionMap>().ReverseMap();
             CreateMap<StructureDto, Structure>().ReverseMap();
             CreateMap<FormShortContentDto, FormShortContent>().ReverseMap();
+            CreateMap<ErrorLogDto, ErrorLog>().ReverseMap();
             CreateMap<LoginLogDto, LoginLog>()
                 .ForMember(
                     d => d.CreateDate,

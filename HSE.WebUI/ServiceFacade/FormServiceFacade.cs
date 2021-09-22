@@ -19,10 +19,10 @@ namespace HSE.WebUI.ServiceFacade
             _employeeFormService = employeeFormService;
         }
 
-        public async Task<InstructionFormDto> AddToInstructionForm(InstructionFormViewModel instructionFormViewModel,int organizationId,string instructorUserId)
+        public async Task<InstructionFormDto> AddToInstructionForm(InstructionFormViewModel instructionFormViewModel,int organizationId,int instructorUserId)
         {
             instructionFormViewModel.InstructorOrganizationId = organizationId;
-            instructionFormViewModel.InstructorUserId = (Convert.ToInt32(instructorUserId));
+            instructionFormViewModel.InstructorUserId = instructorUserId;
             var instructionFormDto = new InstructionFormDto
             {
                 InstructionDate = DateTime.ParseExact(instructionFormViewModel.FormCreateDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
@@ -30,7 +30,7 @@ namespace HSE.WebUI.ServiceFacade
                 InstructorFullName = instructionFormViewModel.InstructorFullName,
                 InstructorOrganizationId = organizationId,
                 InstructorPosition = instructionFormViewModel.InstructorPosition,
-                InstructorUserId = Convert.ToInt32(instructorUserId),
+                InstructorUserId = instructorUserId,
                 InstructionTypeId = Convert.ToInt32(instructionFormViewModel.InstructionType),
                 InstructionTypeName = instructionFormViewModel.InstructionTypeName
             };

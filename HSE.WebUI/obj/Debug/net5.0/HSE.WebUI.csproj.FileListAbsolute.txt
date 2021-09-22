@@ -122,7 +122,6 @@ D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\HSE.Domain.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\HSE.Business.pdb
 D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\HSE.DAL.pdb
 D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\HSE.Domain.pdb
-D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\HSE.WebUI.csprojAssemblyReference.cache
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\HSE.WebUI.GeneratedMSBuildEditorConfig.editorconfig
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\HSE.WebUI.AssemblyInfoInputs.cache
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\HSE.WebUI.AssemblyInfo.cs
@@ -166,3 +165,8 @@ D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\System.DirectoryServices.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.0\System.DirectoryServices.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\QRCoder.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\Razor\Views\Report\ReportIndex.cshtml.g.cs
+D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\HSE.WebUI.csproj.AssemblyReference.cache
+D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\Microsoft.OpenApi.dll
+D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\VisualStudio2019\HSE\HSE.WebUI\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll

@@ -258,6 +258,10 @@ namespace HSE.DAL.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("CREATE_DATE");
 
+                    b.Property<int>("ErrorLineNumber")
+                        .HasColumnType("int")
+                        .HasColumnName("ERROR_LINE_NUMBER");
+
                     b.Property<string>("ErrorMessage")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ERROR_MESSAGE");

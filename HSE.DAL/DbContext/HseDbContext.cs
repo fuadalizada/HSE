@@ -752,6 +752,11 @@ namespace HSE.DAL.DbContext
                 .HasColumnType("nvarchar(250)");
             
             modelBuilder.Entity<ErrorLog>()
+                .Property(x => x.ErrorLineNumber)
+                .HasColumnName("ERROR_LINE_NUMBER")
+                .HasColumnType("int");
+            
+            modelBuilder.Entity<ErrorLog>()
                 .Property(x => x.CreateDate)
                 .HasColumnName("CREATE_DATE")
                 .HasColumnType("datetime");

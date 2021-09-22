@@ -49,11 +49,22 @@ namespace HSE.WebUI
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Account}/{action=Login}/{id?}");
+            });
+
+            app.UseSwaggerAuthorized();
+            app.UseSwagger(s => s.RouteTemplate = "/hse-swagger/{documentName}/swagger.json");
+            app.UseSwaggerUI(s =>
+            {
+
+                s.SwaggerEndpoint("/hse-swagger/v1/swagger.json", "HSE");
+
+                s.RoutePrefix = "hse-swagger";
             });
         }
     }

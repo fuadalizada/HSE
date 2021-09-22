@@ -5,6 +5,10 @@
     <UserSecretsId>17ebf48d-9380-407c-b488-f5f8b7527c4d</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\HSE.Business\HSE.Business.csproj" />
     <ProjectReference Include="..\HSE.DAL\HSE.DAL.csproj" />
@@ -25,6 +29,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="QRCoder" Version="1.4.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.1" />
   </ItemGroup>
 
 </Project>

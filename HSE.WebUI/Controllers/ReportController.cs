@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HSE.WebUI.Controllers
 {
+    [Route("[controller]")]
     public class ReportController : Controller
     {
         private readonly IInstructionFormService _instructionFormService;
@@ -22,13 +23,13 @@ namespace HSE.WebUI.Controllers
             _userRoleServiceFacade = userRoleServiceFacade;
         }
 
-        [HttpGet]
+        [HttpGet("ReportIndex")]
         public IActionResult ReportIndex()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("ReportIndex")]
         public JsonResult ReportIndex(string dateRange,DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters)
         {
             int instructorUserId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value ?? string.Empty);

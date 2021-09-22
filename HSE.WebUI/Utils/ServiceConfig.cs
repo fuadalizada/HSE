@@ -26,6 +26,15 @@ namespace HSE.WebUI.Utils
             services.AddControllersWithViews();
             services.AddAuthorization();
             services.Configure<RecaptchaSettings>(configuration.GetSection("GoogleReCaptchaSetting"));
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "HSE"
+                });
+                s.OperationFilter<FileResultContentTypeOperationFilter>();
+            });
             DependencyInjectionRepositories(services);
             DependencyInjectionServices(services);
             DependencyInjectionFacades(services);
@@ -57,6 +66,7 @@ namespace HSE.WebUI.Utils
             service.AddScoped<IOrganizationBasePermitionMapRepository, OrganizationBasePermitionMapRepository>();
             service.AddScoped<IStructureRepository, StructureRepository>();
             service.AddScoped<IFormShortContentRepository, FormShortContentRepository>();
+            service.AddScoped<IErrorLogsRepository, ErrorLogsRepository>();
         }
 
         private void DependencyInjectionFacades(IServiceCollection service)
@@ -80,6 +90,7 @@ namespace HSE.WebUI.Utils
             service.AddScoped<IOrganizationBasePermitionMapService, OrganizationBasePermitionMapService>();
             service.AddScoped<IStructureService, StructureService>();
             service.AddScoped<IFormShortContentService, FormShortContentService>();
+            service.AddScoped<IErrorLogsService, ErrorLogsService>();
         }
 
         private void DependencyInjectionMappers(IServiceCollection service)

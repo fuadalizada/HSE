@@ -16,6 +16,7 @@ using DataTableParamsModel = HSE.DAL.ViewModels.DataTableParamsModel;
 namespace HSE.WebUI.Controllers
 {
     [Authorize]
+    [Route("[controller]")]
     public class FormController : Controller
     {
         private readonly IInstructionTypeService _instructionTypeService;
@@ -24,61 +25,112 @@ namespace HSE.WebUI.Controllers
         private readonly IFormShortContentService _formShortContentService;
         private readonly FormServiceFacade _formServiceFacade;
         public InstructionFormDto InstructionFormResult;
+        private readonly IErrorLogsService _errorLogsService;
 
-        public FormController(IInstructionTypeService instructionTypeService, IUserService userService, IEmployeeService employeeService,IFormShortContentService formShortContentService, FormServiceFacade formServiceFacade)
+        public FormController(IInstructionTypeService instructionTypeService, IUserService userService, IEmployeeService employeeService, IFormShortContentService formShortContentService,
+            FormServiceFacade formServiceFacade, IErrorLogsService errorLogsService)
         {
             _instructionTypeService = instructionTypeService;
             _userService = userService;
             _employeeService = employeeService;
             _formServiceFacade = formServiceFacade;
             _formShortContentService = formShortContentService;
+            _errorLogsService = errorLogsService;
         }
 
-        [HttpGet]
+        [HttpGet("CreateForm")]
         public async Task<IActionResult> CreateForm()
         {
-            var firstName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-            var lastName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
-            var instructorPosition = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Actor)?.Value;
-            
-            var instructionTypeList = await _instructionTypeService.GetActiveTypes();
-
-            var createFormViewModel = new CreateFormViewModel
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value ?? string.Empty);
+            try
             {
-                InstructorFullName = $"{firstName} {lastName}",
-                InstructorPosition = instructorPosition,
-                InstructionFormDtos = instructionTypeList.ToList()
-            };
-            return View(createFormViewModel);
+                var firstName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+                var lastName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
+                var instructorPosition = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Actor)?.Value;
+
+                var instructionTypeList = await _instructionTypeService.GetActiveTypes();
+
+                var createFormViewModel = new CreateFormViewModel
+                {
+                    InstructorFullName = $"{firstName} {lastName}",
+                    InstructorPosition = instructorPosition,
+                    InstructionFormDtos = instructionTypeList.ToList()
+                };
+                return View(createFormViewModel);
+            }
+            catch (Exception ex)
+            {
+                var errorLineNumber = HelperMethods.HelperMethods.GetLineNumber(ex);
+
+                ErrorLogDto errorLogDto = new ErrorLogDto
+                {
+                    ActionName = ControllerContext.ActionDescriptor.ControllerName + "/" +
+                                 ControllerContext.ActionDescriptor.ActionName,
+                    ErrorMessage = ex.InnerException == null ? "Xəta baş verdi." : ex.InnerException.Message,
+                    InstructionFormId = null,
+                    UserId = userId,
+                    ErrorLineNumber = errorLineNumber,
+                    CreateDate = DateTime.Now
+                };
+                await _errorLogsService.AddErrorLog(errorLogDto);
+                return NotFound();
+            }
+
         }
 
-        [HttpPost]
+        [HttpPost("GetFormContentListByInstructionType")]
         public async Task<List<FormShortContentDto>> GetFormContentListByInstructionType()
         {
-            var formShortContentList = await _formShortContentService.GetShortContentNames();
-            
-            return formShortContentList.ToList();
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value ?? string.Empty);
+            try
+            {
+                var formShortContentList = await _formShortContentService.GetShortContentNames();
+
+                return formShortContentList.ToList();
+            }
+            catch (Exception ex)
+            {
+                var errorLineNumber = HelperMethods.HelperMethods.GetLineNumber(ex);
+
+                ErrorLogDto errorLogDto = new ErrorLogDto
+                {
+                    ActionName = ControllerContext.ActionDescriptor.ControllerName + "/" +
+                                 ControllerContext.ActionDescriptor.ActionName,
+                    ErrorMessage = ex.InnerException == null ? "Xəta baş verdi." : ex.InnerException.Message,
+                    InstructionFormId = null,
+                    UserId = userId,
+                    ErrorLineNumber = errorLineNumber,
+                    CreateDate = DateTime.Now
+                };
+                await _errorLogsService.AddErrorLog(errorLogDto);
+                return null;
+            }
+
+
         }
 
-        [HttpPost]
-        public JsonResult WorkerInformation(DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters)
+        [HttpPost("WorkerInformation")]
+        public async Task<JsonResult> WorkerInformation(DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters)
         {
-            int recordsFiltered = 0, recordsTotal = 0;
-
-            List<WorkerInformationViewModel> data = new List<WorkerInformationViewModel>();
-
-            ParallelOptions parallelOptions = new ParallelOptions
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value ?? string.Empty);
+            try
             {
-                MaxDegreeOfParallelism = 3
-            };
+                int recordsFiltered = 0, recordsTotal = 0;
 
-            Parallel.Invoke(parallelOptions, () =>
-                 {
-                     Task.Run(async () =>
-                     {
-                         data.AddRange(await _userService.GetWorkerInformations(jqueryDataTablesParameters));
-                     }).Wait();
-                 },
+                List<WorkerInformationViewModel> data = new List<WorkerInformationViewModel>();
+
+                ParallelOptions parallelOptions = new ParallelOptions
+                {
+                    MaxDegreeOfParallelism = 3
+                };
+
+                Parallel.Invoke(parallelOptions, () =>
+                    {
+                        Task.Run(async () =>
+                        {
+                            data.AddRange(await _userService.GetWorkerInformations(jqueryDataTablesParameters));
+                        }).Wait();
+                    },
                     () =>
                     {
                         Task.Run(async () =>
@@ -94,47 +146,107 @@ namespace HSE.WebUI.Controllers
                                 await _userService.GetWorkerInformationsFilteredCount(jqueryDataTablesParameters);
                         }).Wait();
                     }
-            );
-            return new JsonResult(new DataTableParamsModel.JqueryDataTablesResult<WorkerInformationViewModel>
+                );
+                return new JsonResult(new DataTableParamsModel.JqueryDataTablesResult<WorkerInformationViewModel>
+                {
+                    Draw = jqueryDataTablesParameters.Draw,
+                    Data = data,
+                    RecordsFiltered = recordsFiltered,
+                    RecordsTotal = recordsTotal
+                });
+            }
+            catch (Exception ex)
             {
-                Draw = jqueryDataTablesParameters.Draw,
-                Data = data,
-                RecordsFiltered = recordsFiltered,
-                RecordsTotal = recordsTotal
-            });
+                var errorLineNumber = HelperMethods.HelperMethods.GetLineNumber(ex);
+
+                ErrorLogDto errorLogDto = new ErrorLogDto
+                {
+                    ActionName = ControllerContext.ActionDescriptor.ControllerName + "/" +
+                                 ControllerContext.ActionDescriptor.ActionName,
+                    ErrorMessage = ex.InnerException == null ? "Xəta baş verdi." : ex.InnerException.Message,
+                    InstructionFormId = null,
+                    UserId = userId,
+                    ErrorLineNumber = errorLineNumber,
+                    CreateDate = DateTime.Now
+                };
+                await _errorLogsService.AddErrorLog(errorLogDto);
+                return null;
+            }
         }
 
-        [HttpPost]
+        [HttpPost("AddForms")]
         public async Task<int> AddForms(InstructionFormViewModel instructionFormViewModel)
         {
-            var employeInfos = JsonConvert.DeserializeObject<List<EmployeInfo>>(instructionFormViewModel.EmployeInfoListJsonString);
-            var fincode = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            var instructorUserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value;
-            
-            var organizationId = await _employeeService.GetOrganizationIdByFincode(fincode);
-            
-            InstructionFormResult = await _formServiceFacade.AddToInstructionForm(instructionFormViewModel, organizationId, instructorUserId);
-            await _formServiceFacade.AddToEmployeeForm(employeInfos);
+            var instructorUserId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value ?? string.Empty);
+            try
+            {
+                var employeInfos = JsonConvert.DeserializeObject<List<EmployeInfo>>(instructionFormViewModel.EmployeInfoListJsonString);
+                var fincode = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            return InstructionFormResult.Id;
+                var organizationId = await _employeeService.GetOrganizationIdByFincode(fincode);
+
+                InstructionFormResult = await _formServiceFacade.AddToInstructionForm(instructionFormViewModel, organizationId, instructorUserId);
+                await _formServiceFacade.AddToEmployeeForm(employeInfos);
+
+                return InstructionFormResult.Id;
+            }
+            catch (Exception ex)
+            {
+                var errorLineNumber = HelperMethods.HelperMethods.GetLineNumber(ex);
+
+                ErrorLogDto errorLogDto = new ErrorLogDto
+                {
+                    ActionName = ControllerContext.ActionDescriptor.ControllerName + "/" +
+                                 ControllerContext.ActionDescriptor.ActionName,
+                    ErrorMessage = ex.InnerException == null ? "Xəta baş verdi." : ex.InnerException.Message,
+                    InstructionFormId = null,
+                    UserId = instructorUserId,
+                    ErrorLineNumber = errorLineNumber,
+                    CreateDate = DateTime.Now
+                };
+                await _errorLogsService.AddErrorLog(errorLogDto);
+                return 0;
+            }
         }
 
-        [HttpGet]
+        [HttpGet("RetrieveFormResult")]
         public async Task<IActionResult> RetrieveFormResult(int instructionFormId)
         {
-            var instructionFormData = await _formServiceFacade.GetInstructionFormInfo(instructionFormId);
-            var employeeFormData = await _formServiceFacade.GetEmployeeFormInfo(instructionFormId);
-            
-            var retrieveFormResultViewModel = new RetrieveFormResultViewModel
+            var instructorUserId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value ?? string.Empty);
+            try
             {
-                InstructionFormDto = instructionFormData,
-                EmployeeFormDtos = employeeFormData.ToList()
-            };
-            return View(retrieveFormResultViewModel);
+                var instructionFormData = await _formServiceFacade.GetInstructionFormInfo(instructionFormId);
+                var employeeFormData = await _formServiceFacade.GetEmployeeFormInfo(instructionFormId);
+
+                var retrieveFormResultViewModel = new RetrieveFormResultViewModel
+                {
+                    InstructionFormDto = instructionFormData,
+                    EmployeeFormDtos = employeeFormData.ToList()
+                };
+                return View(retrieveFormResultViewModel);
+            }
+            catch (Exception ex)
+            {
+                var errorLineNumber = HelperMethods.HelperMethods.GetLineNumber(ex);
+
+                ErrorLogDto errorLogDto = new ErrorLogDto
+                {
+                    ActionName = ControllerContext.ActionDescriptor.ControllerName + "/" +
+                                 ControllerContext.ActionDescriptor.ActionName,
+                    ErrorMessage = ex.InnerException == null ? "Xəta baş verdi." : ex.InnerException.Message,
+                    InstructionFormId = instructionFormId,
+                    UserId = instructorUserId,
+                    ErrorLineNumber = errorLineNumber,
+                    CreateDate = DateTime.Now
+                };
+                await _errorLogsService.AddErrorLog(errorLogDto);
+                return NotFound();
+            }
+            
         }
 
-        [HttpPost]
-        public async Task<bool> CheckIfFincodeAndEmpUserIdIsTrue(string fincode,int employeeUserId)
+        [HttpPost("CheckIfFincodeAndEmpUserIdIsTrue")]
+        public async Task<bool> CheckIfFincodeAndEmpUserIdIsTrue(string fincode, int employeeUserId)
         {
             var result = await _userService.CheckFincodeAndEmpUserId(fincode, employeeUserId);
 #if DEBUG
@@ -143,33 +255,76 @@ namespace HSE.WebUI.Controllers
             return result;
         }
 
-        [HttpPost]
-        public async Task UpdateEmployeeForm(int instructionFormId,int employeeUserId)
+        [HttpPost("UpdateEmployeeForm")]
+        public async Task UpdateEmployeeForm(int instructionFormId, int employeeUserId)
         {
-            var dto = new EmployeeFormDto
+            var instructorUserId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value ?? string.Empty);
+            try
             {
-                InstructionFormId = instructionFormId,
-                EmployeeUserId = employeeUserId
-            };
+                var dto = new EmployeeFormDto
+                {
+                    InstructionFormId = instructionFormId,
+                    EmployeeUserId = employeeUserId
+                };
 
-            var result = await _formServiceFacade.UpdateIsActiveOfEmployee(dto);
+                var result = await _formServiceFacade.UpdateIsActiveOfEmployee(dto);
+            }
+            catch (Exception ex)
+            {
+                var errorLineNumber = HelperMethods.HelperMethods.GetLineNumber(ex);
+
+                ErrorLogDto errorLogDto = new ErrorLogDto
+                {
+                    ActionName = ControllerContext.ActionDescriptor.ControllerName + "/" +
+                                 ControllerContext.ActionDescriptor.ActionName,
+                    ErrorMessage = ex.InnerException == null ? "Xəta baş verdi." : ex.InnerException.Message,
+                    InstructionFormId = instructionFormId,
+                    UserId = instructorUserId,
+                    ErrorLineNumber = errorLineNumber,
+                    CreateDate = DateTime.Now
+                };
+                await _errorLogsService.AddErrorLog(errorLogDto);
+            }
+           
         }
 
-        [HttpPost]
+        [HttpPost("GetPhotoDate")]
         public async Task<string> GetPhotoDate(int instructionFormId, int employeeUserId)
         {
-            string result = "";
-            if (instructionFormId != 0 && employeeUserId != 0)
+            var instructorUserId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value ?? string.Empty);
+            try
             {
-                result = await _formServiceFacade.GetPhotoDate(instructionFormId, employeeUserId);
-            }
+                string result = "";
+                if (instructionFormId != 0 && employeeUserId != 0)
+                {
+                    result = await _formServiceFacade.GetPhotoDate(instructionFormId, employeeUserId);
+                }
 
-            if (result != null)
+                if (result != null)
+                {
+                    return result;
+                }
+
+                return string.Empty;
+            }
+            catch (Exception ex)
             {
-                return result;
-            }
+                var errorLineNumber = HelperMethods.HelperMethods.GetLineNumber(ex);
 
-            return string.Empty;
+                ErrorLogDto errorLogDto = new ErrorLogDto
+                {
+                    ActionName = ControllerContext.ActionDescriptor.ControllerName + "/" +
+                                 ControllerContext.ActionDescriptor.ActionName,
+                    ErrorMessage = ex.InnerException == null ? "Xəta baş verdi." : ex.InnerException.Message,
+                    InstructionFormId = instructionFormId,
+                    UserId = instructorUserId,
+                    ErrorLineNumber = errorLineNumber,
+                    CreateDate = DateTime.Now
+                };
+                await _errorLogsService.AddErrorLog(errorLogDto);
+                return "";
+            }
+            
         }
     }
 }

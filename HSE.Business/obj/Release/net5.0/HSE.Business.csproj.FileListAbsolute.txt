@@ -6,7 +6,6 @@ D:\VisualStudio2019\HSE\HSE.Business\bin\Release\net5.0\HSE.DAL.dll
 D:\VisualStudio2019\HSE\HSE.Business\bin\Release\net5.0\HSE.Domain.dll
 D:\VisualStudio2019\HSE\HSE.Business\bin\Release\net5.0\HSE.DAL.pdb
 D:\VisualStudio2019\HSE\HSE.Business\bin\Release\net5.0\HSE.Domain.pdb
-D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.csprojAssemblyReference.cache
 D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.GeneratedMSBuildEditorConfig.editorconfig
 D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.AssemblyInfoInputs.cache
 D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.AssemblyInfo.cs
@@ -15,3 +14,4 @@ D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.csproj.Copy
 D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.dll
 D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\ref\HSE.Business.dll
 D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.pdb
+D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.csproj.AssemblyReference.cache

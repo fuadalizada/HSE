@@ -8,6 +8,7 @@ namespace HSE.Business.DTOs
         public int? InstructionFormId { get; set; }
         public string ActionName { get; set; }
         public string ErrorMessage { get; set; }
+        public int ErrorLineNumber { get; set; }
         public DateTime CreateDate { get; set; }
     }
 }

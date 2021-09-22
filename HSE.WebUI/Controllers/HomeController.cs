@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace HSE.WebUI.Controllers
 {
     [Authorize]
+    [Route("")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -16,17 +17,16 @@ namespace HSE.WebUI.Controllers
             _logger = logger;
         }
 
+        [HttpGet("")]
+        [HttpGet("[action]")]
+        [HttpGet("[controller]/[action]")]
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
+       
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [HttpGet("[controller]/[action]")]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
