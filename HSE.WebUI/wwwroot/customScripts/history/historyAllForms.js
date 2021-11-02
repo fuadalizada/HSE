@@ -34,9 +34,10 @@ function CreateDataTable() {
             { "data": "formId", "name": "formId", "autoWidth": true },
             { "data": "instructionDate", "name": "instructionDate", "autoWidth": true },
             { "data": "instructorFullName", "name": "instructorFullName", "autoWidth": true },
+            { "data": "instructorOrganizationFullName", "name": "instructorOrganizationFullName", "autoWidth": true },
             { "data": "instructorPosition", "name": "instructorPosition", "autoWidth": true },
             { "data": "instructorTypeName", "name": "instructorTypeName", "autoWidth": true },
-            { "data": "instructionStatus", "name": "instructionStatus", "autoWidth": true }
+            { "data": "isActive", "name": "isActive", "autoWidth": true }
         ],
         "processing": true,
         "serverSide": true,
@@ -70,6 +71,12 @@ function CreateDataTable() {
                 }
             },
             {
+                "targets": "thInstructorOrganizationFullName",
+                "createdCell": function (td) {
+                    $(td).addClass("InstructorOrganizationFullName");
+                }
+            },
+            {
                 "targets": "thInstructorjobName",
                 "createdCell": function (td) {
                     $(td).addClass("InstructorjobName");
@@ -78,7 +85,7 @@ function CreateDataTable() {
                 "targets": "thInstructionStatus",
                 "createdCell": function (td, cellData, rowData, row, col) {
                     var statusBadge = "";
-                    if (rowData.instructionStatus === "Prosesdə") {
+                    if (rowData.isActive === "Prosesdə") {
                         statusBadge = `<span class="badge badge-primary">${cellData}</span>`;
                     }
                     else {

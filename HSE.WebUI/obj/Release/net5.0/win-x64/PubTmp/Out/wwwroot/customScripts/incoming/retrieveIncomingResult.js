@@ -44,23 +44,26 @@ function showWarningMessage(message, title) {
 function OpenPopUpForTakingPicture() {
     $("body").on("click", ".openPopUp",
         function () {
-            employeeUserId = $(this).attr("data-employeeUserId");
-            var employeeFullName = $(this).attr("data-employeeFullName");
-            $(".nameSurnameModal").val(employeeFullName);
+            employeeUserId = window.$(this).attr("data-employeeUserId");
+            var employeeFullName = window.$(this).attr("data-employeeFullName");
+            window.$(".nameSurnameModal").val(employeeFullName);
 
-            $("#takeApictureModal").modal({
+            window.$("#takeApictureModal").modal({
                 backdrop: "static",
                 keyboard: false
             });
-            var finCode = $(".fincode").val();
+            var finCode = window.$(".fincode").val();
             if (finCode !== null) {
                 document.getElementById("fin_code").value = "";
                 document.getElementById("results").innerHTML = `<img src="${null}"/>`;
-                $(".fincodeValidationMessage").html("");
+                window.$(".fincodeValidationMessage").html("");
             }
             attachCamera();
             $("#example").tooltip({
-                title: "Şəxsiyyət vəsiqəsinin fərdi identifikasiya nömrəsi"
+                animated: 'fade',
+                html: true,
+                
+
             });
         });
 }
@@ -97,7 +100,7 @@ function OpenPopUpForShowingPicture() {
 }
 
 function ConfirmModal() {
-    
+
     $("#ConfirmPictureModal").on("click",
         function () {
             isSuccess = false;

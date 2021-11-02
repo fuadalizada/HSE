@@ -61,3 +61,8 @@ form > input {
 .ErrorClass {
     color: red !important;
 }
+
+#img {
+    width: 200%;
+    height: 400px;
+}

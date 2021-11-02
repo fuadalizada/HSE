@@ -184,8 +184,8 @@ namespace HSE.WebUI.Controllers
                 var fincode = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
                 var organizationId = await _employeeService.GetOrganizationIdByFincode(fincode);
-
-                InstructionFormResult = await _formServiceFacade.AddToInstructionForm(instructionFormViewModel, organizationId, instructorUserId);
+                var organizationName = await _employeeService.GetOrganizationFullNameByFincode(fincode);
+                InstructionFormResult = await _formServiceFacade.AddToInstructionForm(instructionFormViewModel, organizationId,organizationName, instructorUserId);
                 await _formServiceFacade.AddToEmployeeForm(employeInfos);
 
                 return InstructionFormResult.Id;

@@ -386,6 +386,11 @@ namespace HSE.DAL.DbContext
             modelBuilder.Entity<InstructionForm>()
                 .Property(x => x.InstructorOrganizationId)
                 .HasColumnName("INSTRUCTOR_ORGANIZATION_ID");
+            
+            modelBuilder.Entity<InstructionForm>()
+                .Property(x => x.InstructorOrganizationFullName)
+                .HasColumnType("nvarchar(240)")
+                .HasColumnName("INSTRUCTOR_ORGANIZATION_FULL_NAME");
 
             modelBuilder.Entity<InstructionForm>()
                 .Property(x => x.InstructorFullName)

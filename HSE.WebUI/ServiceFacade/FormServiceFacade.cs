@@ -19,9 +19,10 @@ namespace HSE.WebUI.ServiceFacade
             _employeeFormService = employeeFormService;
         }
 
-        public async Task<InstructionFormDto> AddToInstructionForm(InstructionFormViewModel instructionFormViewModel,int organizationId,int instructorUserId)
+        public async Task<InstructionFormDto> AddToInstructionForm(InstructionFormViewModel instructionFormViewModel,int organizationId,string organizationName,int instructorUserId)
         {
             instructionFormViewModel.InstructorOrganizationId = organizationId;
+            instructionFormViewModel.InstructorOrganizationFullName = organizationName;
             instructionFormViewModel.InstructorUserId = instructorUserId;
             var instructionFormDto = new InstructionFormDto
             {
@@ -29,6 +30,7 @@ namespace HSE.WebUI.ServiceFacade
                 InstructionShortContent = instructionFormViewModel.InstructionShortContent,
                 InstructorFullName = instructionFormViewModel.InstructorFullName,
                 InstructorOrganizationId = organizationId,
+                InstructorOrganizationFullName = organizationName,
                 InstructorPosition = instructionFormViewModel.InstructorPosition,
                 InstructorUserId = instructorUserId,
                 InstructionTypeId = Convert.ToInt32(instructionFormViewModel.InstructionType),

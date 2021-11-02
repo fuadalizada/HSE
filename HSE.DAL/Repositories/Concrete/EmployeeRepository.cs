@@ -22,7 +22,14 @@ namespace HSE.DAL.Repositories.Concrete
                 .FirstOrDefaultAsync();
             return Convert.ToInt32(result.OrganizationId);
         }
-         
+
+        public async Task<string> GetOrganizationFullNameByFincode(string fincode)
+        {
+            var result = await _context.Set<Employee>().Where(x => x.NationalIdentifier == fincode)
+                .FirstOrDefaultAsync();
+            return result.OrganizationFullname;
+        }
+
         public async Task<byte[]> GetUserPhotoByFincode(string fincode)
         {
             var result = await _context.Set<Employee>().Where(x => x.NationalIdentifier == fincode)

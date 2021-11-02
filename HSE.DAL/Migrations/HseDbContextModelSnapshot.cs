@@ -334,6 +334,10 @@ namespace HSE.DAL.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("INSTRUCTOR_FULL_NAME");
 
+                    b.Property<string>("InstructorOrganizationFullName")
+                        .HasColumnType("nvarchar(240)")
+                        .HasColumnName("INSTRUCTOR_ORGANIZATION_FULL_NAME");
+
                     b.Property<int>("InstructorOrganizationId")
                         .HasColumnType("int")
                         .HasColumnName("INSTRUCTOR_ORGANIZATION_ID");

@@ -49,16 +49,17 @@ namespace HSE.DAL.Repositories.Concrete
             cmd.Parameters.AddWithValue("@instructorUserId", userId);
             cmd.Parameters.AddWithValue("@instructionDate", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructionDate"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorFullName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@instructorOrganizationFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorOrganizationFullName"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorPosition", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorPosition"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorTypeName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorTypeName"))?.Search.Value ?? DBNull.Value);
-            
+
             if (jqueryDataTablesParameters.SortOrder == null)
             {
                 cmd.Parameters.AddWithValue("@sortedColumn", DBNull.Value);
             }
             else
             {
-                cmd.Parameters.AddWithValue("@sortedColumn", jqueryDataTablesParameters.SortOrder);
+                cmd.Parameters.AddWithValue("@sortedColumn", jqueryDataTablesParameters.SortOrder.Split(' ')[0]);
             }
             if (jqueryDataTablesParameters.Order == null)
             {
@@ -79,8 +80,9 @@ namespace HSE.DAL.Repositories.Concrete
                     activeFormsViewModels.Add(new ActiveFormsViewModel
                     {
                         FormId = int.Parse(reader["ID"].ToString() ?? string.Empty),
-                        InstructionDate = reader["INSTRUCTION_DATE"].ToString(),
+                        InstructionDate = Convert.ToDateTime(reader["INSTRUCTION_DATE"]).ToString("dd/MM/yyyy"),
                         InstructorFullName = reader["INSTRUCTOR_FULL_NAME"].ToString(),
+                        InstructorOrganizationFullName = reader["INSTRUCTOR_ORGANIZATION_FULL_NAME"].ToString(),
                         InstructorPosition = reader["INSTRUCTOR_POSITION"].ToString(),
                         InstructorTypeName = reader["INSTRUCTION_TYPE_NAME"].ToString(),
                         InstructionShortContent = reader["INSTRUCTOR_SHORT_CONTENT"].ToString(),
@@ -122,6 +124,7 @@ namespace HSE.DAL.Repositories.Concrete
             cmd.Parameters.AddWithValue("@instructorUserId", instructorUserId);
             cmd.Parameters.AddWithValue("@instructionDate", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructionDate"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorFullName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@instructorOrganizationFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorOrganizationFullName"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorPosition", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorPosition"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorTypeName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorTypeName"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@permitionTypeId", userRoleId);
@@ -147,8 +150,10 @@ namespace HSE.DAL.Repositories.Concrete
             cmd.Parameters.AddWithValue("@instructorUserId", instructorUserId);
             cmd.Parameters.AddWithValue("@instructionDate", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructionDate"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorFullName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@instructorOrganizationFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorOrganizationFullName"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorPosition", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorPosition"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorTypeName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorTypeName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@isActive", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("isActive"))?.Search.Value ?? DBNull.Value);
 
             if (jqueryDataTablesParameters.SortOrder == null)
             {
@@ -156,7 +161,7 @@ namespace HSE.DAL.Repositories.Concrete
             }
             else
             {
-                cmd.Parameters.AddWithValue("@sortedColumn", jqueryDataTablesParameters.SortOrder);
+                cmd.Parameters.AddWithValue("@sortedColumn", jqueryDataTablesParameters.SortOrder.Split(' ')[0]);
             }
             if (jqueryDataTablesParameters.Order == null)
             {
@@ -164,6 +169,7 @@ namespace HSE.DAL.Repositories.Concrete
             }
             else
             {
+                string a = jqueryDataTablesParameters.Order[0].Dir.ToString();
                 cmd.Parameters.AddWithValue("@sortedType", jqueryDataTablesParameters.Order[0].Dir.ToString());
             }
             cmd.Parameters.AddWithValue("@permitionTypeId", userRoleId);
@@ -177,12 +183,13 @@ namespace HSE.DAL.Repositories.Concrete
                     allFormsForHistoryViewModels.Add(new AllFormsForHistoryViewModel
                     {
                         FormId = int.Parse(reader["ID"].ToString() ?? string.Empty),
-                        InstructionDate = reader["INSTRUCTION_DATE"].ToString(),
+                        InstructionDate = Convert.ToDateTime(reader["INSTRUCTION_DATE"]).ToString("dd/MM/yyyy"),
                         InstructorFullName = reader["INSTRUCTOR_FULL_NAME"].ToString(),
+                        InstructorOrganizationFullName = reader["INSTRUCTOR_ORGANIZATION_FULL_NAME"].ToString(),
                         InstructorPosition = reader["INSTRUCTOR_POSITION"].ToString(),
                         InstructorTypeName = reader["INSTRUCTION_TYPE_NAME"].ToString(),
                         InstructionShortContent = reader["INSTRUCTOR_SHORT_CONTENT"].ToString(),
-                        InstructionStatus = reader["IS_ACTIVE"].ToString()
+                        IsActive = reader["IS_ACTIVE"].ToString()
                     });
                 }
             }
@@ -220,8 +227,10 @@ namespace HSE.DAL.Repositories.Concrete
             cmd.Parameters.AddWithValue("@instructorUserId", instructorUserId);
             cmd.Parameters.AddWithValue("@instructionDate", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructionDate"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorFullName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@instructorOrganizationFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorOrganizationFullName"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorPosition", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorPosition"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorTypeName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorTypeName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@isActive", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("isActive"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@permitionTypeId", userRoleId);
             cmd.Parameters.AddWithValue("@child_orgs", organizationIds);
 
@@ -256,8 +265,10 @@ namespace HSE.DAL.Repositories.Concrete
             cmd.Parameters.AddWithValue("@instructorUserId", instructorUserId);
             cmd.Parameters.AddWithValue("@instructionDate", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructionDate"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorFullName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@instructorOrganizationFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorOrganizationFullName"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorPosition", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorPosition"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorTypeName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorTypeName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@isActive", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("isActive"))?.Search.Value ?? DBNull.Value);
 
             if (jqueryDataTablesParameters.SortOrder == null)
             {
@@ -265,7 +276,7 @@ namespace HSE.DAL.Repositories.Concrete
             }
             else
             {
-                cmd.Parameters.AddWithValue("@sortedColumn", jqueryDataTablesParameters.SortOrder);
+                cmd.Parameters.AddWithValue("@sortedColumn", jqueryDataTablesParameters.SortOrder.Split(' ')[0]);
             }
             if (jqueryDataTablesParameters.Order == null)
             {
@@ -286,16 +297,16 @@ namespace HSE.DAL.Repositories.Concrete
                     formsReportViewModels.Add(new FormsReportViewModel
                     {
                         FormId = int.Parse(reader["ID"].ToString() ?? string.Empty),
-                        InstructionDate = reader["INSTRUCTION_DATE"].ToString(),
+                        InstructionDate = Convert.ToDateTime(reader["INSTRUCTION_DATE"]).ToString("dd/MM/yyyy"),
                         InstructorFullName = reader["INSTRUCTOR_FULL_NAME"].ToString(),
+                        InstructorOrganizationFullName = reader["INSTRUCTOR_ORGANIZATION_FULL_NAME"].ToString(),
                         InstructorPosition = reader["INSTRUCTOR_POSITION"].ToString(),
                         InstructorTypeName = reader["INSTRUCTION_TYPE_NAME"].ToString(),
                         InstructionShortContent = reader["INSTRUCTOR_SHORT_CONTENT"].ToString(),
-                        InstructionStatus = reader["IS_ACTIVE"].ToString()
+                        IsActive = reader["IS_ACTIVE"].ToString()
                     });
                 }
             }
-
             return formsReportViewModels;
         }
 
@@ -351,8 +362,10 @@ namespace HSE.DAL.Repositories.Concrete
             cmd.Parameters.AddWithValue("@instructorUserId", instructorUserId);
             cmd.Parameters.AddWithValue("@instructionDate", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructionDate"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorFullName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@instructorOrganizationFullName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorOrganizationFullName"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorPosition", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorPosition"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@instructorTypeName", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("instructorTypeName"))?.Search.Value ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@isActive", (object)jqueryDataTablesParameters.Columns.FirstOrDefault(c => c.Data.Equals("isActive"))?.Search.Value ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@permitionTypeId", userRoleId);
             cmd.Parameters.AddWithValue("@child_orgs", organizationIds);
 

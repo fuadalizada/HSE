@@ -166,3 +166,7 @@ D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\Razor\Views\Shared\_showPho
 D:\VisualStudio2019\HSE\HSE.WebUI\bin\Release\net5.0\QRCoder.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\Razor\Views\Report\ReportIndex.cshtml.g.cs
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\HSE.WebUI.csproj.AssemblyReference.cache
+D:\VisualStudio2019\HSE\HSE.WebUI\bin\Release\net5.0\Microsoft.OpenApi.dll
+D:\VisualStudio2019\HSE\HSE.WebUI\bin\Release\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\VisualStudio2019\HSE\HSE.WebUI\bin\Release\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\VisualStudio2019\HSE\HSE.WebUI\bin\Release\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll

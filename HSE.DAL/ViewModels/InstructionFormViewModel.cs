@@ -10,6 +10,7 @@
         public string InstructionTypeName { get; set; }
         public string InstructionShortContent { get; set; }
         public int InstructorOrganizationId { get; set; }
+        public string InstructorOrganizationFullName { get; set; }
         public string EmployeInfoListJsonString { get; set; }
     }
 

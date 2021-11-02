@@ -23,6 +23,12 @@ namespace HSE.Business.Services.Concrete
             return result;
         }
 
+        public async Task<string> GetOrganizationFullNameByFincode(string fincode)
+        {
+            var result = await _repository.GetOrganizationFullNameByFincode(fincode);
+            return result;
+        }
+
         public async Task<byte[]> GetUserPhotoByFincode(string fincode)
         {
             var result = await _repository.GetUserPhotoByFincode(fincode);

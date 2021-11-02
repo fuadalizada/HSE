@@ -10,8 +10,8 @@ D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.GeneratedMS
 D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.AssemblyInfoInputs.cache
 D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.AssemblyInfo.cs
 D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.csproj.CoreCompileInputs.cache
-D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.csproj.CopyComplete
 D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.dll
 D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\ref\HSE.Business.dll
 D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.pdb
 D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.csproj.AssemblyReference.cache
+D:\VisualStudio2019\HSE\HSE.Business\obj\Release\net5.0\HSE.Business.csproj.CopyComplete

@@ -309,6 +309,7 @@ D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\images\backround.jpg
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\images\export-to-excel-icon.png
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\images\false.png
+D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\images\finTitle.png
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\images\loader.gif
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\images\logo.png
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\wwwroot\images\true.png
@@ -630,6 +631,7 @@ D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Microsof
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Microsoft.IdentityModel.Protocols.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Microsoft.IdentityModel.Tokens.dll
+D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Microsoft.OpenApi.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
@@ -640,6 +642,9 @@ D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Microsof
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Newtonsoft.Json.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\QRCoder.dll
+D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
+D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\System.Composition.AttributedModel.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\System.Composition.Convention.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\win-x64\PubTmp\Out\System.Composition.Hosting.dll

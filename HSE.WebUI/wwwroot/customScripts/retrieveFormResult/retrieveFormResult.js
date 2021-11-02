@@ -58,7 +58,8 @@ function OpenPopUpForTakingPicture() {
             attachCamera();
             ConfirmModal();
             $("#example").tooltip({
-                title: "Şəxsiyyət vəsiqəsinin fərdi identifikasiya nömrəsi"
+                animated: 'fade',
+                html: true
             });
         });
 }

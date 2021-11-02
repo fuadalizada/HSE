@@ -34,6 +34,7 @@ tableIncomings = $("#incomingForms").DataTable({
         { "data": "formId", "name": "formId", "autoWidth": true},
         { "data": "instructionDate", "name": "instructionDate", "autoWidth": true },
         { "data": "instructorFullName", "name": "instructorFullName", "autoWidth": true },
+        { "data": "instructorOrganizationFullName", "name": "instructorOrganizationFullName", "autoWidth": true },
         { "data": "instructorPosition", "name": "instructorPosition", "autoWidth": true },
         { "data": "instructorTypeName", "name": "instructorTypeName", "autoWidth": true },
         { "data": "instructionStatus", "name": "instructionStatus", "autoWidth": true }
@@ -67,6 +68,12 @@ tableIncomings = $("#incomingForms").DataTable({
             "targets": "thInstructorFullName",
             "createdCell": function (td) {
                 $(td).addClass("InstructorFullName");
+            }
+        },
+        {
+            "targets": "thInstructorOrganizationFullName",
+            "createdCell": function (td) {
+                $(td).addClass("InstructorOrganizationFullName");
             }
         },
         {

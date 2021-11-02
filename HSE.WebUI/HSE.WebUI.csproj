@@ -18,7 +18,6 @@
     <Folder Include="Files\2021\" />
     <Folder Include="Files\qrcode2021\" />
     <Folder Include="Views\Camera\" />
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
   <ItemGroup>

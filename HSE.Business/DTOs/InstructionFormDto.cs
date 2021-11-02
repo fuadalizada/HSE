@@ -6,6 +6,7 @@ namespace HSE.Business.DTOs
     {
         public int InstructorUserId { get; set; }
         public int InstructorOrganizationId { get; set; }
+        public string InstructorOrganizationFullName { get; set; }
         public string InstructorFullName { get; set; }
         public string InstructorPosition { get; set; }
         public string InstructionShortContent { get; set; }

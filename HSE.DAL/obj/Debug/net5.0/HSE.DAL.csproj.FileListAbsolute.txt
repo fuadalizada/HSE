@@ -10,7 +10,6 @@ D:\VisualStudio2019\HSE\HSE.DAL\obj\Debug\net5.0\HSE.DAL.GeneratedMSBuildEditorC
 D:\VisualStudio2019\HSE\HSE.DAL\obj\Debug\net5.0\HSE.DAL.AssemblyInfoInputs.cache
 D:\VisualStudio2019\HSE\HSE.DAL\obj\Debug\net5.0\HSE.DAL.AssemblyInfo.cs
 D:\VisualStudio2019\HSE\HSE.DAL\obj\Debug\net5.0\HSE.DAL.csproj.CoreCompileInputs.cache
-D:\VisualStudio2019\HSE\HSE.DAL\obj\Debug\net5.0\HSE.DAL.csproj.CopyComplete
 D:\VisualStudio2019\HSE\HSE.DAL\obj\Debug\net5.0\HSE.DAL.dll
 D:\VisualStudio2019\HSE\HSE.DAL\obj\Debug\net5.0\ref\HSE.DAL.dll
 D:\VisualStudio2019\HSE\HSE.DAL\obj\Debug\net5.0\HSE.DAL.pdb

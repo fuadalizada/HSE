@@ -16,10 +16,10 @@ function CreateDataTable() {
                                                                                      </div>`
     );
 
-    var buttonsHtml = $.parseHTML(
-        `<a href="#" id="btnExcelExport">
-            <img title="Excel" height="30" width="30" src="/images/export-to-excel-icon.png" />
-         </a>`);
+    //var buttonsHtml = $.parseHTML(
+    //    `<a href="#" id="btnExcelExport">
+    //        <img title="Excel" height="30" width="30" src="/images/export-to-excel-icon.png" />
+    //     </a>`);
 
     tableReportForms = $("#reportTable").DataTable({
         "language": {
@@ -51,9 +51,10 @@ function CreateDataTable() {
             { "data": "formId", "name": "formId", "autoWidth": true },
             { "data": "instructionDate", "name": "instructionDate", "autoWidth": true },
             { "data": "instructorFullName", "name": "instructorFullName", "autoWidth": true },
+            { "data": "instructorOrganizationFullName", "name": "instructorOrganizationFullName", "autoWidth": true },
             { "data": "instructorPosition", "name": "instructorPosition", "autoWidth": true },
             { "data": "instructorTypeName", "name": "instructorTypeName", "autoWidth": true },
-            { "data": "instructionStatus", "name": "instructionStatus", "autoWidth": true }
+            { "data": "isActive", "name": "isActive", "autoWidth": true }
         ],
         "processing": true,
         "serverSide": true,
@@ -94,6 +95,12 @@ function CreateDataTable() {
                 }
             },
             {
+                "targets": "thInstructorOrganizationFullName",
+                "createdCell": function (td) {
+                    $(td).addClass("InstructorOrganizationFullName");
+                }
+            },
+            {
                 "targets": "thInstructorjobName",
                 "createdCell": function (td) {
                     $(td).addClass("InstructorjobName");
@@ -102,7 +109,7 @@ function CreateDataTable() {
                 "targets": "thInstructionStatus",
                 "createdCell": function (td, cellData, rowData, row, col) {
                     var statusBadge = "";
-                    if (rowData.instructionStatus === "Prosesdə") {
+                    if (rowData.isActive === "Prosesdə") {
                         statusBadge = `<span class="badge badge-primary">${cellData}</span>`;
                     }
                     else {
@@ -116,7 +123,7 @@ function CreateDataTable() {
         ]
     });
 
-    $('.dt-buttons-icon-container').html(buttonsHtml);
+    //$('.dt-buttons-icon-container').html(buttonsHtml);
     $(".dt-date-range").html(dateRangePickerHtml);
 
     tableReportForms.columns().every(function () {
@@ -186,12 +193,38 @@ function CreateDataTable() {
     cb(start, end);
 }
 
-function ExportExcelHandler() {
-    $("#btnExcelExport").on("click", function (e) {
-        e.preventDefault();
-        var tableId = "reportTable";
-        var reportTitle = $("#reportTitle").html();
-        ExportTableToExcel(tableId, reportTitle, 5);
+function ExportToExcel() {
+    //$("#btnExcelExport").on("click", function (e) {
+    //    e.preventDefault();
+    //    var tableId = "reportTable";
+    //    var reportTitle = $("#reportTitle").html();
+    //    ExportTableToExcel(tableId, reportTitle, 5);
+    //});
+
+    $("#btnExcelExport").on("click", function () {
+        var search;
+        if (typeof tableReportForms !== 'undefined') {
+            search = tableReportForms.search();
+        }
+
+        var documentModel = getFormData($('#ReportForm'));
+
+        $.ajax({
+            "url": "/DocumentReport/ExportToExcel",
+            "type": "GET",
+            data: {
+                documentModel: documentModel,
+                userColumnsJson: $('#userColumnsJson').val(),
+                generalSearch: search
+            },
+            xhrFields: {
+                responseType: 'text'
+            },
+            success: function (response) {
+                // convert json response to csv format
+                JSONToExcelConvertor(response);
+            }
+        });
     });
 }
 
