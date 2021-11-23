@@ -34,8 +34,10 @@ namespace HSE.WebUI.ServiceFacade
                 InstructorPosition = instructionFormViewModel.InstructorPosition,
                 InstructorUserId = instructorUserId,
                 InstructionTypeId = Convert.ToInt32(instructionFormViewModel.InstructionType),
-                InstructionTypeName = instructionFormViewModel.InstructionTypeName
+                InstructionTypeName = instructionFormViewModel.InstructionTypeName,
+                InstructionFormGuidId = Guid.NewGuid().ToString()
             };
+
 
             InstructionFormResult = await _instructionFormService.Add(instructionFormDto);
             return InstructionFormResult;

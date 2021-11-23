@@ -6,6 +6,7 @@ namespace HSE.Domain.Entities
     public class InstructionForm : BaseEntity
     {
         public int InstructorUserId { get; set; }
+        public Guid InstructionFormGuidId { get; set; }
         public int InstructorOrganizationId { get; set; }
         public string InstructorOrganizationFullName { get; set; }
         public string InstructorFullName { get; set; }

@@ -119,9 +119,8 @@ function CreateDataTable() {
     $("#historyForms tbody").on("dblclick", "tr", function () {
 
         const data = tableHistoryForms.row(this).data();
-        const newUrl = "/History/RetrieveHistoryResult?instructionFormId=";
-        window.open(newUrl + data.formId,"_self");
-        //window.target("_blank");
+        const newUrl = "/History/RetrieveHistoryResult?instructionFormGuidId=";
+        window.open(newUrl + data.formGuidId,"_self");
     });
 }
 

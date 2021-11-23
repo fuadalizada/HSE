@@ -131,7 +131,6 @@ D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\HSE.WebUI.MvcApplicationPar
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\HSE.WebUI.RazorAssemblyInfo.cache
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\HSE.WebUI.RazorAssemblyInfo.cs
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\staticwebassets\HSE.WebUI.StaticWebAssets.Manifest.cache
-D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\staticwebassets\HSE.WebUI.StaticWebAssets.xml
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\scopedcss\bundle\HSE.WebUI.styles.css
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\HSE.WebUI.TagHelpers.input.cache
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Release\net5.0\HSE.WebUI.TagHelpers.output.cache
@@ -170,3 +169,4 @@ D:\VisualStudio2019\HSE\HSE.WebUI\bin\Release\net5.0\Microsoft.OpenApi.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\bin\Release\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\bin\Release\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\VisualStudio2019\HSE\HSE.WebUI\bin\Release\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\VisualStudio2019\HSE\HSE.WebUI\bin\Release\net5.0\HSE.WebUI.StaticWebAssets.xml

@@ -346,6 +346,10 @@ namespace HSE.DAL.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("INSTRUCTOR_POSITION");
 
+                    b.Property<Guid>("InstructorUserGuidId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("INSTRUCTION_FORM_GUID_ID");
+
                     b.Property<int>("InstructorUserId")
                         .HasColumnType("int")
                         .HasColumnName("INSTRUCTOR_USER_ID");

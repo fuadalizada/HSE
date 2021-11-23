@@ -166,8 +166,9 @@ namespace HSE.WebUI.Controllers
         }
 
         [HttpGet("RetrieveIncomingResult")]
-        public async Task<IActionResult> RetrieveIncomingResult(int instructionFormId)
+        public async Task<IActionResult> RetrieveIncomingResult(string instructionFormGuidId)
         {
+            int instructionFormId = await _instructionFormService.GetInstructionFormIdByFormGuidId(instructionFormGuidId);
             int instructorUserId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value ?? string.Empty);
             try
             {

@@ -5,6 +5,7 @@ namespace HSE.Business.DTOs
     public class InstructionFormDto : BaseDto
     {
         public int InstructorUserId { get; set; }
+        public string InstructionFormGuidId { get; set; }
         public int InstructorOrganizationId { get; set; }
         public string InstructorOrganizationFullName { get; set; }
         public string InstructorFullName { get; set; }

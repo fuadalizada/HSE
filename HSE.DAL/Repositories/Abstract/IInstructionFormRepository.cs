@@ -18,5 +18,6 @@ namespace HSE.DAL.Repositories.Abstract
         Task<int> GetFormsReportTotalCount(int instructorUserId, string dateRange, int userRoleId, string organizationIds);
         Task<int> GetFormsReportFilteredCount(int instructorUserId, string dateRange, int userRoleId, string organizationIds, DataTableParamsModel.JqueryDataTablesParameters jqueryDataTablesParameters);
         Task<InstructionForm> UpdateIsActiveByInstructionFormId(int instructionFormId);
+        Task<int> GetInstructionFormIdByFormGuidId(string formGuidId);
     }
 }

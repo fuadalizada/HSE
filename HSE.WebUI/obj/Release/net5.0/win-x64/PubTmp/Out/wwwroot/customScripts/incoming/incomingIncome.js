@@ -113,9 +113,8 @@ tableIncomings.columns().every(function () {
     $("#incomingForms tbody").on("dblclick", "tr", function () {
 
         const data = tableIncomings.row(this).data();
-        const newUrl = "/Incoming/RetrieveIncomingResult?instructionFormId=";
-        window.open(newUrl + data.formId,"_self");
-        //window.target("_blank");
+        const newUrl = "/Incoming/RetrieveIncomingResult?instructionFormGuidId=";
+        window.open(newUrl + data.formGuidId, "_self");
     });
 }
 

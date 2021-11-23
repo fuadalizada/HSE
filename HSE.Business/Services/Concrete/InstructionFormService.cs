@@ -87,5 +87,11 @@ namespace HSE.Business.Services.Concrete
             var result = await _repository.GetFormsReportFilteredCount(instructorUserId, dateRange, userRoleId, organizationIds, jqueryDataTablesParameters);
             return result;
         }
+
+        public async Task<int> GetInstructionFormIdByFormGuidId(string formGuidId)
+        {
+            var result = await _repository.GetInstructionFormIdByFormGuidId(formGuidId);
+            return result;
+        }
     }
 }

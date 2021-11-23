@@ -146,8 +146,8 @@ function CreateDataTable() {
     $("#reportTable tbody").on("dblclick", "tr", function () {
 
         const data = tableReportForms.row(this).data();
-        const newUrl = "/History/RetrieveHistoryResult?instructionFormId=";
-        window.open(newUrl + data.formId);
+        const newUrl = "/History/RetrieveHistoryResult?instructionFormGuidId=";
+        window.open(newUrl + data.formGuidId);
         window.target("_blank");
     });
 

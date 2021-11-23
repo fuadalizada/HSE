@@ -73,7 +73,7 @@ function CreateForm() {
 
 
 
-            var newUrl = "RetrieveFormResult?instructionFormId=";
+            var newUrl = "RetrieveFormResult?instructionFormGuidId=";
 
             if (!instructionType || !instructionTypeName) {
                 $("#InstructionType").parent().find(".select2-container").addClass("selectErrorClass");

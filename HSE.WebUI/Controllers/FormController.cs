@@ -26,9 +26,10 @@ namespace HSE.WebUI.Controllers
         private readonly FormServiceFacade _formServiceFacade;
         public InstructionFormDto InstructionFormResult;
         private readonly IErrorLogsService _errorLogsService;
+        private readonly IInstructionFormService _instructionFormService;
 
         public FormController(IInstructionTypeService instructionTypeService, IUserService userService, IEmployeeService employeeService, IFormShortContentService formShortContentService,
-            FormServiceFacade formServiceFacade, IErrorLogsService errorLogsService)
+            FormServiceFacade formServiceFacade, IErrorLogsService errorLogsService, IInstructionFormService instructionFormService)
         {
             _instructionTypeService = instructionTypeService;
             _userService = userService;
@@ -36,6 +37,7 @@ namespace HSE.WebUI.Controllers
             _formServiceFacade = formServiceFacade;
             _formShortContentService = formShortContentService;
             _errorLogsService = errorLogsService;
+            _instructionFormService = instructionFormService;
         }
 
         [HttpGet("CreateForm")]
@@ -175,7 +177,7 @@ namespace HSE.WebUI.Controllers
         }
 
         [HttpPost("AddForms")]
-        public async Task<int> AddForms(InstructionFormViewModel instructionFormViewModel)
+        public async Task<string> AddForms(InstructionFormViewModel instructionFormViewModel)
         {
             var instructorUserId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value ?? string.Empty);
             try
@@ -188,7 +190,7 @@ namespace HSE.WebUI.Controllers
                 InstructionFormResult = await _formServiceFacade.AddToInstructionForm(instructionFormViewModel, organizationId,organizationName, instructorUserId);
                 await _formServiceFacade.AddToEmployeeForm(employeInfos);
 
-                return InstructionFormResult.Id;
+                return InstructionFormResult.InstructionFormGuidId;
             }
             catch (Exception ex)
             {
@@ -205,13 +207,14 @@ namespace HSE.WebUI.Controllers
                     CreateDate = DateTime.Now
                 };
                 await _errorLogsService.AddErrorLog(errorLogDto);
-                return 0;
+                return string.Empty;
             }
         }
 
         [HttpGet("RetrieveFormResult")]
-        public async Task<IActionResult> RetrieveFormResult(int instructionFormId)
+        public async Task<IActionResult> RetrieveFormResult(string instructionFormGuidId)
         {
+            int instructionFormId = await _instructionFormService.GetInstructionFormIdByFormGuidId(instructionFormGuidId);
             var instructorUserId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PrimarySid)?.Value ?? string.Empty);
             try
             {

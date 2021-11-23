@@ -80,6 +80,7 @@ namespace HSE.DAL.Repositories.Concrete
                     activeFormsViewModels.Add(new ActiveFormsViewModel
                     {
                         FormId = int.Parse(reader["ID"].ToString() ?? string.Empty),
+                        FormGuidId = reader["INSTRUCTION_FORM_GUID_ID"].ToString(),
                         InstructionDate = Convert.ToDateTime(reader["INSTRUCTION_DATE"]).ToString("dd/MM/yyyy"),
                         InstructorFullName = reader["INSTRUCTOR_FULL_NAME"].ToString(),
                         InstructorOrganizationFullName = reader["INSTRUCTOR_ORGANIZATION_FULL_NAME"].ToString(),
@@ -90,7 +91,6 @@ namespace HSE.DAL.Repositories.Concrete
                     });
                 }
             }
-
             return activeFormsViewModels;
         }
 
@@ -183,6 +183,7 @@ namespace HSE.DAL.Repositories.Concrete
                     allFormsForHistoryViewModels.Add(new AllFormsForHistoryViewModel
                     {
                         FormId = int.Parse(reader["ID"].ToString() ?? string.Empty),
+                        FormGuidId = reader["INSTRUCTION_FORM_GUID_ID"].ToString(),
                         InstructionDate = Convert.ToDateTime(reader["INSTRUCTION_DATE"]).ToString("dd/MM/yyyy"),
                         InstructorFullName = reader["INSTRUCTOR_FULL_NAME"].ToString(),
                         InstructorOrganizationFullName = reader["INSTRUCTOR_ORGANIZATION_FULL_NAME"].ToString(),
@@ -297,6 +298,7 @@ namespace HSE.DAL.Repositories.Concrete
                     formsReportViewModels.Add(new FormsReportViewModel
                     {
                         FormId = int.Parse(reader["ID"].ToString() ?? string.Empty),
+                        FormGuidId = reader["INSTRUCTION_FORM_GUID_ID"].ToString(),
                         InstructionDate = Convert.ToDateTime(reader["INSTRUCTION_DATE"]).ToString("dd/MM/yyyy"),
                         InstructorFullName = reader["INSTRUCTOR_FULL_NAME"].ToString(),
                         InstructorOrganizationFullName = reader["INSTRUCTOR_ORGANIZATION_FULL_NAME"].ToString(),
@@ -382,6 +384,13 @@ namespace HSE.DAL.Repositories.Concrete
                 _context.Update(result);
                 await _context.SaveChangesAsync();
             }
+            return result;
+        }
+
+        public async Task<int> GetInstructionFormIdByFormGuidId(string formGuidId)
+        {
+            Guid formGuid = new Guid(formGuidId);
+            var result = await _context.Set<InstructionForm>().Where(x => x.InstructionFormGuidId == formGuid).Select(x=>x.Id).FirstOrDefaultAsync();
             return result;
         }
     }

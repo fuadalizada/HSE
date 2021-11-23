@@ -131,7 +131,6 @@ D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\HSE.WebUI.MvcApplicationParts
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\HSE.WebUI.RazorAssemblyInfo.cache
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\HSE.WebUI.RazorAssemblyInfo.cs
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\staticwebassets\HSE.WebUI.StaticWebAssets.Manifest.cache
-D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\staticwebassets\HSE.WebUI.StaticWebAssets.xml
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\scopedcss\bundle\HSE.WebUI.styles.css
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\HSE.WebUI.TagHelpers.input.cache
 D:\VisualStudio2019\HSE\HSE.WebUI\obj\Debug\net5.0\HSE.WebUI.TagHelpers.output.cache

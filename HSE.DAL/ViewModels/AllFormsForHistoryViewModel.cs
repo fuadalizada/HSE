@@ -1,10 +1,9 @@
-﻿using System;
-
-namespace HSE.DAL.ViewModels
+﻿namespace HSE.DAL.ViewModels
 {
     public class AllFormsForHistoryViewModel
     {
         public int FormId { get; set; }
+        public string FormGuidId { get; set; }
         public string InstructionDate { get; set; }
         public string InstructorFullName { get; set; }
         public string InstructorOrganizationFullName { get; set; }
